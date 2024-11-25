@@ -1,30 +1,17 @@
-# TorboxApi Python SDK 1.0.0
-
-Welcome to the TorboxApi SDK documentation. This guide will help you get started with integrating and using the TorboxApi SDK in your project.
-
-## Versions
-
-- API version: `1.0.0`
-- SDK version: `1.0.0`
+![Logo](https://raw.githubusercontent.com/TorBox-App/torbox-sdk-py/main/assets/banner.png)
 
 ## Table of Contents
 
-- [TorboxApi Python SDK 1.0.0](#torboxapi-python-sdk-100)
-  - [Versions](#versions)
-  - [Table of Contents](#table-of-contents)
-  - [Setup \& Configuration](#setup--configuration)
-    - [Supported Language Versions](#supported-language-versions)
-    - [Installation](#installation)
+- [Setup \& Configuration](#setup--configuration)
+  - [Supported Language Versions](#supported-language-versions)
+  - [Installation](#installation)
   - [Authentication](#authentication)
     - [Access Token Authentication](#access-token-authentication)
       - [Setting the Access Token](#setting-the-access-token)
   - [Setting a Custom Timeout](#setting-a-custom-timeout)
 - [Sample Usage](#sample-usage)
-  - [Services](#services)
+  - [Documentation](#documentation)
   - [Models](#models)
-    - [Using Union Types](#using-union-types)
-      - [Example Function with Union Types](#example-function-with-union-types)
-  - [License](#license)
 
 ## Setup & Configuration
 
@@ -93,7 +80,7 @@ print(result)
 
 ```
 
-## Services
+## Documentation
 
 The SDK provides various services to interact with the API.
 
