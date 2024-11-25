@@ -42,6 +42,7 @@ When you initialize the SDK, you can set the access token as follows:
 ```py
 TorboxApi(
     access_token="YOUR_ACCESS_TOKEN",
+    base_url="https://api.torbox.app",
     timeout=10000
 )
 ```
@@ -50,6 +51,7 @@ If you need to set or update the access token after initializing the SDK, you ca
 
 ```py
 sdk.set_access_token("YOUR_ACCESS_TOKEN")
+sdk.set_base_url("https://api.torbox.app")
 ```
 
 ## Setting a Custom Timeout
@@ -71,6 +73,7 @@ from torbox_api import TorboxApi
 
 sdk = TorboxApi(
     access_token="YOUR_ACCESS_TOKEN",
+    base_url="https://api.torbox.app",
     timeout=10000
 )
 
