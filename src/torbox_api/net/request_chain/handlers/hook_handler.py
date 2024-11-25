@@ -2,7 +2,7 @@ from typing import Generator, Optional, Tuple
 
 
 from .base_handler import BaseHandler
-from ....hooks.hook import DefaultHook
+from ....hooks.hook import CustomHook
 from ...transport.request import Request
 from ...transport.response import Response
 from ...transport.request_error import RequestError
@@ -20,7 +20,7 @@ class HookHandler(BaseHandler):
         Initialize a new instance of HookHandler.
         """
         super().__init__()
-        self._hook = DefaultHook()
+        self._hook = CustomHook()
 
     def handle(
         self, request: Request

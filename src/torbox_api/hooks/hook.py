@@ -6,7 +6,7 @@ class Request:
         self.body = body
 
     def __str__(self):
-        return f"method={self.method}, url={self.url}, headers={self.headers}, body={self.body})"
+        return f"Request(method={self.method}, url={self.url}, headers={self.headers}, body={self.body})"
 
 
 class Response:
@@ -16,20 +16,20 @@ class Response:
         self.body = body
 
     def __str__(self):
-        return "Response(status={}, headers={}, body={})".format(
-            self.status, self.headers, self.body
+        return (
+            f"Response(status={self.status}, headers={self.headers}, body={self.body})"
         )
 
 
-class DefaultHook:
+class CustomHook:
 
     def before_request(self, request: Request, **kwargs):
-        pass
+        print("before_request")
 
     def after_response(self, request: Request, response: Response, **kwargs):
-        pass
+        print("after_response")
 
     def on_error(
         self, error: Exception, request: Request, response: Response, **kwargs
     ):
-        pass
+        print("on_error")

@@ -11,7 +11,6 @@
   - [Setting a Custom Timeout](#setting-a-custom-timeout)
 - [Sample Usage](#sample-usage)
   - [Documentation](#documentation)
-  - [Models](#models)
 
 ## Setup & Configuration
 
@@ -137,36 +136,3 @@ The SDK includes several models that represent the data structures used in API r
 | [GetAllJobsByHashOkResponse](documentation/models/GetAllJobsByHashOkResponse.md)                         |             |
 
 </details>
-
-### Using Union Types
-
-Union types allow you to specify that a variable can have more than one type. This is particularly useful when a function can accept multiple types of inputs. The Union type hint is used for this purpose.
-
-#### Example Function with Union Types
-
-You can call service method with an instance of `TypeA`, `TypeB`, or a dictionary that can be converted to an instance of either type.
-
-```python
-# Model Definition
-ParamType = Union[TypeA, TypeB]
-
-# Service Method
-def service_method(param: ParamType):
-...
-
-## Usage
-type_a = TypeA(key="value")
-type_b = TypeB(key="value")
-
-sdk.service.service_method(type_a)
-sdk.service.service_method(type_b)
-sdk.service.service_method({"key": "value"})
-```
-
-You cannot create an instance of a `Union` type itself. Instead, pass an instance of one of the types in the `Union`, or a dictionary that can be converted to one of those types.
-
-## License
-
-This SDK is licensed under the MIT License.
-
-See the [LICENSE](LICENSE) file for more details.
