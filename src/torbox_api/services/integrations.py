@@ -91,41 +91,6 @@ class IntegrationsService(BaseService):
         return response
 
     @cast_models
-    def queue_dropbox(self, api_version: str, request_body: any = None) -> Any:
-        """### Overview
-
-        Queues a job to upload the specified file or zip to the Dropbox account sent with the `dropbox_token` key. To get this key, either get an OAuth2 token using `/oauth/dropbox` or your own solution. Make sure when creating the OAuth link you use the scopes `files.content.write` _(used for uploading to the user's account)_ and `sharing.write` _(used for creating the link)._
-
-        ### Authorization
-
-        Requires an API key using the Authorization Bearer Header.
-
-        :param request_body: The request body., defaults to None
-        :type request_body: any, optional
-        :param api_version: api_version
-        :type api_version: str
-        ...
-        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
-        ...
-        """
-
-        Validator(str).validate(api_version)
-
-        serialized_request = (
-            Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/dropbox",
-                self.get_default_headers(),
-            )
-            .add_path("api_version", api_version)
-            .serialize()
-            .set_method("POST")
-            .set_body(request_body)
-        )
-
-        response = self.send_request(serialized_request)
-        return response
-
-    @cast_models
     def queue_onedrive(self, api_version: str, request_body: any = None) -> Any:
         """### Overview
 

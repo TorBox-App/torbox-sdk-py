@@ -6,6 +6,7 @@
 | :------ | :-------------------------- | :------- | :---------- |
 | data    | CreateTorrentOkResponseData | ❌       |             |
 | detail  | str                         | ❌       |             |
+| error   | any                         | ❌       |             |
 | success | bool                        | ❌       |             |
 
 # CreateTorrentOkResponseData

@@ -101,17 +101,35 @@ class GetStatsOkResponse(BaseModel):
     :type data: GetStatsOkResponseData, optional
     :param detail: detail, defaults to None
     :type detail: str, optional
+    :param error: error, defaults to None
+    :type error: bool, optional
+    :param success: success, defaults to None
+    :type success: bool, optional
     """
 
-    def __init__(self, data: GetStatsOkResponseData = None, detail: str = None):
+    def __init__(
+        self,
+        data: GetStatsOkResponseData = None,
+        detail: str = None,
+        error: bool = None,
+        success: bool = None,
+    ):
         """GetStatsOkResponse
 
         :param data: data, defaults to None
         :type data: GetStatsOkResponseData, optional
         :param detail: detail, defaults to None
         :type detail: str, optional
+        :param error: error, defaults to None
+        :type error: bool, optional
+        :param success: success, defaults to None
+        :type success: bool, optional
         """
         if data is not None:
             self.data = self._define_object(data, GetStatsOkResponseData)
         if detail is not None:
             self.detail = detail
+        if error is not None:
+            self.error = error
+        if success is not None:
+            self.success = success

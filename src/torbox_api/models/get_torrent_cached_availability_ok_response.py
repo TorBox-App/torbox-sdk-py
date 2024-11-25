@@ -183,6 +183,8 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
     :type data: GetTorrentCachedAvailabilityOkResponseData, optional
     :param detail: detail, defaults to None
     :type detail: str, optional
+    :param error: error, defaults to None
+    :type error: str, optional
     :param success: success, defaults to None
     :type success: bool, optional
     """
@@ -191,6 +193,7 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
         self,
         data: GetTorrentCachedAvailabilityOkResponseData = None,
         detail: str = None,
+        error: str = None,
         success: bool = None,
     ):
         """GetTorrentCachedAvailabilityOkResponse
@@ -199,6 +202,8 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
         :type data: GetTorrentCachedAvailabilityOkResponseData, optional
         :param detail: detail, defaults to None
         :type detail: str, optional
+        :param error: error, defaults to None
+        :type error: str, optional
         :param success: success, defaults to None
         :type success: bool, optional
         """
@@ -208,5 +213,7 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
             )
         if detail is not None:
             self.detail = detail
+        if error is not None:
+            self.error = self._define_str("error", error, nullable=True)
         if success is not None:
             self.success = success

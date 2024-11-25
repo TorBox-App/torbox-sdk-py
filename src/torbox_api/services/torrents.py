@@ -161,6 +161,7 @@ class TorrentsService(BaseService):
         file_id: str = None,
         zip_link: str = None,
         torrent_file: str = None,
+        user_ip: str = None,
     ) -> RequestDownloadLinkOkResponse:
         """### Overview
 
@@ -182,6 +183,8 @@ class TorrentsService(BaseService):
         :type zip_link: str, optional
         :param torrent_file: If you want a .torrent file to be downloaded. Does not work with the zip_link option. Optional., defaults to None
         :type torrent_file: str, optional
+        :param user_ip: The user's IP to determine the closest CDN. Optional., defaults to None
+        :type user_ip: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -195,6 +198,7 @@ class TorrentsService(BaseService):
         Validator(str).is_optional().validate(file_id)
         Validator(str).is_optional().validate(zip_link)
         Validator(str).is_optional().validate(torrent_file)
+        Validator(str).is_optional().validate(user_ip)
 
         serialized_request = (
             Serializer(
@@ -207,6 +211,7 @@ class TorrentsService(BaseService):
             .add_query("file_id", file_id)
             .add_query("zip_link", zip_link)
             .add_query("torrent_file", torrent_file)
+            .add_query("user_ip", user_ip)
             .serialize()
             .set_method("GET")
         )

@@ -10,17 +10,27 @@ class ControlTorrentOkResponse(BaseModel):
     :type data: any, optional
     :param detail: detail, defaults to None
     :type detail: str, optional
+    :param error: error, defaults to None
+    :type error: any, optional
     :param success: success, defaults to None
     :type success: bool, optional
     """
 
-    def __init__(self, data: any = None, detail: str = None, success: bool = None):
+    def __init__(
+        self,
+        data: any = None,
+        detail: str = None,
+        error: any = None,
+        success: bool = None,
+    ):
         """ControlTorrentOkResponse
 
         :param data: data, defaults to None
         :type data: any, optional
         :param detail: detail, defaults to None
         :type detail: str, optional
+        :param error: error, defaults to None
+        :type error: any, optional
         :param success: success, defaults to None
         :type success: bool, optional
         """
@@ -28,5 +38,7 @@ class ControlTorrentOkResponse(BaseModel):
             self.data = data
         if detail is not None:
             self.detail = detail
+        if error is not None:
+            self.error = error
         if success is not None:
             self.success = success

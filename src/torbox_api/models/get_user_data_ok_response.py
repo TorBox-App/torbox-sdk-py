@@ -153,6 +153,8 @@ class GetUserDataOkResponse(BaseModel):
     :type data: GetUserDataOkResponseData, optional
     :param detail: detail, defaults to None
     :type detail: str, optional
+    :param error: error, defaults to None
+    :type error: any, optional
     :param success: success, defaults to None
     :type success: bool, optional
     """
@@ -161,6 +163,7 @@ class GetUserDataOkResponse(BaseModel):
         self,
         data: GetUserDataOkResponseData = None,
         detail: str = None,
+        error: any = None,
         success: bool = None,
     ):
         """GetUserDataOkResponse
@@ -169,6 +172,8 @@ class GetUserDataOkResponse(BaseModel):
         :type data: GetUserDataOkResponseData, optional
         :param detail: detail, defaults to None
         :type detail: str, optional
+        :param error: error, defaults to None
+        :type error: any, optional
         :param success: success, defaults to None
         :type success: bool, optional
         """
@@ -176,5 +181,7 @@ class GetUserDataOkResponse(BaseModel):
             self.data = self._define_object(data, GetUserDataOkResponseData)
         if detail is not None:
             self.detail = detail
+        if error is not None:
+            self.error = error
         if success is not None:
             self.success = success

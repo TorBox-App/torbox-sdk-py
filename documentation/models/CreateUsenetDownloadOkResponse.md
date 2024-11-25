@@ -6,6 +6,7 @@
 | :------ | :--------------------------------- | :------- | :---------- |
 | data    | CreateUsenetDownloadOkResponseData | ❌       |             |
 | detail  | str                                | ❌       |             |
+| error   | any                                | ❌       |             |
 | success | bool                               | ❌       |             |
 
 # CreateUsenetDownloadOkResponseData

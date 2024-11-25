@@ -6,6 +6,7 @@
 | :------ | :----------------------------- | :------- | :---------- |
 | data    | List[GetAllJobsOkResponseData] | ❌       |             |
 | detail  | str                            | ❌       |             |
+| error   | any                            | ❌       |             |
 | success | bool                           | ❌       |             |
 
 # GetAllJobsOkResponseData

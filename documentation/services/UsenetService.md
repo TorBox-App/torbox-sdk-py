@@ -104,6 +104,7 @@ print(result)
 | file_id      | str  | ❌       | The files's ID that you want to download                                                         |
 | zip_link     | str  | ❌       | If you want a zip link. Required if no file_id. Takes precedence over file_id if both are given. |
 | torrent_file | str  | ❌       | If you want a .torrent file to be downloaded. Does not work with the zip_link option. Optional.  |
+| user_ip      | str  | ❌       | The user's IP to determine the closest CDN. Optional.                                            |
 
 **Example Usage Code Snippet**
 
@@ -121,7 +122,8 @@ result = sdk.usenet.request_download_link1(
     usenet_id="{{usenet_id}}",
     file_id="{{usenet_file_id}}",
     zip_link="boolean",
-    torrent_file="boolean"
+    torrent_file="boolean",
+    user_ip="string"
 )
 
 print(result)

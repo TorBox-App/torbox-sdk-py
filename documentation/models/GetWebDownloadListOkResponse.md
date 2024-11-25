@@ -2,10 +2,12 @@
 
 **Properties**
 
-| Name   | Type                                   | Required | Description |
-| :----- | :------------------------------------- | :------- | :---------- |
-| data   | List[GetWebDownloadListOkResponseData] | ❌       |             |
-| detail | str                                    | ❌       |             |
+| Name    | Type                                   | Required | Description |
+| :------ | :------------------------------------- | :------- | :---------- |
+| data    | List[GetWebDownloadListOkResponseData] | ❌       |             |
+| detail  | str                                    | ❌       |             |
+| error   | any                                    | ❌       |             |
+| success | bool                                   | ❌       |             |
 
 # GetWebDownloadListOkResponseData
 

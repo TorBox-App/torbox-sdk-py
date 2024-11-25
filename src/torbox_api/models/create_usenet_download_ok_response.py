@@ -42,6 +42,8 @@ class CreateUsenetDownloadOkResponse(BaseModel):
     :type data: CreateUsenetDownloadOkResponseData, optional
     :param detail: detail, defaults to None
     :type detail: str, optional
+    :param error: error, defaults to None
+    :type error: any, optional
     :param success: success, defaults to None
     :type success: bool, optional
     """
@@ -50,6 +52,7 @@ class CreateUsenetDownloadOkResponse(BaseModel):
         self,
         data: CreateUsenetDownloadOkResponseData = None,
         detail: str = None,
+        error: any = None,
         success: bool = None,
     ):
         """CreateUsenetDownloadOkResponse
@@ -58,6 +61,8 @@ class CreateUsenetDownloadOkResponse(BaseModel):
         :type data: CreateUsenetDownloadOkResponseData, optional
         :param detail: detail, defaults to None
         :type detail: str, optional
+        :param error: error, defaults to None
+        :type error: any, optional
         :param success: success, defaults to None
         :type success: bool, optional
         """
@@ -65,5 +70,7 @@ class CreateUsenetDownloadOkResponse(BaseModel):
             self.data = self._define_object(data, CreateUsenetDownloadOkResponseData)
         if detail is not None:
             self.detail = detail
+        if error is not None:
+            self.error = error
         if success is not None:
             self.success = success

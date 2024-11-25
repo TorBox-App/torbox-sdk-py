@@ -235,6 +235,8 @@ class GetUsenetListOkResponse(BaseModel):
     :type data: List[GetUsenetListOkResponseData], optional
     :param detail: detail, defaults to None
     :type detail: str, optional
+    :param error: error, defaults to None
+    :type error: any, optional
     :param success: success, defaults to None
     :type success: bool, optional
     """
@@ -243,6 +245,7 @@ class GetUsenetListOkResponse(BaseModel):
         self,
         data: List[GetUsenetListOkResponseData] = None,
         detail: str = None,
+        error: any = None,
         success: bool = None,
     ):
         """GetUsenetListOkResponse
@@ -251,6 +254,8 @@ class GetUsenetListOkResponse(BaseModel):
         :type data: List[GetUsenetListOkResponseData], optional
         :param detail: detail, defaults to None
         :type detail: str, optional
+        :param error: error, defaults to None
+        :type error: any, optional
         :param success: success, defaults to None
         :type success: bool, optional
         """
@@ -258,5 +263,7 @@ class GetUsenetListOkResponse(BaseModel):
             self.data = self._define_list(data, GetUsenetListOkResponseData)
         if detail is not None:
             self.detail = detail
+        if error is not None:
+            self.error = error
         if success is not None:
             self.success = success

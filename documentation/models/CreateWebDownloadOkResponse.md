@@ -6,6 +6,7 @@
 | :------ | :------------------------------ | :------- | :---------- |
 | data    | CreateWebDownloadOkResponseData | ❌       |             |
 | detail  | str                             | ❌       |             |
+| error   | any                             | ❌       |             |
 | success | bool                            | ❌       |             |
 
 # CreateWebDownloadOkResponseData

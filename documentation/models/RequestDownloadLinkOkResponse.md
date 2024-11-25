@@ -6,4 +6,5 @@
 | :------ | :--- | :------- | :---------- |
 | data    | str  | ❌       |             |
 | detail  | str  | ❌       |             |
+| error   | any  | ❌       |             |
 | success | bool | ❌       |             |

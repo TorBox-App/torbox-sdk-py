@@ -118,6 +118,8 @@ class GetAllJobsOkResponse(BaseModel):
     :type data: List[GetAllJobsOkResponseData], optional
     :param detail: detail, defaults to None
     :type detail: str, optional
+    :param error: error, defaults to None
+    :type error: any, optional
     :param success: success, defaults to None
     :type success: bool, optional
     """
@@ -126,6 +128,7 @@ class GetAllJobsOkResponse(BaseModel):
         self,
         data: List[GetAllJobsOkResponseData] = None,
         detail: str = None,
+        error: any = None,
         success: bool = None,
     ):
         """GetAllJobsOkResponse
@@ -134,6 +137,8 @@ class GetAllJobsOkResponse(BaseModel):
         :type data: List[GetAllJobsOkResponseData], optional
         :param detail: detail, defaults to None
         :type detail: str, optional
+        :param error: error, defaults to None
+        :type error: any, optional
         :param success: success, defaults to None
         :type success: bool, optional
         """
@@ -141,5 +146,7 @@ class GetAllJobsOkResponse(BaseModel):
             self.data = self._define_list(data, GetAllJobsOkResponseData)
         if detail is not None:
             self.detail = detail
+        if error is not None:
+            self.error = error
         if success is not None:
             self.success = success
