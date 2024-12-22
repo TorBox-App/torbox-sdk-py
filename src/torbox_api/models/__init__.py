@@ -54,3 +54,4 @@ from .get_all_jobs_by_hash_ok_response import (
     GetAllJobsByHashOkResponse,
     GetAllJobsByHashOkResponseData,
 )
+from .get_web_download_hosters_ok_response import GetWebDownloadHostersOkResponse

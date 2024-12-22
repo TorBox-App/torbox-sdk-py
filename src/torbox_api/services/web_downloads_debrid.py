@@ -7,6 +7,7 @@ from ..models import (
     CreateWebDownloadOkResponse,
     CreateWebDownloadRequest,
     GetWebDownloadListOkResponse,
+    GetWebDownloadHostersOkResponse
 )
 
 
@@ -277,3 +278,33 @@ class WebDownloadsDebridService(BaseService):
 
         response = self.send_request(serialized_request)
         return response
+
+    @cast_models
+    def get_web_download_hosters(self, api_version: str) -> GetWebDownloadHostersOkResponse:
+        """### Overview
+
+                Gets the list of hosters that are supported by the web download service. This is useful for knowing what hosters are supported by the service.
+
+                ### Authorization
+
+                no
+
+                :param api_version: api_version
+                :type api_version: str
+                ...
+                :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+                ...
+        """
+        Validator(str).validate(api_version)
+        serialized_request = (
+            Serializer(
+                f"{self.base_url}/{{api_version}}/api/webdl/hosters",
+                self.get_default_headers(),
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("GET")
+        )
+
+        response = self.send_request(serialized_request)
+        return GetWebDownloadHostersOkResponse._unmap(response)
