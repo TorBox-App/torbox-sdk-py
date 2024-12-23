@@ -28,6 +28,7 @@ class CreateTorrentOkResponseData(BaseModel):
         name: str = None,
         queued_id: float = None,
         torrent_id: float = None,
+        auth_id: str = None,
     ):
         """CreateTorrentOkResponseData
 
@@ -43,6 +44,8 @@ class CreateTorrentOkResponseData(BaseModel):
         :type queued_id: float, optional
         :param torrent_id: torrent_id, defaults to None
         :type torrent_id: float, optional
+        :param auth_id: auth_id, defaults to None
+        :type auth_id: str, optional
         """
         if active_limit is not None:
             self.active_limit = active_limit
@@ -56,6 +59,8 @@ class CreateTorrentOkResponseData(BaseModel):
             self.queued_id = queued_id
         if torrent_id is not None:
             self.torrent_id = torrent_id
+        if auth_id is not None:
+            self.auth_id = auth_id
 
 
 @JsonMap({})
