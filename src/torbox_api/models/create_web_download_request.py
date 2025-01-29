@@ -10,7 +10,7 @@ class CreateWebDownloadRequest(BaseModel):
     :type link: str, optional
     """
 
-    def __init__(self, link: str = None):
+    def __init__(self, link: str = None, **kwargs):
         """CreateWebDownloadRequest
 
         :param link: An accessible link to any file on the internet. Cannot be a redirection., defaults to None
@@ -18,3 +18,4 @@ class CreateWebDownloadRequest(BaseModel):
         """
         if link is not None:
             self.link = link
+        self._kwargs = kwargs

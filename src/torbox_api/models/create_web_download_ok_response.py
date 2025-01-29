@@ -15,7 +15,11 @@ class CreateWebDownloadOkResponseData(BaseModel):
     """
 
     def __init__(
-        self, auth_id: str = None, hash: str = None, webdownload_id: str = None
+        self,
+        auth_id: str = None,
+        hash: str = None,
+        webdownload_id: str = None,
+        **kwargs
     ):
         """CreateWebDownloadOkResponseData
 
@@ -32,6 +36,7 @@ class CreateWebDownloadOkResponseData(BaseModel):
             self.hash = hash
         if webdownload_id is not None:
             self.webdownload_id = webdownload_id
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -54,6 +59,7 @@ class CreateWebDownloadOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """CreateWebDownloadOkResponse
 
@@ -74,3 +80,4 @@ class CreateWebDownloadOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

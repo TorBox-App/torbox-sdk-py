@@ -1,4 +1,3 @@
-from typing import Any
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
@@ -25,7 +24,7 @@ class NotificationsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get RSS Notification Feed Success
+        :return: The parsed response data.
         :rtype: str
         """
 
@@ -43,7 +42,7 @@ class NotificationsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return response
 
     @cast_models
@@ -61,7 +60,7 @@ class NotificationsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Notification Feed Success
+        :return: The parsed response data.
         :rtype: GetNotificationFeedOkResponse
         """
 
@@ -77,11 +76,11 @@ class NotificationsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetNotificationFeedOkResponse._unmap(response)
 
     @cast_models
-    def clear_all_notifications(self, api_version: str) -> Any:
+    def clear_all_notifications(self, api_version: str) -> None:
         """### Overview
 
         Marks all of your notifications as read and deletes them permanently.
@@ -109,11 +108,10 @@ class NotificationsService(BaseService):
             .set_method("POST")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
-    def clear_single_notification(self, api_version: str, notification_id: str) -> Any:
+    def clear_single_notification(self, api_version: str, notification_id: str) -> None:
         """### Overview
 
         Marks a single notification as read and permanently deletes it from your notifications. Requires a `notification_id` which can be found by getting your notification feed.
@@ -145,11 +143,10 @@ class NotificationsService(BaseService):
             .set_method("POST")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
-    def send_test_notification(self, api_version: str) -> Any:
+    def send_test_notification(self, api_version: str) -> None:
         """### Overview
 
         Sends a test notification to all enabled notification types. This can be useful for validating setups. No need for any body in this request.
@@ -177,5 +174,4 @@ class NotificationsService(BaseService):
             .set_method("POST")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)

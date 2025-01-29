@@ -1,4 +1,3 @@
-from typing import Any
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
@@ -46,7 +45,7 @@ class UsenetService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Create Usenet Download
+        :return: The parsed response data.
         :rtype: CreateUsenetDownloadOkResponse
         """
 
@@ -64,13 +63,13 @@ class UsenetService(BaseService):
             .set_body(request_body, "multipart/form-data")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return CreateUsenetDownloadOkResponse._unmap(response)
 
     @cast_models
     def control_usenet_download(
         self, api_version: str, request_body: any = None
-    ) -> Any:
+    ) -> None:
         """### Overview
 
         Controls a usenet download. By sending the usenet download's ID and the type of operation you want to perform, it will send that request to the usenet client.
@@ -110,8 +109,7 @@ class UsenetService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
     def request_download_link1(
@@ -123,7 +121,7 @@ class UsenetService(BaseService):
         zip_link: str = None,
         torrent_file: str = None,
         user_ip: str = None,
-    ) -> Any:
+    ) -> None:
         """### Overview
 
         Requests the download link from the server. Because downloads are metered, TorBox cannot afford to allow free access to the links directly. This endpoint opens the link for 1 hour for downloads. Once a download is started, the user has nearly unlilimited time to download the file. The 1 hour time limit is simply for starting downloads. This prevents long term link sharing.
@@ -175,8 +173,7 @@ class UsenetService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
     def get_usenet_list(
@@ -208,7 +205,7 @@ class UsenetService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Usenet List Success
+        :return: The parsed response data.
         :rtype: GetUsenetListOkResponse
         """
 
@@ -232,13 +229,13 @@ class UsenetService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetUsenetListOkResponse._unmap(response)
 
     @cast_models
     def get_usenet_cached_availability(
         self, api_version: str, hash: str = None, format: str = None
-    ) -> Any:
+    ) -> None:
         """### Overview
 
         Takes in a list of comma separated usenet hashes and checks if the usenet download is cached. This endpoint only gets a max of around 100 at a time, due to http limits in queries. If you want to do more, you can simply do more hash queries. Such as:
@@ -282,5 +279,4 @@ class UsenetService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)

@@ -16,8 +16,8 @@
 | Name                     | Type  | Required | Description |
 | :----------------------- | :---- | :------- | :---------- |
 | active_limit             | float | ❌       |             |
+| auth_id                  | str   | ❌       |             |
 | current_active_downloads | float | ❌       |             |
 | hash                     | str   | ❌       |             |
-| name                     | str   | ❌       |             |
 | queued_id                | float | ❌       |             |
 | torrent_id               | float | ❌       |             |

@@ -50,6 +50,7 @@ class GetAllJobsByHashOkResponseData(BaseModel):
         type_: str = None,
         updated_at: str = None,
         zip: bool = None,
+        **kwargs
     ):
         """GetAllJobsByHashOkResponseData
 
@@ -108,6 +109,7 @@ class GetAllJobsByHashOkResponseData(BaseModel):
             self.updated_at = updated_at
         if zip is not None:
             self.zip = zip
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -130,6 +132,7 @@ class GetAllJobsByHashOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """GetAllJobsByHashOkResponse
 
@@ -150,3 +153,4 @@ class GetAllJobsByHashOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

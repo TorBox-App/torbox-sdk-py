@@ -12,7 +12,7 @@ class Settings(BaseModel):
     :type setting: str, optional
     """
 
-    def __init__(self, anothersetting: str = None, setting: str = None):
+    def __init__(self, anothersetting: str = None, setting: str = None, **kwargs):
         """Settings
 
         :param anothersetting: anothersetting, defaults to None
@@ -24,6 +24,7 @@ class Settings(BaseModel):
             self.anothersetting = anothersetting
         if setting is not None:
             self.setting = setting
+        self._kwargs = kwargs
 
 
 @JsonMap({"id_": "id"})
@@ -79,6 +80,7 @@ class GetUserDataOkResponseData(BaseModel):
         total_downloaded: float = None,
         updated_at: str = None,
         user_referral: str = None,
+        **kwargs
     ):
         """GetUserDataOkResponseData
 
@@ -143,6 +145,7 @@ class GetUserDataOkResponseData(BaseModel):
             self.updated_at = updated_at
         if user_referral is not None:
             self.user_referral = user_referral
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -165,6 +168,7 @@ class GetUserDataOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """GetUserDataOkResponse
 
@@ -185,3 +189,4 @@ class GetUserDataOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

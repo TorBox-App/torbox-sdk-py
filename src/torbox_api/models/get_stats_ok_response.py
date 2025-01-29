@@ -43,6 +43,7 @@ class GetStatsOkResponseData(BaseModel):
         total_usenet_downloads: float = None,
         total_users: float = None,
         total_web_downloads: float = None,
+        **kwargs
     ):
         """GetStatsOkResponseData
 
@@ -91,6 +92,7 @@ class GetStatsOkResponseData(BaseModel):
             self.total_users = total_users
         if total_web_downloads is not None:
             self.total_web_downloads = total_web_downloads
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -113,6 +115,7 @@ class GetStatsOkResponse(BaseModel):
         detail: str = None,
         error: bool = None,
         success: bool = None,
+        **kwargs
     ):
         """GetStatsOkResponse
 
@@ -133,3 +136,4 @@ class GetStatsOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

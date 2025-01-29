@@ -99,6 +99,7 @@ The SDK provides various services to interact with the API.
 | [UserService](documentation/services/UserService.md)                             |
 | [RssFeedsService](documentation/services/RssFeedsService.md)                     |
 | [IntegrationsService](documentation/services/IntegrationsService.md)             |
+| [QueuedService](documentation/services/QueuedService.md)                         |
 
 </details>
 
@@ -114,11 +115,9 @@ The SDK includes several models that represent the data structures used in API r
 | [CreateTorrentRequest](documentation/models/CreateTorrentRequest.md)                                     |             |
 | [CreateTorrentOkResponse](documentation/models/CreateTorrentOkResponse.md)                               |             |
 | [ControlTorrentOkResponse](documentation/models/ControlTorrentOkResponse.md)                             |             |
-| [ControlQueuedTorrentOkResponse](documentation/models/ControlQueuedTorrentOkResponse.md)                 |             |
 | [RequestDownloadLinkOkResponse](documentation/models/RequestDownloadLinkOkResponse.md)                   |             |
 | [GetTorrentListOkResponse](documentation/models/GetTorrentListOkResponse.md)                             |             |
 | [GetTorrentCachedAvailabilityOkResponse](documentation/models/GetTorrentCachedAvailabilityOkResponse.md) |             |
-| [SearchAllTorrentsFromScraperOkResponse](documentation/models/SearchAllTorrentsFromScraperOkResponse.md) |             |
 | [ExportTorrentDataOkResponse](documentation/models/ExportTorrentDataOkResponse.md)                       |             |
 | [GetTorrentInfoOkResponse](documentation/models/GetTorrentInfoOkResponse.md)                             |             |
 | [CreateUsenetDownloadRequest](documentation/models/CreateUsenetDownloadRequest.md)                       |             |
@@ -127,6 +126,7 @@ The SDK includes several models that represent the data structures used in API r
 | [CreateWebDownloadRequest](documentation/models/CreateWebDownloadRequest.md)                             |             |
 | [CreateWebDownloadOkResponse](documentation/models/CreateWebDownloadOkResponse.md)                       |             |
 | [GetWebDownloadListOkResponse](documentation/models/GetWebDownloadListOkResponse.md)                     |             |
+| [GetHosterListOkResponse](documentation/models/GetHosterListOkResponse.md)                               |             |
 | [GetUpStatusOkResponse](documentation/models/GetUpStatusOkResponse.md)                                   |             |
 | [GetStatsOkResponse](documentation/models/GetStatsOkResponse.md)                                         |             |
 | [GetNotificationFeedOkResponse](documentation/models/GetNotificationFeedOkResponse.md)                   |             |

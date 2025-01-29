@@ -26,6 +26,7 @@ class GetNotificationFeedOkResponseData(BaseModel):
         id_: float = None,
         message: str = None,
         title: str = None,
+        **kwargs
     ):
         """GetNotificationFeedOkResponseData
 
@@ -50,6 +51,7 @@ class GetNotificationFeedOkResponseData(BaseModel):
             self.message = message
         if title is not None:
             self.title = title
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -72,6 +74,7 @@ class GetNotificationFeedOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """GetNotificationFeedOkResponse
 
@@ -92,3 +95,4 @@ class GetNotificationFeedOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

@@ -15,7 +15,11 @@ class CreateUsenetDownloadOkResponseData(BaseModel):
     """
 
     def __init__(
-        self, auth_id: str = None, hash: str = None, usenetdownload_id: str = None
+        self,
+        auth_id: str = None,
+        hash: str = None,
+        usenetdownload_id: str = None,
+        **kwargs
     ):
         """CreateUsenetDownloadOkResponseData
 
@@ -32,6 +36,7 @@ class CreateUsenetDownloadOkResponseData(BaseModel):
             self.hash = hash
         if usenetdownload_id is not None:
             self.usenetdownload_id = usenetdownload_id
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -54,6 +59,7 @@ class CreateUsenetDownloadOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """CreateUsenetDownloadOkResponse
 
@@ -74,3 +80,4 @@ class CreateUsenetDownloadOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

@@ -1,10 +1,8 @@
-from typing import Any
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
 from ..models.utils.cast_models import cast_models
 from ..models import (
-    ControlQueuedTorrentOkResponse,
     ControlTorrentOkResponse,
     CreateTorrentOkResponse,
     CreateTorrentRequest,
@@ -13,7 +11,6 @@ from ..models import (
     GetTorrentInfoOkResponse,
     GetTorrentListOkResponse,
     RequestDownloadLinkOkResponse,
-    SearchAllTorrentsFromScraperOkResponse,
 )
 
 
@@ -39,7 +36,7 @@ class TorrentsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Create Torrent Success / Create Torrent Queued / Create Torrent Active Limit Fail
+        :return: The parsed response data.
         :rtype: CreateTorrentOkResponse
         """
 
@@ -57,7 +54,7 @@ class TorrentsService(BaseService):
             .set_body(request_body, "multipart/form-data")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return CreateTorrentOkResponse._unmap(response)
 
     @cast_models
@@ -88,7 +85,7 @@ class TorrentsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Control Torrent Success
+        :return: The parsed response data.
         :rtype: ControlTorrentOkResponse
         """
 
@@ -105,52 +102,8 @@ class TorrentsService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return ControlTorrentOkResponse._unmap(response)
-
-    @cast_models
-    def control_queued_torrent(
-        self, api_version: str, request_body: any = None
-    ) -> ControlQueuedTorrentOkResponse:
-        """### Overview
-
-        Controls a queued torrent. By sending the queued torrent's ID and the type of operation you want to perform, it will perform that action on the queued torrent.
-
-        Operations are either:
-
-        - **Delete** `deletes the queued torrent from your account`
-
-
-        ### Authorization
-
-        Requires an API key using the Authorization Bearer Header.
-
-        :param request_body: The request body., defaults to None
-        :type request_body: any, optional
-        :param api_version: api_version
-        :type api_version: str
-        ...
-        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
-        ...
-        :return: Control Torrent Success
-        :rtype: ControlQueuedTorrentOkResponse
-        """
-
-        Validator(str).validate(api_version)
-
-        serialized_request = (
-            Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/controlqueued",
-                self.get_default_headers(),
-            )
-            .add_path("api_version", api_version)
-            .serialize()
-            .set_method("POST")
-            .set_body(request_body)
-        )
-
-        response = self.send_request(serialized_request)
-        return ControlQueuedTorrentOkResponse._unmap(response)
 
     @cast_models
     def request_download_link(
@@ -188,7 +141,7 @@ class TorrentsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Request Download Link Success
+        :return: The parsed response data.
         :rtype: RequestDownloadLinkOkResponse
         """
 
@@ -216,7 +169,7 @@ class TorrentsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return RequestDownloadLinkOkResponse._unmap(response)
 
     @cast_models
@@ -270,7 +223,7 @@ class TorrentsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Torrent List Success
+        :return: The parsed response data.
         :rtype: GetTorrentListOkResponse
         """
 
@@ -294,7 +247,7 @@ class TorrentsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetTorrentListOkResponse._unmap(response)
 
     @cast_models
@@ -330,7 +283,7 @@ class TorrentsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Torrent Cached Availability List With FIles Success / Get Torrent Cached Availability List Success / Get Torrent Cached Availability Object Success / Get Torrent Cached Availability Success Uncached
+        :return: The parsed response data.
         :rtype: GetTorrentCachedAvailabilityOkResponse
         """
 
@@ -352,50 +305,8 @@ class TorrentsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetTorrentCachedAvailabilityOkResponse._unmap(response)
-
-    @cast_models
-    def search_all_torrents_from_scraper(
-        self, api_version: str, query: str = None
-    ) -> SearchAllTorrentsFromScraperOkResponse:
-        """### Overview
-
-        Uses Meilisearch to search for scraped torrents. This is a basic torrent aggregator system and has no real relation to TorBox. It is simply a tool you can use. It does not have cache information, or anything special like that, and will not have any of that information. This is simply a torrent search, nothing more.
-
-        You may use this for anything. TorBox uses it in the website to make it easy for users to find torrents without having to go and find them on sketchy websites.
-
-        ### Authorization
-
-        None required.
-
-        :param api_version: api_version
-        :type api_version: str
-        :param query: The query you want to search for., defaults to None
-        :type query: str, optional
-        ...
-        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
-        ...
-        :return: Search All Torrents From Scraper Success
-        :rtype: SearchAllTorrentsFromScraperOkResponse
-        """
-
-        Validator(str).validate(api_version)
-        Validator(str).is_optional().validate(query)
-
-        serialized_request = (
-            Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/search",
-                self.get_default_headers(),
-            )
-            .add_path("api_version", api_version)
-            .add_query("query", query)
-            .serialize()
-            .set_method("GET")
-        )
-
-        response = self.send_request(serialized_request)
-        return SearchAllTorrentsFromScraperOkResponse._unmap(response)
 
     @cast_models
     def export_torrent_data(
@@ -418,7 +329,7 @@ class TorrentsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Export Torrent Data Magnet / Export Torrent Data File Success
+        :return: The parsed response data.
         :rtype: ExportTorrentDataOkResponse
         """
 
@@ -438,7 +349,7 @@ class TorrentsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return ExportTorrentDataOkResponse._unmap(response)
 
     @cast_models
@@ -462,7 +373,7 @@ class TorrentsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Torrent Info Success
+        :return: The parsed response data.
         :rtype: GetTorrentInfoOkResponse
         """
 
@@ -482,37 +393,5 @@ class TorrentsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetTorrentInfoOkResponse._unmap(response)
-
-    @cast_models
-    def get_queued_torrents(self, api_version: str) -> Any:
-        """### Overview
-
-        Retrieves all of a user's queued torrents.
-
-        ### Authorization
-
-        Requires an API key using the Authorization Bearer Header.
-
-        :param api_version: api_version
-        :type api_version: str
-        ...
-        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
-        ...
-        """
-
-        Validator(str).validate(api_version)
-
-        serialized_request = (
-            Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/getqueued",
-                self.get_default_headers(),
-            )
-            .add_path("api_version", api_version)
-            .serialize()
-            .set_method("GET")
-        )
-
-        response = self.send_request(serialized_request)
-        return response

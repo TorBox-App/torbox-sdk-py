@@ -22,6 +22,7 @@ class ControlTorrentOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """ControlTorrentOkResponse
 
@@ -42,3 +43,4 @@ class ControlTorrentOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

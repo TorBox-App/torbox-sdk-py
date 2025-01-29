@@ -14,7 +14,9 @@ class GetTorrentCachedAvailabilityOkResponseData(BaseModel):
     :type hash: str, optional
     """
 
-    def __init__(self, name: str = None, size: float = None, hash: str = None):
+    def __init__(
+        self, name: str = None, size: float = None, hash: str = None, **kwargs
+    ):
         """GetTorrentCachedAvailabilityOkResponseData
 
         :param name: name, defaults to None
@@ -30,6 +32,7 @@ class GetTorrentCachedAvailabilityOkResponseData(BaseModel):
             self.size = size
         if hash is not None:
             self.hash = hash
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -52,6 +55,7 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
         detail: str = None,
         error: str = None,
         success: bool = None,
+        **kwargs
     ):
         """GetTorrentCachedAvailabilityOkResponse
 
@@ -72,3 +76,4 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
             self.error = self._define_str("error", error, nullable=True)
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

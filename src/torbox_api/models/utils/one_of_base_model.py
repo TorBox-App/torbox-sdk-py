@@ -31,33 +31,61 @@ class OneOfBaseModel:
         if isinstance(input_data, (str, float, int, bool)):
             return input_data
 
+        exception_list = []
+        success_list = []
         for class_constructor in cls.class_list.values():
-            exception_list = []
             try:
-                # Check if the class is a only a TypeHint
-                origin = get_origin(class_constructor)
-                if origin is not None and isinstance(input_data, list):
-                    list_instance = cls._get_list_instance(
-                        input_data, class_constructor, origin
-                    )
-                    if list_instance is not None:
-                        return list_instance
-                    else:
-                        continue  # Try the next class constructor
-
-                # Check if the input_data is already an instance of the class
-                if isinstance(input_data, class_constructor):
-                    return input_data
-
-                # Check if the input_data is a dictionary that can be used to initialize the class
-                elif isinstance(input_data, dict):
-                    instance = class_constructor._unmap(input_data)
-                    if cls._check_params(input_data, instance):
-                        return instance
+                instance = cls._get_instance(class_constructor, input_data)
+                if instance is not None:
+                    success_list.append(instance)
             except Exception as e:
                 exception_list.append({"class": class_constructor, "exception": e})
 
+        if success_list:
+            return max(success_list, key=cls._count_non_none_attributes)
+
         cls._raise_one_of_error(exception_list)
+
+    @classmethod
+    def _count_non_none_attributes(cls, instance):
+        """
+        Count the number of non-None attributes in the instance.
+
+        :param instance: The instance to check.
+        :return: The number of non-None attributes.
+        """
+        if not hasattr(instance, "_map"):
+            return 0
+        return len([value for value in instance._map().values() if value is not None])
+
+    @classmethod
+    def _get_instance(cls, class_constructor, input_data):
+        """
+        Return an instance of the class based on the input data.
+
+        :param class_constructor: The constructor of the class to check against.
+        :param
+        :return: An instance of the class if the input data matches the class constructor
+            or can be used to initialize the class, None otherwise.
+        """
+        # Check if the class is only a TypeHint.
+        origin = get_origin(class_constructor)
+        if origin is not None and isinstance(input_data, list):
+            list_instance = cls._get_list_instance(
+                input_data, class_constructor, origin
+            )
+            if list_instance is not None:
+                return list_instance
+            else:
+                return None
+
+        # Check if the input_data is already an instance of the class
+        if isinstance(input_data, class_constructor):
+            return input_data
+
+        # Check if the input_data is a dictionary that can be used to initialize the class
+        elif isinstance(input_data, dict):
+            return class_constructor._unmap(input_data)
 
     @classmethod
     def _get_list_instance(
@@ -84,23 +112,6 @@ class OneOfBaseModel:
             return [inner_type._unmap(item) for item in input_data]
 
         return input_data
-
-    @classmethod
-    def _check_params(cls, raw_input: Dict[str, Any], instance: Any) -> bool:
-        """
-        Checks if the optional parameters in the instance match the keys in the input data,
-        ensuring compliance with one of the models.
-
-        :param dict raw_input: Input data used for initialization.
-        :param object instance: An instance of one of the classes specified in the 'oneOf' model.
-        :return: True if the optional parameters in the instance match the keys in the input data, False otherwise.
-        """
-        input_values = {k: v for k, v in raw_input.items() if v is not None}.values()
-        instance_map = instance._map()
-        instance_values = {
-            k: v for k, v in instance_map.items() if v is not None
-        }.values()
-        return len(input_values) == len(instance_values)
 
     @classmethod
     def _raise_one_of_error(cls, exception_list):

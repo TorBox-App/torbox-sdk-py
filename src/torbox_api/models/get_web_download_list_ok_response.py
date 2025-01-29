@@ -32,6 +32,7 @@ class DataFiles4(BaseModel):
         s3_path: str = None,
         short_name: str = None,
         size: float = None,
+        **kwargs
     ):
         """DataFiles4
 
@@ -64,6 +65,7 @@ class DataFiles4(BaseModel):
             self.short_name = short_name
         if size is not None:
             self.size = size
+        self._kwargs = kwargs
 
 
 @JsonMap({"id_": "id"})
@@ -140,6 +142,7 @@ class GetWebDownloadListOkResponseData(BaseModel):
         torrent_file: bool = None,
         updated_at: str = None,
         upload_speed: float = None,
+        **kwargs
     ):
         """GetWebDownloadListOkResponseData
 
@@ -232,6 +235,7 @@ class GetWebDownloadListOkResponseData(BaseModel):
             self.updated_at = updated_at
         if upload_speed is not None:
             self.upload_speed = upload_speed
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -254,6 +258,7 @@ class GetWebDownloadListOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """GetWebDownloadListOkResponse
 
@@ -274,3 +279,4 @@ class GetWebDownloadListOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

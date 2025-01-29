@@ -1,4 +1,3 @@
-from typing import Any
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
@@ -6,6 +5,7 @@ from ..models.utils.cast_models import cast_models
 from ..models import (
     CreateWebDownloadOkResponse,
     CreateWebDownloadRequest,
+    GetHosterListOkResponse,
     GetWebDownloadListOkResponse,
 )
 
@@ -31,7 +31,7 @@ class WebDownloadsDebridService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Create Web Download Success
+        :return: The parsed response data.
         :rtype: CreateWebDownloadOkResponse
         """
 
@@ -49,7 +49,7 @@ class WebDownloadsDebridService(BaseService):
             .set_body(request_body, "multipart/form-data")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return CreateWebDownloadOkResponse._unmap(response)
 
     @cast_models
@@ -59,7 +59,7 @@ class WebDownloadsDebridService(BaseService):
         request_body: any = None,
         bypass_cache: str = None,
         id_: str = None,
-    ) -> Any:
+    ) -> None:
         """### Overview
 
         Controls a web download. By sending the web download's ID and the type of operation you want to perform, it will send that request to the debrid client.
@@ -103,8 +103,7 @@ class WebDownloadsDebridService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
     def request_download_link2(
@@ -116,7 +115,7 @@ class WebDownloadsDebridService(BaseService):
         zip_link: str = None,
         torrent_file: str = None,
         user_ip: str = None,
-    ) -> Any:
+    ) -> None:
         """### Overview
 
         Requests the download link from the server. Because downloads are metered, TorBox cannot afford to allow free access to the links directly. This endpoint opens the link for 1 hour for downloads. Once a download is started, the user has nearly unlilimited time to download the file. The 1 hour time limit is simply for starting downloads. This prevents long term link sharing.
@@ -168,8 +167,7 @@ class WebDownloadsDebridService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
     def get_web_download_list(
@@ -201,7 +199,7 @@ class WebDownloadsDebridService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Usenet List Success
+        :return: The parsed response data.
         :rtype: GetWebDownloadListOkResponse
         """
 
@@ -225,13 +223,13 @@ class WebDownloadsDebridService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetWebDownloadListOkResponse._unmap(response)
 
     @cast_models
     def get_web_download_cached_availability(
         self, api_version: str, hash: str = None, format: str = None
-    ) -> Any:
+    ) -> None:
         """### Overview
 
         Takes in a list of comma separated usenet hashes and checks if the web download is cached. This endpoint only gets a max of around 100 at a time, due to http limits in queries. If you want to do more, you can simply do more hash queries. Such as:
@@ -275,5 +273,61 @@ class WebDownloadsDebridService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
+
+    @cast_models
+    def get_hoster_list(self, api_version: str) -> GetHosterListOkResponse:
+        """### Overview
+
+        A dynamic list of hosters that TorBox is capable of downloading through its paid service.
+
+        - Name - a clean name for display use, the well known name of the service, should be recognizable to users.
+
+        - Domains - an array of known domains that the hoster uses. While each may serve a different purpose it is still included.
+
+        - URL - the main url of the service. This should take you to the home page or a service page of the hoster.
+
+        - Icon - a square image, usually a favicon or logo, that represents the service, should be recognizable as the hoster's icon.
+
+        - Status - whether this hoster can be used on TorBox or not at the current time. It is usually a good idea to check this value before submitting a download to TorBox's servers for download.
+
+        - Type - values are either "hoster" or "stream". Both do the same thing, but is good to differentiate services used for different things.
+
+        - Note - a string value (or null) that may give helpful information about the current status or state of a hoster. This can and should be shown to end users.
+
+        - Daily Link Limit - the number of downloads a user can use per day. As a user submits links, once they hit this number, the API will deny them from adding anymore of this type of link. A zero value means that it is unlimited.
+
+        - Daily Link Used - the number of downloads a user has already used. This endpoint currently doesn't update this value.
+
+        - Daily Bandwidth Limit - the value in bytes that a user is allowed to download from this hoster. A zero value means that it is unlimited. This endpoint doesn't currently implement this limit. It is recommended to use the Daily Link Limit instead.
+
+        - Daily Bandwdith Used - the value in btes that a user has already used to download from this hoster. This endpoint currently doesn't update this value.
+
+
+        ### Authorization
+
+        Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: GetHosterListOkResponse
+        """
+
+        Validator(str).validate(api_version)
+
+        serialized_request = (
+            Serializer(
+                f"{self.base_url}/{{api_version}}/api/webdl/hosters",
+                self.get_default_headers(),
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("GET")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return GetHosterListOkResponse._unmap(response)

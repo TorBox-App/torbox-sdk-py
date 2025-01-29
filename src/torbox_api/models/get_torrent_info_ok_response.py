@@ -13,7 +13,7 @@ class DataFiles2(BaseModel):
     :type size: float, optional
     """
 
-    def __init__(self, name: str = None, size: float = None):
+    def __init__(self, name: str = None, size: float = None, **kwargs):
         """DataFiles2
 
         :param name: name, defaults to None
@@ -25,6 +25,7 @@ class DataFiles2(BaseModel):
             self.name = name
         if size is not None:
             self.size = size
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -47,6 +48,7 @@ class GetTorrentInfoOkResponseData(BaseModel):
         hash: str = None,
         name: str = None,
         size: float = None,
+        **kwargs
     ):
         """GetTorrentInfoOkResponseData
 
@@ -67,6 +69,7 @@ class GetTorrentInfoOkResponseData(BaseModel):
             self.name = name
         if size is not None:
             self.size = size
+        self._kwargs = kwargs
 
 
 @JsonMap({})
@@ -89,6 +92,7 @@ class GetTorrentInfoOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """GetTorrentInfoOkResponse
 
@@ -109,3 +113,4 @@ class GetTorrentInfoOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

@@ -22,6 +22,7 @@ class ExportTorrentDataOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """ExportTorrentDataOkResponse
 
@@ -42,3 +43,4 @@ class ExportTorrentDataOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

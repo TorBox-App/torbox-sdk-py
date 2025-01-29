@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "torbox-api"
-version = "1.0.3"
+version = "1.0.4"
 license = { text = "MIT" }
 description = """You can view the full documentation at https://api-docs.torbox.app."""
 readme = "PyPI_README.md"

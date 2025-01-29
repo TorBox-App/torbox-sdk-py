@@ -1,4 +1,3 @@
-from typing import Any
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
@@ -9,7 +8,7 @@ from ..models import AddReferralToAccountOkResponse, GetUserDataOkResponse
 class UserService(BaseService):
 
     @cast_models
-    def refresh_api_token(self, api_version: str, request_body: any = None) -> Any:
+    def refresh_api_token(self, api_version: str, request_body: any = None) -> None:
         """### Overview
 
         If you want a new API token, or your old one has been compromised, you may request a new one. If you happen to forget the token, go the [TorBox settings page ](https://torbox.app/settings) and copy the current one. If this still doesn't work, you may contact us at our support email for a new one.
@@ -40,8 +39,7 @@ class UserService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
     def get_user_data(
@@ -72,7 +70,7 @@ class UserService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get User Data Success / Get User Data Settings Success
+        :return: The parsed response data.
         :rtype: GetUserDataOkResponse
         """
 
@@ -90,14 +88,22 @@ class UserService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetUserDataOkResponse._unmap(response)
 
     @cast_models
     def add_referral_to_account(
         self, api_version: str, referral: str = None
     ) -> AddReferralToAccountOkResponse:
-        """Add Referral To Account
+        """### Overview
+
+        Automatically adds a referral code to the user's account. This can be used for developers to automatically add their referral to user's accounts who use their service.
+
+        This will not override any referral a user already has. If they already have one, then it cannot be changed using this endpoint. It can only be done by the user on the [website](https://torbox.app/subscription).
+
+        ### Authorization
+
+        Requires an API key using the Authorization Bearer Header. Use the user's API key, not your own.
 
         :param api_version: api_version
         :type api_version: str
@@ -106,7 +112,7 @@ class UserService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Add Referral To Account Success
+        :return: The parsed response data.
         :rtype: AddReferralToAccountOkResponse
         """
 
@@ -124,5 +130,36 @@ class UserService(BaseService):
             .set_method("POST")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return AddReferralToAccountOkResponse._unmap(response)
+
+    @cast_models
+    def get_confirmation_code(self, api_version: str) -> None:
+        """### Overview
+
+        Requests a 6 digit code to be sent to the user's email for verification. Used to verify a user actually wants to perform a potentially dangerous action.
+
+        ### Authorization
+
+        Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        """
+
+        Validator(str).validate(api_version)
+
+        serialized_request = (
+            Serializer(
+                f"{self.base_url}/{{api_version}}/api/user/getconfirmation",
+                self.get_default_headers(),
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("GET")
+        )
+
+        self.send_request(serialized_request)

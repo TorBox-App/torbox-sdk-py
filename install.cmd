@@ -15,7 +15,7 @@ if "%USE_VENV%"=="1" (
 
 pip install build
 python -m build --outdir dist .
-pip install dist\torbox_api-1.0.0-py3-none-any.whl --force-reinstall
+pip install dist\torbox_api-1.0.5-py3-none-any.whl --force-reinstall
 
 if "%USE_VENV%"=="1" (
     deactivate

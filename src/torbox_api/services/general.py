@@ -20,7 +20,7 @@ class GeneralService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Up Status Success
+        :return: The parsed response data.
         :rtype: GetUpStatusOkResponse
         """
 
@@ -30,7 +30,7 @@ class GeneralService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetUpStatusOkResponse._unmap(response)
 
     @cast_models
@@ -48,7 +48,7 @@ class GeneralService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Stats Success
+        :return: The parsed response data.
         :rtype: GetStatsOkResponse
         """
 
@@ -63,5 +63,5 @@ class GeneralService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetStatsOkResponse._unmap(response)

@@ -22,6 +22,7 @@ class AddReferralToAccountOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """AddReferralToAccountOkResponse
 
@@ -42,3 +43,4 @@ class AddReferralToAccountOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

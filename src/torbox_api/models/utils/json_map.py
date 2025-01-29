@@ -45,6 +45,8 @@ class JsonMap:
             result_dict = {}
 
             for key, value in attribute_dict.items():
+                if key == "_kwargs":
+                    continue
                 if isinstance(value, list):
                     value = [v._map() if hasattr(v, "_map") else v for v in value]
                 elif isinstance(value, Enum):

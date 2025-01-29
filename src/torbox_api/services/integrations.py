@@ -1,4 +1,3 @@
-from typing import Any
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
@@ -9,7 +8,7 @@ from ..models import GetAllJobsByHashOkResponse, GetAllJobsOkResponse
 class IntegrationsService(BaseService):
 
     @cast_models
-    def authenticate_oauth(self, api_version: str, provider: str) -> Any:
+    def authenticate_oauth(self, api_version: str, provider: str) -> None:
         """### Overview
 
         Allows you to get an authorization token for using the user's account. Callback is located at `/oauth/{provider}/callback` which will verify the token recieved from the OAuth, then redirect you finally to `https://torbox.app/{provider}/success?token={token}&expires_in={expires_in}&expires_at={expires_at}`
@@ -52,11 +51,10 @@ class IntegrationsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
-    def queue_google_drive(self, api_version: str, request_body: any = None) -> Any:
+    def queue_google_drive(self, api_version: str, request_body: any = None) -> None:
         """### Overview
 
         Queues a job to upload the specified file or zip to the Google Drive account sent with the `google_token` key. To get this key, either get an OAuth2 token using `/oauth/google` or your own solution. Make sure when creating the OAuth link, you add the scope `https://www.googleapis.com/auth/drive.file` so TorBox has access to the user's Drive.
@@ -87,11 +85,10 @@ class IntegrationsService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
-    def queue_onedrive(self, api_version: str, request_body: any = None) -> Any:
+    def queue_onedrive(self, api_version: str, request_body: any = None) -> None:
         """### Overview
 
         Queues a job to upload the specified file or zip to the OneDrive sent with the `onedrive_token` key. To get this key, either get an OAuth2 token using `/oauth/onedrive` or your own solution. Make sure when creating the OAuth link you use the scope `files.readwrite.all`. This is compatible with all different types of Microsoft accounts.
@@ -122,11 +119,10 @@ class IntegrationsService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
-    def queue_gofile(self, api_version: str, request_body: any = None) -> Any:
+    def queue_gofile(self, api_version: str, request_body: any = None) -> None:
         """### Overview
 
         Queues a job to upload the specified file or zip to the GoFile account sent with the `gofile_token` _(optional)_. To get this key, login to your GoFile account and go [here](https://gofile.io/myProfile). Copy the **Account API Token**. This is what you will use as the `gofile_token`, if you choose to use it. If you don't use an Account API Token, GoFile will simply create an anonymous file. This file will expire after inactivity.
@@ -157,11 +153,10 @@ class IntegrationsService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
-    def queue1fichier(self, api_version: str, request_body: any = None) -> Any:
+    def queue1fichier(self, api_version: str, request_body: any = None) -> None:
         """### Overview
 
         Queues a job to upload the specified file or zip to the 1Fichier account sent with the `onefichier_token` key (optional). To get this key you must be a Premium or Premium Gold member at 1Fichier. If you are upgraded, [go to the parameters page](https://1fichier.com/console/params.pl), and get an **API Key**. This is what you will use as the `onefichier_token`, if you choose to use it. If you don't use an API Key, 1Fichier will simply create an anonymous file.
@@ -192,8 +187,7 @@ class IntegrationsService(BaseService):
             .set_body(request_body)
         )
 
-        response = self.send_request(serialized_request)
-        return response
+        self.send_request(serialized_request)
 
     @cast_models
     def get_all_jobs(self, api_version: str) -> GetAllJobsOkResponse:
@@ -219,7 +213,7 @@ class IntegrationsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get All Jobs Success
+        :return: The parsed response data.
         :rtype: GetAllJobsOkResponse
         """
 
@@ -235,7 +229,7 @@ class IntegrationsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetAllJobsOkResponse._unmap(response)
 
     @cast_models
@@ -263,7 +257,7 @@ class IntegrationsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get Specific Job Success
+        :return: The parsed response data.
         :rtype: str
         """
 
@@ -281,7 +275,7 @@ class IntegrationsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return response
 
     @cast_models
@@ -311,7 +305,7 @@ class IntegrationsService(BaseService):
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
-        :return: Get All Jobs By Hash Success
+        :return: The parsed response data.
         :rtype: GetAllJobsByHashOkResponse
         """
 
@@ -329,5 +323,5 @@ class IntegrationsService(BaseService):
             .set_method("GET")
         )
 
-        response = self.send_request(serialized_request)
+        response, _, _ = self.send_request(serialized_request)
         return GetAllJobsByHashOkResponse._unmap(response)

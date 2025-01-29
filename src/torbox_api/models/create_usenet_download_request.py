@@ -12,7 +12,7 @@ class CreateUsenetDownloadRequest(BaseModel):
     :type link: str, optional
     """
 
-    def __init__(self, file: bytes = None, link: str = None):
+    def __init__(self, file: bytes = None, link: str = None, **kwargs):
         """CreateUsenetDownloadRequest
 
         :param file: An NZB File. Optional., defaults to None
@@ -24,3 +24,4 @@ class CreateUsenetDownloadRequest(BaseModel):
             self.file = file
         if link is not None:
             self.link = link
+        self._kwargs = kwargs

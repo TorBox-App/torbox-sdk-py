@@ -4,7 +4,6 @@ from .create_torrent_ok_response import (
     CreateTorrentOkResponseData,
 )
 from .control_torrent_ok_response import ControlTorrentOkResponse
-from .control_queued_torrent_ok_response import ControlQueuedTorrentOkResponse
 from .request_download_link_ok_response import RequestDownloadLinkOkResponse
 from .get_torrent_list_ok_response import (
     GetTorrentListOkResponse,
@@ -13,10 +12,6 @@ from .get_torrent_list_ok_response import (
 from .get_torrent_cached_availability_ok_response import (
     GetTorrentCachedAvailabilityOkResponse,
     GetTorrentCachedAvailabilityOkResponseData,
-)
-from .search_all_torrents_from_scraper_ok_response import (
-    SearchAllTorrentsFromScraperOkResponse,
-    SearchAllTorrentsFromScraperOkResponseData,
 )
 from .export_torrent_data_ok_response import ExportTorrentDataOkResponse
 from .get_torrent_info_ok_response import (
@@ -40,6 +35,10 @@ from .create_web_download_ok_response import (
 from .get_web_download_list_ok_response import (
     GetWebDownloadListOkResponse,
     GetWebDownloadListOkResponseData,
+)
+from .get_hoster_list_ok_response import (
+    GetHosterListOkResponse,
+    GetHosterListOkResponseData,
 )
 from .get_up_status_ok_response import GetUpStatusOkResponse
 from .get_stats_ok_response import GetStatsOkResponse, GetStatsOkResponseData

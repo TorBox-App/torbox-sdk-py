@@ -7,6 +7,7 @@ from .services.notifications import NotificationsService
 from .services.user import UserService
 from .services.rss_feeds import RssFeedsService
 from .services.integrations import IntegrationsService
+from .services.queued import QueuedService
 from .net.environment import Environment
 
 
@@ -32,6 +33,7 @@ class TorboxApi:
         self.user = UserService(base_url=self._base_url)
         self.rss_feeds = RssFeedsService(base_url=self._base_url)
         self.integrations = IntegrationsService(base_url=self._base_url)
+        self.queued = QueuedService(base_url=self._base_url)
         self.set_access_token(access_token)
         self.set_timeout(timeout)
 
@@ -54,6 +56,7 @@ class TorboxApi:
         self.user.set_base_url(self._base_url)
         self.rss_feeds.set_base_url(self._base_url)
         self.integrations.set_base_url(self._base_url)
+        self.queued.set_base_url(self._base_url)
 
         return self
 
@@ -69,6 +72,7 @@ class TorboxApi:
         self.user.set_access_token(access_token)
         self.rss_feeds.set_access_token(access_token)
         self.integrations.set_access_token(access_token)
+        self.queued.set_access_token(access_token)
 
         return self
 
@@ -87,6 +91,7 @@ class TorboxApi:
         self.user.set_timeout(timeout)
         self.rss_feeds.set_timeout(timeout)
         self.integrations.set_timeout(timeout)
+        self.queued.set_timeout(timeout)
 
         return self
 

@@ -22,6 +22,7 @@ class GetUpStatusOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """GetUpStatusOkResponse
 
@@ -42,3 +43,4 @@ class GetUpStatusOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs

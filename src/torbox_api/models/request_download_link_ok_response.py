@@ -22,6 +22,7 @@ class RequestDownloadLinkOkResponse(BaseModel):
         detail: str = None,
         error: any = None,
         success: bool = None,
+        **kwargs
     ):
         """RequestDownloadLinkOkResponse
 
@@ -42,3 +43,4 @@ class RequestDownloadLinkOkResponse(BaseModel):
             self.error = error
         if success is not None:
             self.success = success
+        self._kwargs = kwargs
