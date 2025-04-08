@@ -129,6 +129,7 @@ The SDK includes several models that represent the data structures used in API r
 | [GetHosterListOkResponse](documentation/models/GetHosterListOkResponse.md)                               |             |
 | [GetUpStatusOkResponse](documentation/models/GetUpStatusOkResponse.md)                                   |             |
 | [GetStatsOkResponse](documentation/models/GetStatsOkResponse.md)                                         |             |
+| [GetChangelogsJsonOkResponse](documentation/models/GetChangelogsJsonOkResponse.md)                       |             |
 | [GetNotificationFeedOkResponse](documentation/models/GetNotificationFeedOkResponse.md)                   |             |
 | [GetUserDataOkResponse](documentation/models/GetUserDataOkResponse.md)                                   |             |
 | [AddReferralToAccountOkResponse](documentation/models/AddReferralToAccountOkResponse.md)                 |             |

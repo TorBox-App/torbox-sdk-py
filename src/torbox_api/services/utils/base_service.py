@@ -2,6 +2,9 @@ from typing import Any, Dict, Tuple, Generator
 from enum import Enum
 
 from .default_headers import DefaultHeaders, DefaultHeadersKeys
+
+from ...net.headers.base_header import BaseHeader
+
 from ...net.transport.request import Request
 from ...net.request_chain.request_chain import RequestChain
 from ...net.request_chain.handlers.hook_handler import HookHandler
@@ -39,6 +42,15 @@ class BaseService:
         )
 
         return self
+
+    def get_access_token(self) -> BaseHeader:
+        """
+        Get the access auth header.
+
+        :return: The access auth header.
+        :rtype: BaseHeader
+        """
+        return self._default_headers.get_header(DefaultHeadersKeys.ACCESS_AUTH)
 
     def set_timeout(self, timeout: int):
         """
@@ -110,8 +122,8 @@ class BaseService:
         """
         return (
             RequestChain()
-            .add_handler(RetryHandler())
             .add_handler(HookHandler())
+            .add_handler(RetryHandler())
             .add_handler(HttpHandler(self._timeout))
         )
 

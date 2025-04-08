@@ -38,7 +38,7 @@ def cast_models(func):
         # Instanciate oneOf models
         if _is_one_of_model(input_type):
             class_list = {
-                arg.__name__: arg for arg in get_args(input_type) if arg.__name__
+                getattr(arg, "__name__", str(arg)): arg for arg in get_args(input_type)
             }
             OneOfBaseModel.class_list = class_list
             return OneOfBaseModel.return_one_of(data)

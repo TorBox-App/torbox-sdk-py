@@ -1,5 +1,7 @@
+from typing import Union
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({})
@@ -15,7 +17,11 @@ class GetTorrentCachedAvailabilityOkResponseData(BaseModel):
     """
 
     def __init__(
-        self, name: str = None, size: float = None, hash: str = None, **kwargs
+        self,
+        name: str = SENTINEL,
+        size: float = SENTINEL,
+        hash: str = SENTINEL,
+        **kwargs
     ):
         """GetTorrentCachedAvailabilityOkResponseData
 
@@ -26,11 +32,11 @@ class GetTorrentCachedAvailabilityOkResponseData(BaseModel):
         :param hash: hash, defaults to None
         :type hash: str, optional
         """
-        if name is not None:
+        if name is not SENTINEL:
             self.name = name
-        if size is not None:
+        if size is not SENTINEL:
             self.size = size
-        if hash is not None:
+        if hash is not SENTINEL:
             self.hash = hash
         self._kwargs = kwargs
 
@@ -51,10 +57,10 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: dict = None,
-        detail: str = None,
-        error: str = None,
-        success: bool = None,
+        data: dict = SENTINEL,
+        detail: str = SENTINEL,
+        error: Union[str, None] = SENTINEL,
+        success: bool = SENTINEL,
         **kwargs
     ):
         """GetTorrentCachedAvailabilityOkResponse
@@ -68,12 +74,12 @@ class GetTorrentCachedAvailabilityOkResponse(BaseModel):
         :param success: success, defaults to None
         :type success: bool, optional
         """
-        if data is not None:
+        if data is not SENTINEL:
             self.data = data
-        if detail is not None:
+        if detail is not SENTINEL:
             self.detail = detail
-        if error is not None:
+        if error is not SENTINEL:
             self.error = self._define_str("error", error, nullable=True)
-        if success is not None:
+        if success is not SENTINEL:
             self.success = success
         self._kwargs = kwargs

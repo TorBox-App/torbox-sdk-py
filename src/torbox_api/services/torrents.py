@@ -1,6 +1,8 @@
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
+from ..net.environment.environment import Environment
+from ..models.utils.sentinel import SENTINEL
 from ..models.utils.cast_models import cast_models
 from ..models import (
     ControlTorrentOkResponse,
@@ -45,8 +47,8 @@ class TorrentsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/createtorrent",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/createtorrent",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -93,8 +95,8 @@ class TorrentsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/controltorrent",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/controltorrent",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -109,16 +111,21 @@ class TorrentsService(BaseService):
     def request_download_link(
         self,
         api_version: str,
-        token: str = None,
-        torrent_id: str = None,
-        file_id: str = None,
-        zip_link: str = None,
-        torrent_file: str = None,
-        user_ip: str = None,
+        token: str = SENTINEL,
+        torrent_id: str = SENTINEL,
+        file_id: str = SENTINEL,
+        zip_link: str = SENTINEL,
+        torrent_file: str = SENTINEL,
+        user_ip: str = SENTINEL,
+        redirect: str = SENTINEL,
     ) -> RequestDownloadLinkOkResponse:
         """### Overview
 
-        Requests the download link from the server. Because downloads are metered, TorBox cannot afford to allow free access to the links directly. This endpoint opens the link for 1 hour for downloads. Once a download is started, the user has nearly unlilimited time to download the file. The 1 hour time limit is simply for starting downloads. This prevents long term link sharing.
+        Requests the download link from the server. Because downloads are metered, TorBox cannot afford to allow free access to the links directly. This endpoint opens the link for 3 hours for downloads. Once a download is started, the user has nearly unlilimited time to download the file. The 1 hour time limit is simply for starting downloads. This prevents long term link sharing.
+
+        ### Permalinks
+
+        Instead of generating many CDN urls by requesting this endpoint, you can instead create a permalink such as: `https://api.torbox.app/v1/api/torrents/requestdl?token=APIKEY&torrent_id=NUMBER&file_id=NUMBER&redirect=true` and when a user clicks on it, it will automatically redirect them to the CDN link. This saves requests and doesn't abuse the API. Use this method rather than saving CDN links as they are not permanent. To invalidate these permalinks, simply reset your API token or delete the item from your dashboard.
 
         ### Authorization
 
@@ -138,6 +145,8 @@ class TorrentsService(BaseService):
         :type torrent_file: str, optional
         :param user_ip: The user's IP to determine the closest CDN. Optional., defaults to None
         :type user_ip: str, optional
+        :param redirect: If you want to redirect the user to the CDN link. This is useful for creating permalinks so that you can just make this request URL the link., defaults to None
+        :type redirect: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -152,11 +161,12 @@ class TorrentsService(BaseService):
         Validator(str).is_optional().validate(zip_link)
         Validator(str).is_optional().validate(torrent_file)
         Validator(str).is_optional().validate(user_ip)
+        Validator(str).is_optional().validate(redirect)
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/requestdl",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/requestdl",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("token", token)
@@ -165,6 +175,7 @@ class TorrentsService(BaseService):
             .add_query("zip_link", zip_link)
             .add_query("torrent_file", torrent_file)
             .add_query("user_ip", user_ip)
+            .add_query("redirect", redirect)
             .serialize()
             .set_method("GET")
         )
@@ -176,10 +187,10 @@ class TorrentsService(BaseService):
     def get_torrent_list(
         self,
         api_version: str,
-        bypass_cache: str = None,
-        id_: str = None,
-        offset: str = None,
-        limit: str = None,
+        bypass_cache: str = SENTINEL,
+        id_: str = SENTINEL,
+        offset: str = SENTINEL,
+        limit: str = SENTINEL,
     ) -> GetTorrentListOkResponse:
         """### Overview
 
@@ -235,8 +246,8 @@ class TorrentsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/mylist",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/mylist",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("bypass_cache", bypass_cache)
@@ -254,9 +265,9 @@ class TorrentsService(BaseService):
     def get_torrent_cached_availability(
         self,
         api_version: str,
-        hash: str = None,
-        format: str = None,
-        list_files: str = None,
+        hash: str = SENTINEL,
+        format: str = SENTINEL,
+        list_files: str = SENTINEL,
     ) -> GetTorrentCachedAvailabilityOkResponse:
         """### Overview
 
@@ -294,8 +305,8 @@ class TorrentsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/checkcached",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/checkcached",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("hash", hash)
@@ -310,7 +321,7 @@ class TorrentsService(BaseService):
 
     @cast_models
     def export_torrent_data(
-        self, api_version: str, torrent_id: str = None, type_: str = None
+        self, api_version: str, torrent_id: str = SENTINEL, type_: str = SENTINEL
     ) -> ExportTorrentDataOkResponse:
         """### Overview
 
@@ -339,8 +350,8 @@ class TorrentsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/exportdata",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/exportdata",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("torrent_id", torrent_id)
@@ -354,7 +365,7 @@ class TorrentsService(BaseService):
 
     @cast_models
     def get_torrent_info(
-        self, api_version: str, hash: str = None, timeout: str = None
+        self, api_version: str, hash: str = SENTINEL, timeout: str = SENTINEL
     ) -> GetTorrentInfoOkResponse:
         """### Overview
 
@@ -383,8 +394,8 @@ class TorrentsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/torrents/torrentinfo",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/torrentinfo",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("hash", hash)

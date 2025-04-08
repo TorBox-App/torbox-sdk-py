@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "torbox-api"
-version = "1.0.4"
+version = "1.0.5"
 license = { text = "MIT" }
 description = """You can view the full documentation at https://api-docs.torbox.app."""
-readme = "PyPI_README.md"
+readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
     "requests>=2.31.0"

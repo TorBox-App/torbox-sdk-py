@@ -1,3 +1,8 @@
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+
 class Request:
     def __init__(self, method, url, headers, body=""):
         self.method = method
@@ -24,12 +29,17 @@ class Response:
 class CustomHook:
 
     def before_request(self, request: Request, **kwargs):
-        print("before_request")
+        logging.debug("before_request")
+        logging.debug(request)
 
     def after_response(self, request: Request, response: Response, **kwargs):
-        print("after_response")
+        logging.debug("after_response")
+        logging.debug(response)
 
     def on_error(
         self, error: Exception, request: Request, response: Response, **kwargs
     ):
-        print("on_error")
+        logging.debug("on_error")
+        logging.error(f"Error: {error}")
+        logging.debug(request)
+        logging.debug(response)

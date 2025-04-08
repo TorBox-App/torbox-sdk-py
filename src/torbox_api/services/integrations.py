@@ -1,6 +1,7 @@
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
+from ..net.environment.environment import Environment
 from ..models.utils.cast_models import cast_models
 from ..models import GetAllJobsByHashOkResponse, GetAllJobsOkResponse
 
@@ -42,8 +43,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/oauth/{{provider}}",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/oauth/{{provider}}",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_path("provider", provider)
@@ -76,8 +77,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/googledrive",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/googledrive",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -110,8 +111,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/onedrive",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/onedrive",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -144,8 +145,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/gofile",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/gofile",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -178,8 +179,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/1fichier",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/1fichier",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -221,8 +222,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/jobs",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/jobs",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -266,8 +267,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/job/{{job_id}}",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/job/{{job_id}}",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_path("job_id", job_id)
@@ -277,6 +278,41 @@ class IntegrationsService(BaseService):
 
         response, _, _ = self.send_request(serialized_request)
         return response
+
+    @cast_models
+    def cancel_specific_job(self, api_version: str, job_id: str) -> None:
+        """### Overview
+
+        Cancels a job or deletes the job. Cancels while in progess (pending, uploading), or deletes the job any other time. It will delete it from the database completely.
+
+        ### Authorization
+
+        Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        :param job_id: job_id
+        :type job_id: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        """
+
+        Validator(str).validate(api_version)
+        Validator(str).validate(job_id)
+
+        serialized_request = (
+            Serializer(
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/job/{{job_id}}",
+                [self.get_access_token()],
+            )
+            .add_path("api_version", api_version)
+            .add_path("job_id", job_id)
+            .serialize()
+            .set_method("DELETE")
+        )
+
+        self.send_request(serialized_request)
 
     @cast_models
     def get_all_jobs_by_hash(
@@ -314,8 +350,8 @@ class IntegrationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/integration/jobs/{{hash}}",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/jobs/{{hash}}",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_path("hash", hash)

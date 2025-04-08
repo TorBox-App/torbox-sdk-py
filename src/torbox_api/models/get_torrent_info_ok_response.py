@@ -1,6 +1,8 @@
 from typing import List
+from typing import Union
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({})
@@ -13,7 +15,7 @@ class DataFiles2(BaseModel):
     :type size: float, optional
     """
 
-    def __init__(self, name: str = None, size: float = None, **kwargs):
+    def __init__(self, name: str = SENTINEL, size: float = SENTINEL, **kwargs):
         """DataFiles2
 
         :param name: name, defaults to None
@@ -21,9 +23,9 @@ class DataFiles2(BaseModel):
         :param size: size, defaults to None
         :type size: float, optional
         """
-        if name is not None:
+        if name is not SENTINEL:
             self.name = name
-        if size is not None:
+        if size is not SENTINEL:
             self.size = size
         self._kwargs = kwargs
 
@@ -44,10 +46,10 @@ class GetTorrentInfoOkResponseData(BaseModel):
 
     def __init__(
         self,
-        files: List[DataFiles2] = None,
-        hash: str = None,
-        name: str = None,
-        size: float = None,
+        files: List[DataFiles2] = SENTINEL,
+        hash: str = SENTINEL,
+        name: str = SENTINEL,
+        size: float = SENTINEL,
         **kwargs
     ):
         """GetTorrentInfoOkResponseData
@@ -61,13 +63,13 @@ class GetTorrentInfoOkResponseData(BaseModel):
         :param size: size, defaults to None
         :type size: float, optional
         """
-        if files is not None:
+        if files is not SENTINEL:
             self.files = self._define_list(files, DataFiles2)
-        if hash is not None:
+        if hash is not SENTINEL:
             self.hash = hash
-        if name is not None:
+        if name is not SENTINEL:
             self.name = name
-        if size is not None:
+        if size is not SENTINEL:
             self.size = size
         self._kwargs = kwargs
 
@@ -88,10 +90,10 @@ class GetTorrentInfoOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: GetTorrentInfoOkResponseData = None,
-        detail: str = None,
-        error: any = None,
-        success: bool = None,
+        data: GetTorrentInfoOkResponseData = SENTINEL,
+        detail: str = SENTINEL,
+        error: Union[any, None] = SENTINEL,
+        success: bool = SENTINEL,
         **kwargs
     ):
         """GetTorrentInfoOkResponse
@@ -105,12 +107,12 @@ class GetTorrentInfoOkResponse(BaseModel):
         :param success: success, defaults to None
         :type success: bool, optional
         """
-        if data is not None:
+        if data is not SENTINEL:
             self.data = self._define_object(data, GetTorrentInfoOkResponseData)
-        if detail is not None:
+        if detail is not SENTINEL:
             self.detail = detail
-        if error is not None:
+        if error is not SENTINEL:
             self.error = error
-        if success is not None:
+        if success is not SENTINEL:
             self.success = success
         self._kwargs = kwargs

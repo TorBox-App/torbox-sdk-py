@@ -1,19 +1,25 @@
 import re
 import operator
 from typing import Union, Any, Type, Pattern, get_args
+from ...models.utils.sentinel import was_value_set
 from ...models.utils.one_of_base_model import OneOfBaseModel
 
 
 class Validator:
     """
-    A simple validator class for validating the type and pattern of a value.
+    A simple validator class for validating the type, pattern, and other constraints of a value.
 
     :ivar Type[Any] _type: The expected type for the value.
     :ivar bool _is_optional: Flag indicating whether the value is optional.
+    :ivar bool _is_nullable: Flag indicating whether the value can be null.
     :ivar bool _is_array: Flag indicating whether the value is an array.
     :ivar Pattern[str] _pattern: The regular expression pattern for validating the value.
+    :ivar int _min_length: The minimum length for validating the value.
+    :ivar int _max_length: The maximum length for validating the value.
     :ivar int _min: The minimum value for validating the value.
+    :ivar bool _min_exclusive: Flag indicating whether the minimum value is exclusive.
     :ivar int _max: The maximum value for validating the value.
+    :ivar bool _max_exclusive: Flag indicating whether the maximum value is exclusive.
     """
 
     def __init__(self, _type: Type[Any] = None):
@@ -24,6 +30,7 @@ class Validator:
         """
         self._type: Type[Any] = _type
         self._is_optional: bool = False
+        self._is_nullable: bool = False
         self._is_array: bool = False
         self._pattern: Pattern[str] = None
         self._min_length: int = None
@@ -51,6 +58,16 @@ class Validator:
         :rtype: Validator
         """
         self._is_optional = True
+        return self
+
+    def is_nullable(self) -> "Validator":
+        """
+        Marks the value as nullable.
+
+        :return: The Validator instance for method chaining.
+        :rtype: Validator
+        """
+        self._is_nullable = True
         return self
 
     def pattern(self, pattern: str) -> "Validator":
@@ -121,7 +138,11 @@ class Validator:
         """
         if not self._type:
             raise TypeError("Invalid type: No type specified")
-        if self._is_optional and value is None:
+
+        if self._is_nullable and value is None:
+            return
+
+        if self._is_optional and not was_value_set(value):
             return
 
         self._validate_type(value)
@@ -148,7 +169,11 @@ class Validator:
         :param Any value: The input that needs to be checked
         :raises ValueError: If the value does not match the oneOf rules.
         """
-        class_list = {arg.__name__: arg for arg in get_args(self._type) if arg.__name__}
+        class_list = {
+            arg.__name__: arg
+            for arg in get_args(self._type)
+            if hasattr(arg, "__name__")
+        }
         OneOfBaseModel.class_list = class_list
         OneOfBaseModel.return_one_of(value)
 

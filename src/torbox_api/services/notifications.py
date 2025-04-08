@@ -1,6 +1,8 @@
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
+from ..net.environment.environment import Environment
+from ..models.utils.sentinel import SENTINEL
 from ..models.utils.cast_models import cast_models
 from ..models import GetNotificationFeedOkResponse
 
@@ -8,7 +10,7 @@ from ..models import GetNotificationFeedOkResponse
 class NotificationsService(BaseService):
 
     @cast_models
-    def get_rss_notification_feed(self, api_version: str, token: str = None) -> str:
+    def get_rss_notification_feed(self, api_version: str, token: str = SENTINEL) -> str:
         """### Overview
 
         Gets your notifications in an RSS Feed which allows you to use them with RSS Feed readers or notification services that can take RSS Feeds and listen to updates. As soon as a notification goes to your account, it will be added to your feed.
@@ -33,8 +35,8 @@ class NotificationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/notifications/rss",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/notifications/rss",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("token", token)
@@ -68,8 +70,8 @@ class NotificationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/notifications/mynotifications",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/notifications/mynotifications",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -100,8 +102,8 @@ class NotificationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/notifications/clear",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/notifications/clear",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -134,8 +136,8 @@ class NotificationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/notifications/clear/{{notification_id}}",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/notifications/clear/{{notification_id}}",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_path("notification_id", notification_id)
@@ -166,8 +168,8 @@ class NotificationsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/notifications/test",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/notifications/test",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()

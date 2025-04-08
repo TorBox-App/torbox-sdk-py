@@ -1,5 +1,7 @@
+from typing import Union
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({})
@@ -22,12 +24,12 @@ class CreateTorrentOkResponseData(BaseModel):
 
     def __init__(
         self,
-        active_limit: float = None,
-        auth_id: str = None,
-        current_active_downloads: float = None,
-        hash: str = None,
-        queued_id: float = None,
-        torrent_id: float = None,
+        active_limit: float = SENTINEL,
+        auth_id: str = SENTINEL,
+        current_active_downloads: float = SENTINEL,
+        hash: str = SENTINEL,
+        queued_id: float = SENTINEL,
+        torrent_id: float = SENTINEL,
         **kwargs
     ):
         """CreateTorrentOkResponseData
@@ -45,17 +47,17 @@ class CreateTorrentOkResponseData(BaseModel):
         :param torrent_id: torrent_id, defaults to None
         :type torrent_id: float, optional
         """
-        if active_limit is not None:
+        if active_limit is not SENTINEL:
             self.active_limit = active_limit
-        if auth_id is not None:
+        if auth_id is not SENTINEL:
             self.auth_id = auth_id
-        if current_active_downloads is not None:
+        if current_active_downloads is not SENTINEL:
             self.current_active_downloads = current_active_downloads
-        if hash is not None:
+        if hash is not SENTINEL:
             self.hash = hash
-        if queued_id is not None:
+        if queued_id is not SENTINEL:
             self.queued_id = queued_id
-        if torrent_id is not None:
+        if torrent_id is not SENTINEL:
             self.torrent_id = torrent_id
         self._kwargs = kwargs
 
@@ -76,10 +78,10 @@ class CreateTorrentOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: CreateTorrentOkResponseData = None,
-        detail: str = None,
-        error: any = None,
-        success: bool = None,
+        data: CreateTorrentOkResponseData = SENTINEL,
+        detail: str = SENTINEL,
+        error: Union[any, None] = SENTINEL,
+        success: bool = SENTINEL,
         **kwargs
     ):
         """CreateTorrentOkResponse
@@ -93,12 +95,12 @@ class CreateTorrentOkResponse(BaseModel):
         :param success: success, defaults to None
         :type success: bool, optional
         """
-        if data is not None:
+        if data is not SENTINEL:
             self.data = self._define_object(data, CreateTorrentOkResponseData)
-        if detail is not None:
+        if detail is not SENTINEL:
             self.detail = detail
-        if error is not None:
+        if error is not SENTINEL:
             self.error = error
-        if success is not None:
+        if success is not SENTINEL:
             self.success = success
         self._kwargs = kwargs

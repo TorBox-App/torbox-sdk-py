@@ -1,5 +1,7 @@
+from typing import Union
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({})
@@ -18,10 +20,10 @@ class ControlTorrentOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: any = None,
-        detail: str = None,
-        error: any = None,
-        success: bool = None,
+        data: Union[any, None] = SENTINEL,
+        detail: str = SENTINEL,
+        error: Union[any, None] = SENTINEL,
+        success: bool = SENTINEL,
         **kwargs
     ):
         """ControlTorrentOkResponse
@@ -35,12 +37,12 @@ class ControlTorrentOkResponse(BaseModel):
         :param success: success, defaults to None
         :type success: bool, optional
         """
-        if data is not None:
+        if data is not SENTINEL:
             self.data = data
-        if detail is not None:
+        if detail is not SENTINEL:
             self.detail = detail
-        if error is not None:
+        if error is not SENTINEL:
             self.error = error
-        if success is not None:
+        if success is not SENTINEL:
             self.success = success
         self._kwargs = kwargs

@@ -113,7 +113,7 @@ class HttpHandler(BaseHandler):
             files, form_data = {}, {}
             for key, value in data.items():
                 if isinstance(value, bytes):
-                    files[key] = value
+                    files[key] = (key, value, "application/octet-stream")
                 else:
                     form_data[key] = value
             return {"files": files, "data": form_data}

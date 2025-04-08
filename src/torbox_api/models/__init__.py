@@ -42,6 +42,10 @@ from .get_hoster_list_ok_response import (
 )
 from .get_up_status_ok_response import GetUpStatusOkResponse
 from .get_stats_ok_response import GetStatsOkResponse, GetStatsOkResponseData
+from .get_changelogs_json_ok_response import (
+    GetChangelogsJsonOkResponse,
+    GetChangelogsJsonOkResponseData,
+)
 from .get_notification_feed_ok_response import (
     GetNotificationFeedOkResponse,
     GetNotificationFeedOkResponseData,

@@ -1,5 +1,7 @@
+from typing import Union
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({})
@@ -12,7 +14,9 @@ class Settings(BaseModel):
     :type setting: str, optional
     """
 
-    def __init__(self, anothersetting: str = None, setting: str = None, **kwargs):
+    def __init__(
+        self, anothersetting: str = SENTINEL, setting: str = SENTINEL, **kwargs
+    ):
         """Settings
 
         :param anothersetting: anothersetting, defaults to None
@@ -20,9 +24,9 @@ class Settings(BaseModel):
         :param setting: setting, defaults to None
         :type setting: str, optional
         """
-        if anothersetting is not None:
+        if anothersetting is not SENTINEL:
             self.anothersetting = anothersetting
-        if setting is not None:
+        if setting is not SENTINEL:
             self.setting = setting
         self._kwargs = kwargs
 
@@ -65,21 +69,21 @@ class GetUserDataOkResponseData(BaseModel):
 
     def __init__(
         self,
-        auth_id: str = None,
-        base_email: str = None,
-        cooldown_until: str = None,
-        created_at: str = None,
-        customer: str = None,
-        email: str = None,
-        id_: float = None,
-        is_subscribed: bool = None,
-        plan: float = None,
-        premium_expires_at: str = None,
-        server: float = None,
-        settings: Settings = None,
-        total_downloaded: float = None,
-        updated_at: str = None,
-        user_referral: str = None,
+        auth_id: str = SENTINEL,
+        base_email: str = SENTINEL,
+        cooldown_until: str = SENTINEL,
+        created_at: str = SENTINEL,
+        customer: str = SENTINEL,
+        email: str = SENTINEL,
+        id_: float = SENTINEL,
+        is_subscribed: bool = SENTINEL,
+        plan: float = SENTINEL,
+        premium_expires_at: str = SENTINEL,
+        server: float = SENTINEL,
+        settings: Settings = SENTINEL,
+        total_downloaded: float = SENTINEL,
+        updated_at: str = SENTINEL,
+        user_referral: str = SENTINEL,
         **kwargs
     ):
         """GetUserDataOkResponseData
@@ -115,35 +119,35 @@ class GetUserDataOkResponseData(BaseModel):
         :param user_referral: user_referral, defaults to None
         :type user_referral: str, optional
         """
-        if auth_id is not None:
+        if auth_id is not SENTINEL:
             self.auth_id = auth_id
-        if base_email is not None:
+        if base_email is not SENTINEL:
             self.base_email = base_email
-        if cooldown_until is not None:
+        if cooldown_until is not SENTINEL:
             self.cooldown_until = cooldown_until
-        if created_at is not None:
+        if created_at is not SENTINEL:
             self.created_at = created_at
-        if customer is not None:
+        if customer is not SENTINEL:
             self.customer = customer
-        if email is not None:
+        if email is not SENTINEL:
             self.email = email
-        if id_ is not None:
+        if id_ is not SENTINEL:
             self.id_ = id_
-        if is_subscribed is not None:
+        if is_subscribed is not SENTINEL:
             self.is_subscribed = is_subscribed
-        if plan is not None:
+        if plan is not SENTINEL:
             self.plan = plan
-        if premium_expires_at is not None:
+        if premium_expires_at is not SENTINEL:
             self.premium_expires_at = premium_expires_at
-        if server is not None:
+        if server is not SENTINEL:
             self.server = server
-        if settings is not None:
+        if settings is not SENTINEL:
             self.settings = self._define_object(settings, Settings)
-        if total_downloaded is not None:
+        if total_downloaded is not SENTINEL:
             self.total_downloaded = total_downloaded
-        if updated_at is not None:
+        if updated_at is not SENTINEL:
             self.updated_at = updated_at
-        if user_referral is not None:
+        if user_referral is not SENTINEL:
             self.user_referral = user_referral
         self._kwargs = kwargs
 
@@ -164,10 +168,10 @@ class GetUserDataOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: GetUserDataOkResponseData = None,
-        detail: str = None,
-        error: any = None,
-        success: bool = None,
+        data: GetUserDataOkResponseData = SENTINEL,
+        detail: str = SENTINEL,
+        error: Union[any, None] = SENTINEL,
+        success: bool = SENTINEL,
         **kwargs
     ):
         """GetUserDataOkResponse
@@ -181,12 +185,12 @@ class GetUserDataOkResponse(BaseModel):
         :param success: success, defaults to None
         :type success: bool, optional
         """
-        if data is not None:
+        if data is not SENTINEL:
             self.data = self._define_object(data, GetUserDataOkResponseData)
-        if detail is not None:
+        if detail is not SENTINEL:
             self.detail = detail
-        if error is not None:
+        if error is not SENTINEL:
             self.error = error
-        if success is not None:
+        if success is not SENTINEL:
             self.success = success
         self._kwargs = kwargs

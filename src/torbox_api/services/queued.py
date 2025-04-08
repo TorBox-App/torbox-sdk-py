@@ -1,6 +1,8 @@
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
+from ..net.environment.environment import Environment
+from ..models.utils.sentinel import SENTINEL
 from ..models.utils.cast_models import cast_models
 
 
@@ -10,11 +12,11 @@ class QueuedService(BaseService):
     def get_queued_downloads(
         self,
         api_version: str,
-        bypass_cache: str = None,
-        id_: str = None,
-        offset: str = None,
-        limit: str = None,
-        type_: str = None,
+        bypass_cache: str = SENTINEL,
+        id_: str = SENTINEL,
+        offset: str = SENTINEL,
+        limit: str = SENTINEL,
+        type_: str = SENTINEL,
     ) -> None:
         """### Overview
 
@@ -50,8 +52,8 @@ class QueuedService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/queued/getqueued",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/queued/getqueued",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("bypass_cache", bypass_cache)
@@ -97,8 +99,8 @@ class QueuedService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/queued/controlqueued",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/queued/controlqueued",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()

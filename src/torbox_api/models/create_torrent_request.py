@@ -1,5 +1,6 @@
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({})
@@ -22,12 +23,12 @@ class CreateTorrentRequest(BaseModel):
 
     def __init__(
         self,
-        allow_zip: str = None,
-        as_queued: str = None,
-        file: bytes = None,
-        magnet: str = None,
-        name: str = None,
-        seed: str = None,
+        allow_zip: str = SENTINEL,
+        as_queued: str = SENTINEL,
+        file: bytes = SENTINEL,
+        magnet: str = SENTINEL,
+        name: str = SENTINEL,
+        seed: str = SENTINEL,
         **kwargs
     ):
         """CreateTorrentRequest
@@ -45,16 +46,16 @@ class CreateTorrentRequest(BaseModel):
         :param seed: Tells TorBox your preference for seeding this torrent. 1 is auto. 2 is seed. 3 is don't seed. Optional. Default is 1, or whatever the user has in their settings. Overwrites option in settings., defaults to None
         :type seed: str, optional
         """
-        if allow_zip is not None:
+        if allow_zip is not SENTINEL:
             self.allow_zip = allow_zip
-        if as_queued is not None:
+        if as_queued is not SENTINEL:
             self.as_queued = as_queued
-        if file is not None:
+        if file is not SENTINEL:
             self.file = file
-        if magnet is not None:
+        if magnet is not SENTINEL:
             self.magnet = magnet
-        if name is not None:
+        if name is not SENTINEL:
             self.name = name
-        if seed is not None:
+        if seed is not SENTINEL:
             self.seed = seed
         self._kwargs = kwargs

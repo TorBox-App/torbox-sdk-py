@@ -1,6 +1,8 @@
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
+from ..net.environment.environment import Environment
+from ..models.utils.sentinel import SENTINEL
 from ..models.utils.cast_models import cast_models
 from ..models import AddReferralToAccountOkResponse, GetUserDataOkResponse
 
@@ -30,8 +32,8 @@ class UserService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/user/refreshtoken",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/user/refreshtoken",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -43,7 +45,7 @@ class UserService(BaseService):
 
     @cast_models
     def get_user_data(
-        self, api_version: str, settings: str = None
+        self, api_version: str, settings: str = SENTINEL
     ) -> GetUserDataOkResponse:
         """### Overview
 
@@ -79,8 +81,8 @@ class UserService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/user/me",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/user/me",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("settings", settings)
@@ -93,7 +95,7 @@ class UserService(BaseService):
 
     @cast_models
     def add_referral_to_account(
-        self, api_version: str, referral: str = None
+        self, api_version: str, referral: str = SENTINEL
     ) -> AddReferralToAccountOkResponse:
         """### Overview
 
@@ -121,8 +123,8 @@ class UserService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/user/addreferral",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/user/addreferral",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("referral", referral)
@@ -154,8 +156,8 @@ class UserService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/user/getconfirmation",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/user/getconfirmation",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()

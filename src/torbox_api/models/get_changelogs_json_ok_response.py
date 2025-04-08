@@ -6,62 +6,69 @@ from .utils.sentinel import SENTINEL
 
 
 @JsonMap({"id_": "id"})
-class GetNotificationFeedOkResponseData(BaseModel):
-    """GetNotificationFeedOkResponseData
+class GetChangelogsJsonOkResponseData(BaseModel):
+    """GetChangelogsJsonOkResponseData
 
-    :param auth_id: auth_id, defaults to None
-    :type auth_id: str, optional
     :param created_at: created_at, defaults to None
     :type created_at: str, optional
+    :param html: html, defaults to None
+    :type html: str, optional
     :param id_: id_, defaults to None
-    :type id_: float, optional
-    :param message: message, defaults to None
-    :type message: str, optional
-    :param title: title, defaults to None
-    :type title: str, optional
+    :type id_: str, optional
+    :param link: link, defaults to None
+    :type link: str, optional
+    :param markdown: markdown, defaults to None
+    :type markdown: str, optional
+    :param name: name, defaults to None
+    :type name: str, optional
     """
 
     def __init__(
         self,
-        auth_id: str = SENTINEL,
         created_at: str = SENTINEL,
-        id_: float = SENTINEL,
-        message: str = SENTINEL,
-        title: str = SENTINEL,
+        html: str = SENTINEL,
+        id_: str = SENTINEL,
+        link: str = SENTINEL,
+        markdown: str = SENTINEL,
+        name: str = SENTINEL,
         **kwargs
     ):
-        """GetNotificationFeedOkResponseData
+        """GetChangelogsJsonOkResponseData
 
-        :param auth_id: auth_id, defaults to None
-        :type auth_id: str, optional
         :param created_at: created_at, defaults to None
         :type created_at: str, optional
+        :param html: html, defaults to None
+        :type html: str, optional
         :param id_: id_, defaults to None
-        :type id_: float, optional
-        :param message: message, defaults to None
-        :type message: str, optional
-        :param title: title, defaults to None
-        :type title: str, optional
+        :type id_: str, optional
+        :param link: link, defaults to None
+        :type link: str, optional
+        :param markdown: markdown, defaults to None
+        :type markdown: str, optional
+        :param name: name, defaults to None
+        :type name: str, optional
         """
-        if auth_id is not SENTINEL:
-            self.auth_id = auth_id
         if created_at is not SENTINEL:
             self.created_at = created_at
+        if html is not SENTINEL:
+            self.html = html
         if id_ is not SENTINEL:
             self.id_ = id_
-        if message is not SENTINEL:
-            self.message = message
-        if title is not SENTINEL:
-            self.title = title
+        if link is not SENTINEL:
+            self.link = link
+        if markdown is not SENTINEL:
+            self.markdown = markdown
+        if name is not SENTINEL:
+            self.name = name
         self._kwargs = kwargs
 
 
 @JsonMap({})
-class GetNotificationFeedOkResponse(BaseModel):
-    """GetNotificationFeedOkResponse
+class GetChangelogsJsonOkResponse(BaseModel):
+    """GetChangelogsJsonOkResponse
 
     :param data: data, defaults to None
-    :type data: List[GetNotificationFeedOkResponseData], optional
+    :type data: List[GetChangelogsJsonOkResponseData], optional
     :param detail: detail, defaults to None
     :type detail: str, optional
     :param error: error, defaults to None
@@ -72,16 +79,16 @@ class GetNotificationFeedOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: List[GetNotificationFeedOkResponseData] = SENTINEL,
+        data: List[GetChangelogsJsonOkResponseData] = SENTINEL,
         detail: str = SENTINEL,
         error: Union[any, None] = SENTINEL,
         success: bool = SENTINEL,
         **kwargs
     ):
-        """GetNotificationFeedOkResponse
+        """GetChangelogsJsonOkResponse
 
         :param data: data, defaults to None
-        :type data: List[GetNotificationFeedOkResponseData], optional
+        :type data: List[GetChangelogsJsonOkResponseData], optional
         :param detail: detail, defaults to None
         :type detail: str, optional
         :param error: error, defaults to None
@@ -90,7 +97,7 @@ class GetNotificationFeedOkResponse(BaseModel):
         :type success: bool, optional
         """
         if data is not SENTINEL:
-            self.data = self._define_list(data, GetNotificationFeedOkResponseData)
+            self.data = self._define_list(data, GetChangelogsJsonOkResponseData)
         if detail is not SENTINEL:
             self.detail = detail
         if error is not SENTINEL:

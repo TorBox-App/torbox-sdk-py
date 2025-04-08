@@ -1,6 +1,8 @@
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
+from ..net.environment.environment import Environment
+from ..models.utils.sentinel import SENTINEL
 from ..models.utils.cast_models import cast_models
 from ..models import (
     CreateWebDownloadOkResponse,
@@ -40,8 +42,8 @@ class WebDownloadsDebridService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/webdl/createwebdownload",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/webdl/createwebdownload",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -57,8 +59,8 @@ class WebDownloadsDebridService(BaseService):
         self,
         api_version: str,
         request_body: any = None,
-        bypass_cache: str = None,
-        id_: str = None,
+        bypass_cache: str = SENTINEL,
+        id_: str = SENTINEL,
     ) -> None:
         """### Overview
 
@@ -92,8 +94,8 @@ class WebDownloadsDebridService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/webdl/controlwebdownload",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/webdl/controlwebdownload",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("bypass_cache", bypass_cache)
@@ -109,16 +111,21 @@ class WebDownloadsDebridService(BaseService):
     def request_download_link2(
         self,
         api_version: str,
-        token: str = None,
-        web_id: str = None,
-        file_id: str = None,
-        zip_link: str = None,
-        torrent_file: str = None,
-        user_ip: str = None,
+        token: str = SENTINEL,
+        web_id: str = SENTINEL,
+        file_id: str = SENTINEL,
+        zip_link: str = SENTINEL,
+        torrent_file: str = SENTINEL,
+        user_ip: str = SENTINEL,
+        redirect: str = SENTINEL,
     ) -> None:
         """### Overview
 
-        Requests the download link from the server. Because downloads are metered, TorBox cannot afford to allow free access to the links directly. This endpoint opens the link for 1 hour for downloads. Once a download is started, the user has nearly unlilimited time to download the file. The 1 hour time limit is simply for starting downloads. This prevents long term link sharing.
+        Requests the download link from the server. Because downloads are metered, TorBox cannot afford to allow free access to the links directly. This endpoint opens the link for 3 hours for downloads. Once a download is started, the user has nearly unlilimited time to download the file. The 1 hour time limit is simply for starting downloads. This prevents long term link sharing.
+
+        ### Permalinks
+
+        Instead of generating many CDN urls by requesting this endpoint, you can instead create a permalink such as: `https://api.torbox.app/v1/api/torrents/requestdl?token=APIKEY&torrent_id=NUMBER&file_id=NUMBER&redirect=true` and when a user clicks on it, it will automatically redirect them to the CDN link. This saves requests and doesn't abuse the API. Use this method rather than saving CDN links as they are not permanent. To invalidate these permalinks, simply reset your API token or delete the item from your dashboard.
 
         ### Authorization
 
@@ -138,6 +145,8 @@ class WebDownloadsDebridService(BaseService):
         :type torrent_file: str, optional
         :param user_ip: The user's IP to determine the closest CDN. Optional., defaults to None
         :type user_ip: str, optional
+        :param redirect: If you want to redirect the user to the CDN link. This is useful for creating permalinks so that you can just make this request URL the link., defaults to None
+        :type redirect: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -150,11 +159,12 @@ class WebDownloadsDebridService(BaseService):
         Validator(str).is_optional().validate(zip_link)
         Validator(str).is_optional().validate(torrent_file)
         Validator(str).is_optional().validate(user_ip)
+        Validator(str).is_optional().validate(redirect)
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/webdl/requestdl",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/webdl/requestdl",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("token", token)
@@ -163,6 +173,7 @@ class WebDownloadsDebridService(BaseService):
             .add_query("zip_link", zip_link)
             .add_query("torrent_file", torrent_file)
             .add_query("user_ip", user_ip)
+            .add_query("redirect", redirect)
             .serialize()
             .set_method("GET")
         )
@@ -173,10 +184,10 @@ class WebDownloadsDebridService(BaseService):
     def get_web_download_list(
         self,
         api_version: str,
-        bypass_cache: str = None,
-        id_: str = None,
-        offset: str = None,
-        limit: str = None,
+        bypass_cache: str = SENTINEL,
+        id_: str = SENTINEL,
+        offset: str = SENTINEL,
+        limit: str = SENTINEL,
     ) -> GetWebDownloadListOkResponse:
         """### Overview
 
@@ -211,8 +222,8 @@ class WebDownloadsDebridService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/webdl/mylist",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/webdl/mylist",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("bypass_cache", bypass_cache)
@@ -228,7 +239,7 @@ class WebDownloadsDebridService(BaseService):
 
     @cast_models
     def get_web_download_cached_availability(
-        self, api_version: str, hash: str = None, format: str = None
+        self, api_version: str, hash: str = SENTINEL, format: str = SENTINEL
     ) -> None:
         """### Overview
 
@@ -263,8 +274,8 @@ class WebDownloadsDebridService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/webdl/checkcached",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/webdl/checkcached",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("hash", hash)
@@ -281,32 +292,32 @@ class WebDownloadsDebridService(BaseService):
 
         A dynamic list of hosters that TorBox is capable of downloading through its paid service.
 
-        - Name - a clean name for display use, the well known name of the service, should be recognizable to users.
+        - **Name** - a clean name for display use, the well known name of the service, should be recognizable to users.
 
-        - Domains - an array of known domains that the hoster uses. While each may serve a different purpose it is still included.
+        - **Domains** - an array of known domains that the hoster uses. While each may serve a different purpose it is still included.
 
-        - URL - the main url of the service. This should take you to the home page or a service page of the hoster.
+        - **URL** - the main url of the service. This should take you to the home page or a service page of the hoster.
 
-        - Icon - a square image, usually a favicon or logo, that represents the service, should be recognizable as the hoster's icon.
+        - **Icon** - a square image, usually a favicon or logo, that represents the service, should be recognizable as the hoster's icon.
 
-        - Status - whether this hoster can be used on TorBox or not at the current time. It is usually a good idea to check this value before submitting a download to TorBox's servers for download.
+        - **Status** - whether this hoster can be used on TorBox or not at the current time. It is usually a good idea to check this value before submitting a download to TorBox's servers for download.
 
-        - Type - values are either "hoster" or "stream". Both do the same thing, but is good to differentiate services used for different things.
+        - **Type** - values are either "hoster" or "stream". Both do the same thing, but is good to differentiate services used for different things.
 
-        - Note - a string value (or null) that may give helpful information about the current status or state of a hoster. This can and should be shown to end users.
+        - **Note** - a string value (or null) that may give helpful information about the current status or state of a hoster. This can and should be shown to end users.
 
-        - Daily Link Limit - the number of downloads a user can use per day. As a user submits links, once they hit this number, the API will deny them from adding anymore of this type of link. A zero value means that it is unlimited.
+        - **Daily Link Limit** - the number of downloads a user can use per day. As a user submits links, once they hit this number, the API will deny them from adding anymore of this type of link. A zero value means that it is unlimited.
 
-        - Daily Link Used - the number of downloads a user has already used. This endpoint currently doesn't update this value.
+        - **Daily Link Used** - the number of downloads a user has already used. Usually zero unless you send authentication to the endpoint. This will return accurate values.
 
-        - Daily Bandwidth Limit - the value in bytes that a user is allowed to download from this hoster. A zero value means that it is unlimited. This endpoint doesn't currently implement this limit. It is recommended to use the Daily Link Limit instead.
+        - **Daily Bandwidth Limit** - the value in bytes that a user is allowed to download from this hoster. A zero value means that it is unlimited. It is recommended to use the Daily Link Limit instead.
 
-        - Daily Bandwdith Used - the value in btes that a user has already used to download from this hoster. This endpoint currently doesn't update this value.
+        - **Daily Bandwidth Used** - the value in bytes that a user has already used to download from this hoster. Usually zero unless you send authentication to the endpoint. This will return accurate values.
 
 
         ### Authorization
 
-        Requires an API key using the Authorization Bearer Header.
+        Optional authorization. Authorization is not required in this endpoint unless you want to get the user's live data. Requires an API key using the Authorization Bearer Header to get the live and accurate data for **Daily Link Used** and **Daily Bandwidth Used**.
 
         :param api_version: api_version
         :type api_version: str
@@ -321,8 +332,8 @@ class WebDownloadsDebridService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/webdl/hosters",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/webdl/hosters",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()

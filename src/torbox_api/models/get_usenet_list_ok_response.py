@@ -1,6 +1,8 @@
 from typing import List
+from typing import Union
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({"id_": "id"})
@@ -25,13 +27,13 @@ class DataFiles3(BaseModel):
 
     def __init__(
         self,
-        id_: float = None,
-        md5: str = None,
-        mimetype: str = None,
-        name: str = None,
-        s3_path: str = None,
-        short_name: str = None,
-        size: float = None,
+        id_: float = SENTINEL,
+        md5: str = SENTINEL,
+        mimetype: str = SENTINEL,
+        name: str = SENTINEL,
+        s3_path: str = SENTINEL,
+        short_name: str = SENTINEL,
+        size: float = SENTINEL,
         **kwargs
     ):
         """DataFiles3
@@ -51,19 +53,19 @@ class DataFiles3(BaseModel):
         :param size: size, defaults to None
         :type size: float, optional
         """
-        if id_ is not None:
+        if id_ is not SENTINEL:
             self.id_ = id_
-        if md5 is not None:
+        if md5 is not SENTINEL:
             self.md5 = md5
-        if mimetype is not None:
+        if mimetype is not SENTINEL:
             self.mimetype = mimetype
-        if name is not None:
+        if name is not SENTINEL:
             self.name = name
-        if s3_path is not None:
+        if s3_path is not SENTINEL:
             self.s3_path = s3_path
-        if short_name is not None:
+        if short_name is not SENTINEL:
             self.short_name = short_name
-        if size is not None:
+        if size is not SENTINEL:
             self.size = size
         self._kwargs = kwargs
 
@@ -118,27 +120,27 @@ class GetUsenetListOkResponseData(BaseModel):
 
     def __init__(
         self,
-        active: bool = None,
-        auth_id: str = None,
-        availability: float = None,
-        created_at: str = None,
-        download_finished: bool = None,
-        download_present: bool = None,
-        download_speed: float = None,
-        download_state: str = None,
-        eta: float = None,
-        expires_at: str = None,
-        files: List[DataFiles3] = None,
-        hash: str = None,
-        id_: float = None,
-        inactive_check: float = None,
-        name: str = None,
-        progress: float = None,
-        server: float = None,
-        size: float = None,
-        torrent_file: bool = None,
-        updated_at: str = None,
-        upload_speed: float = None,
+        active: bool = SENTINEL,
+        auth_id: str = SENTINEL,
+        availability: float = SENTINEL,
+        created_at: str = SENTINEL,
+        download_finished: bool = SENTINEL,
+        download_present: bool = SENTINEL,
+        download_speed: float = SENTINEL,
+        download_state: str = SENTINEL,
+        eta: float = SENTINEL,
+        expires_at: str = SENTINEL,
+        files: List[DataFiles3] = SENTINEL,
+        hash: str = SENTINEL,
+        id_: float = SENTINEL,
+        inactive_check: float = SENTINEL,
+        name: str = SENTINEL,
+        progress: float = SENTINEL,
+        server: float = SENTINEL,
+        size: float = SENTINEL,
+        torrent_file: bool = SENTINEL,
+        updated_at: str = SENTINEL,
+        upload_speed: float = SENTINEL,
         **kwargs
     ):
         """GetUsenetListOkResponseData
@@ -186,47 +188,47 @@ class GetUsenetListOkResponseData(BaseModel):
         :param upload_speed: upload_speed, defaults to None
         :type upload_speed: float, optional
         """
-        if active is not None:
+        if active is not SENTINEL:
             self.active = active
-        if auth_id is not None:
+        if auth_id is not SENTINEL:
             self.auth_id = auth_id
-        if availability is not None:
+        if availability is not SENTINEL:
             self.availability = availability
-        if created_at is not None:
+        if created_at is not SENTINEL:
             self.created_at = created_at
-        if download_finished is not None:
+        if download_finished is not SENTINEL:
             self.download_finished = download_finished
-        if download_present is not None:
+        if download_present is not SENTINEL:
             self.download_present = download_present
-        if download_speed is not None:
+        if download_speed is not SENTINEL:
             self.download_speed = download_speed
-        if download_state is not None:
+        if download_state is not SENTINEL:
             self.download_state = download_state
-        if eta is not None:
+        if eta is not SENTINEL:
             self.eta = eta
-        if expires_at is not None:
+        if expires_at is not SENTINEL:
             self.expires_at = expires_at
-        if files is not None:
+        if files is not SENTINEL:
             self.files = self._define_list(files, DataFiles3)
-        if hash is not None:
+        if hash is not SENTINEL:
             self.hash = hash
-        if id_ is not None:
+        if id_ is not SENTINEL:
             self.id_ = id_
-        if inactive_check is not None:
+        if inactive_check is not SENTINEL:
             self.inactive_check = inactive_check
-        if name is not None:
+        if name is not SENTINEL:
             self.name = name
-        if progress is not None:
+        if progress is not SENTINEL:
             self.progress = progress
-        if server is not None:
+        if server is not SENTINEL:
             self.server = server
-        if size is not None:
+        if size is not SENTINEL:
             self.size = size
-        if torrent_file is not None:
+        if torrent_file is not SENTINEL:
             self.torrent_file = torrent_file
-        if updated_at is not None:
+        if updated_at is not SENTINEL:
             self.updated_at = updated_at
-        if upload_speed is not None:
+        if upload_speed is not SENTINEL:
             self.upload_speed = upload_speed
         self._kwargs = kwargs
 
@@ -247,10 +249,10 @@ class GetUsenetListOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: List[GetUsenetListOkResponseData] = None,
-        detail: str = None,
-        error: any = None,
-        success: bool = None,
+        data: List[GetUsenetListOkResponseData] = SENTINEL,
+        detail: str = SENTINEL,
+        error: Union[any, None] = SENTINEL,
+        success: bool = SENTINEL,
         **kwargs
     ):
         """GetUsenetListOkResponse
@@ -264,12 +266,12 @@ class GetUsenetListOkResponse(BaseModel):
         :param success: success, defaults to None
         :type success: bool, optional
         """
-        if data is not None:
+        if data is not SENTINEL:
             self.data = self._define_list(data, GetUsenetListOkResponseData)
-        if detail is not None:
+        if detail is not SENTINEL:
             self.detail = detail
-        if error is not None:
+        if error is not SENTINEL:
             self.error = error
-        if success is not None:
+        if success is not SENTINEL:
             self.success = success
         self._kwargs = kwargs

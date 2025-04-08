@@ -1,6 +1,8 @@
 from .utils.validator import Validator
 from .utils.base_service import BaseService
 from ..net.transport.serializer import Serializer
+from ..net.environment.environment import Environment
+from ..models.utils.sentinel import SENTINEL
 from ..models.utils.cast_models import cast_models
 
 
@@ -29,8 +31,8 @@ class RssFeedsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/rss/addrss",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/rss/addrss",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -71,8 +73,8 @@ class RssFeedsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/rss/controlrss",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/rss/controlrss",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -107,8 +109,8 @@ class RssFeedsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/rss/modifyrss",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/rss/modifyrss",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .serialize()
@@ -119,7 +121,7 @@ class RssFeedsService(BaseService):
         self.send_request(serialized_request)
 
     @cast_models
-    def get_user_rss_feeds(self, api_version: str, id_: str = None) -> None:
+    def get_user_rss_feeds(self, api_version: str, id_: str = SENTINEL) -> None:
         """### Overview
 
         Gets all of a user's RSS feeds located on their account. Can only be accessed on a Pro (plan: 2) account. Also allows you to get a specific by passing an "id" in the parameters.
@@ -182,8 +184,8 @@ class RssFeedsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/rss/getfeeds",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/rss/getfeeds",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("id", id_)
@@ -194,7 +196,7 @@ class RssFeedsService(BaseService):
         self.send_request(serialized_request)
 
     @cast_models
-    def get_rss_feed_items(self, api_version: str, rss_feed_id: str = None) -> None:
+    def get_rss_feed_items(self, api_version: str, rss_feed_id: str = SENTINEL) -> None:
         """### Overview
 
         Gets the first 10,000 RSS feed items associated with an RSS feed. RSS feed items are scraped items from the RSS feed. They contain a direct download link as well as the content name, and additional information.
@@ -236,8 +238,8 @@ class RssFeedsService(BaseService):
 
         serialized_request = (
             Serializer(
-                f"{self.base_url}/{{api_version}}/api/rss/getfeeditems",
-                self.get_default_headers(),
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/rss/getfeeditems",
+                [self.get_access_token()],
             )
             .add_path("api_version", api_version)
             .add_query("rss_feed_id", rss_feed_id)

@@ -1,6 +1,8 @@
 from typing import List
+from typing import Union
 from .utils.json_map import JsonMap
 from .utils.base_model import BaseModel
+from .utils.sentinel import SENTINEL
 
 
 @JsonMap({"type_": "type"})
@@ -39,20 +41,20 @@ class GetHosterListOkResponseData(BaseModel):
 
     def __init__(
         self,
-        daily_bandwidth_limit: float = None,
-        daily_bandwidth_used: float = None,
-        daily_link_limit: float = None,
-        daily_link_used: float = None,
-        domains: List[str] = None,
-        domais: List[str] = None,
-        domaisn: List[str] = None,
-        icon: str = None,
-        limit: float = None,
-        name: str = None,
-        note: str = None,
-        status: bool = None,
-        type_: str = None,
-        url: str = None,
+        daily_bandwidth_limit: float = SENTINEL,
+        daily_bandwidth_used: float = SENTINEL,
+        daily_link_limit: float = SENTINEL,
+        daily_link_used: float = SENTINEL,
+        domains: List[str] = SENTINEL,
+        domais: List[str] = SENTINEL,
+        domaisn: List[str] = SENTINEL,
+        icon: str = SENTINEL,
+        limit: float = SENTINEL,
+        name: str = SENTINEL,
+        note: Union[str, None] = SENTINEL,
+        status: bool = SENTINEL,
+        type_: str = SENTINEL,
+        url: str = SENTINEL,
         **kwargs
     ):
         """GetHosterListOkResponseData
@@ -86,33 +88,33 @@ class GetHosterListOkResponseData(BaseModel):
         :param url: url, defaults to None
         :type url: str, optional
         """
-        if daily_bandwidth_limit is not None:
+        if daily_bandwidth_limit is not SENTINEL:
             self.daily_bandwidth_limit = daily_bandwidth_limit
-        if daily_bandwidth_used is not None:
+        if daily_bandwidth_used is not SENTINEL:
             self.daily_bandwidth_used = daily_bandwidth_used
-        if daily_link_limit is not None:
+        if daily_link_limit is not SENTINEL:
             self.daily_link_limit = daily_link_limit
-        if daily_link_used is not None:
+        if daily_link_used is not SENTINEL:
             self.daily_link_used = daily_link_used
-        if domains is not None:
+        if domains is not SENTINEL:
             self.domains = domains
-        if domais is not None:
+        if domais is not SENTINEL:
             self.domais = domais
-        if domaisn is not None:
+        if domaisn is not SENTINEL:
             self.domaisn = domaisn
-        if icon is not None:
+        if icon is not SENTINEL:
             self.icon = icon
-        if limit is not None:
+        if limit is not SENTINEL:
             self.limit = limit
-        if name is not None:
+        if name is not SENTINEL:
             self.name = name
-        if note is not None:
+        if note is not SENTINEL:
             self.note = self._define_str("note", note, nullable=True)
-        if status is not None:
+        if status is not SENTINEL:
             self.status = status
-        if type_ is not None:
+        if type_ is not SENTINEL:
             self.type_ = type_
-        if url is not None:
+        if url is not SENTINEL:
             self.url = url
         self._kwargs = kwargs
 
@@ -133,10 +135,10 @@ class GetHosterListOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: List[GetHosterListOkResponseData] = None,
-        detail: str = None,
-        error: any = None,
-        success: bool = None,
+        data: List[GetHosterListOkResponseData] = SENTINEL,
+        detail: str = SENTINEL,
+        error: Union[any, None] = SENTINEL,
+        success: bool = SENTINEL,
         **kwargs
     ):
         """GetHosterListOkResponse
@@ -150,12 +152,12 @@ class GetHosterListOkResponse(BaseModel):
         :param success: success, defaults to None
         :type success: bool, optional
         """
-        if data is not None:
+        if data is not SENTINEL:
             self.data = self._define_list(data, GetHosterListOkResponseData)
-        if detail is not None:
+        if detail is not SENTINEL:
             self.detail = detail
-        if error is not None:
+        if error is not SENTINEL:
             self.error = error
-        if success is not None:
+        if success is not SENTINEL:
             self.success = success
         self._kwargs = kwargs

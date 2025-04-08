@@ -1,4 +1,5 @@
 from enum import Enum
+from .sentinel import was_value_set
 
 
 class JsonMap:
@@ -45,7 +46,7 @@ class JsonMap:
             result_dict = {}
 
             for key, value in attribute_dict.items():
-                if key == "_kwargs":
+                if key == "_kwargs" or not was_value_set(value):
                     continue
                 if isinstance(value, list):
                     value = [v._map() if hasattr(v, "_map") else v for v in value]
@@ -70,6 +71,7 @@ class JsonMap:
             """
             reversed_map = {v: k for k, v in cls.__json_mapping.items()}
             mapped_attributes = {}
+
             for key, value in mapped_data.items():
                 mapped_key = reversed_map.get(key, key)
                 mapped_attributes[mapped_key] = value

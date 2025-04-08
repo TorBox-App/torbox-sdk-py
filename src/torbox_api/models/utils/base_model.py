@@ -3,6 +3,7 @@ import operator
 from typing import List, Union, Type, Any, TypeVar, Optional
 from enum import Enum
 from .one_of_base_model import OneOfBaseModel
+from .sentinel import SENTINEL
 
 T = TypeVar("T")
 
@@ -25,7 +26,7 @@ class BaseModel:
         :return: The input data if it is an instance of input_class, otherwise an instance of input_class.
         :rtype: object
         """
-        if input_data is None:
+        if input_data is None or input_data is SENTINEL:
             return None
         elif isinstance(input_data, input_class):
             return input_data
@@ -43,7 +44,7 @@ class BaseModel:
         :rtype: list
         """
 
-        if input_data is None:
+        if input_data is None or input_data is SENTINEL:
             return None
 
         result: List[T] = []
@@ -99,7 +100,7 @@ class BaseModel:
         """
         if value is None and not nullable:
             raise ValueError(f"{variable_name} cannot be null.")
-        if value is None:
+        if value is None or value is SENTINEL:
             return None
 
         if pattern:
@@ -152,7 +153,7 @@ class BaseModel:
         if value is None and not nullable:
             raise ValueError(f"{variable_name} cannot be null.")
 
-        if value is None:
+        if value is None or value is SENTINEL:
             return None
 
         if ge is not None:
