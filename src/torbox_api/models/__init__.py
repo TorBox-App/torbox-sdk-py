@@ -18,6 +18,11 @@ from .get_torrent_info_ok_response import (
     GetTorrentInfoOkResponse,
     GetTorrentInfoOkResponseData,
 )
+from .get_torrent_info1_request import GetTorrentInfo1Request
+from .get_torrent_info1_ok_response import (
+    GetTorrentInfo1OkResponse,
+    GetTorrentInfo1OkResponseData,
+)
 from .create_usenet_download_request import CreateUsenetDownloadRequest
 from .create_usenet_download_ok_response import (
     CreateUsenetDownloadOkResponse,

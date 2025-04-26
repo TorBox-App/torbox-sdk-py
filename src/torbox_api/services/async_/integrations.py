@@ -17,6 +17,11 @@ class IntegrationsServiceAsync(IntegrationsService):
     ) -> Awaitable[None]:
         return to_async(super().queue_google_drive)(api_version, request_body)
 
+    def queue_pixeldrain(
+        self, api_version: str, request_body: any = None
+    ) -> Awaitable[None]:
+        return to_async(super().queue_pixeldrain)(api_version, request_body)
+
     def queue_onedrive(
         self, api_version: str, request_body: any = None
     ) -> Awaitable[None]:

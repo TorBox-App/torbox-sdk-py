@@ -26,7 +26,7 @@
 | error             | str              | ❌       |             |
 | eta               | float            | ❌       |             |
 | expires_at        | str              | ❌       |             |
-| files             | List[DataFiles4] | ❌       |             |
+| files             | List[DataFiles5] | ❌       |             |
 | hash              | str              | ❌       |             |
 | id\_              | float            | ❌       |             |
 | inactive_check    | float            | ❌       |             |
@@ -38,7 +38,7 @@
 | updated_at        | str              | ❌       |             |
 | upload_speed      | float            | ❌       |             |
 
-# DataFiles_4
+# DataFiles_5
 
 **Properties**
 

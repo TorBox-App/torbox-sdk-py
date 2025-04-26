@@ -1,21 +1,21 @@
-# GetTorrentInfoOkResponse
+# GetTorrentInfo1OkResponse
 
 **Properties**
 
-| Name    | Type                         | Required | Description |
-| :------ | :--------------------------- | :------- | :---------- |
-| data    | GetTorrentInfoOkResponseData | ❌       |             |
-| detail  | str                          | ❌       |             |
-| error   | any                          | ❌       |             |
-| success | bool                         | ❌       |             |
+| Name    | Type                          | Required | Description |
+| :------ | :---------------------------- | :------- | :---------- |
+| data    | GetTorrentInfo1OkResponseData | ❌       |             |
+| detail  | str                           | ❌       |             |
+| error   | any                           | ❌       |             |
+| success | bool                          | ❌       |             |
 
-# GetTorrentInfoOkResponseData
+# GetTorrentInfo1OkResponseData
 
 **Properties**
 
 | Name     | Type             | Required | Description |
 | :------- | :--------------- | :------- | :---------- |
-| files    | List[DataFiles2] | ❌       |             |
+| files    | List[DataFiles3] | ❌       |             |
 | hash     | str              | ❌       |             |
 | name     | str              | ❌       |             |
 | peers    | float            | ❌       |             |
@@ -23,7 +23,7 @@
 | size     | float            | ❌       |             |
 | trackers | List[any]        | ❌       |             |
 
-# DataFiles_2
+# DataFiles_3
 
 **Properties**
 

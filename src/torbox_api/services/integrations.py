@@ -89,6 +89,40 @@ class IntegrationsService(BaseService):
         self.send_request(serialized_request)
 
     @cast_models
+    def queue_pixeldrain(self, api_version: str, request_body: any = None) -> None:
+        """### Overview
+
+        Queues a job to upload the specified file or zip to Pixeldrain.
+
+        ### Authorization
+
+        Requires an API key using the Authorization Bearer Header.
+
+        :param request_body: The request body., defaults to None
+        :type request_body: any, optional
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        """
+
+        Validator(str).validate(api_version)
+
+        serialized_request = (
+            Serializer(
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/integration/pixeldrain",
+                [self.get_access_token()],
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("POST")
+            .set_body(request_body)
+        )
+
+        self.send_request(serialized_request)
+
+    @cast_models
     def queue_onedrive(self, api_version: str, request_body: any = None) -> None:
         """### Overview
 

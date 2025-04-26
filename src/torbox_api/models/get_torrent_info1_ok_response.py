@@ -6,8 +6,8 @@ from .utils.sentinel import SENTINEL
 
 
 @JsonMap({})
-class DataFiles2(BaseModel):
-    """DataFiles2
+class DataFiles3(BaseModel):
+    """DataFiles3
 
     :param name: name, defaults to None
     :type name: str, optional
@@ -16,7 +16,7 @@ class DataFiles2(BaseModel):
     """
 
     def __init__(self, name: str = SENTINEL, size: float = SENTINEL, **kwargs):
-        """DataFiles2
+        """DataFiles3
 
         :param name: name, defaults to None
         :type name: str, optional
@@ -31,11 +31,11 @@ class DataFiles2(BaseModel):
 
 
 @JsonMap({})
-class GetTorrentInfoOkResponseData(BaseModel):
-    """GetTorrentInfoOkResponseData
+class GetTorrentInfo1OkResponseData(BaseModel):
+    """GetTorrentInfo1OkResponseData
 
     :param files: files, defaults to None
-    :type files: List[DataFiles2], optional
+    :type files: List[DataFiles3], optional
     :param hash: hash, defaults to None
     :type hash: str, optional
     :param name: name, defaults to None
@@ -52,7 +52,7 @@ class GetTorrentInfoOkResponseData(BaseModel):
 
     def __init__(
         self,
-        files: List[DataFiles2] = SENTINEL,
+        files: List[DataFiles3] = SENTINEL,
         hash: str = SENTINEL,
         name: str = SENTINEL,
         peers: float = SENTINEL,
@@ -61,10 +61,10 @@ class GetTorrentInfoOkResponseData(BaseModel):
         trackers: List[any] = SENTINEL,
         **kwargs
     ):
-        """GetTorrentInfoOkResponseData
+        """GetTorrentInfo1OkResponseData
 
         :param files: files, defaults to None
-        :type files: List[DataFiles2], optional
+        :type files: List[DataFiles3], optional
         :param hash: hash, defaults to None
         :type hash: str, optional
         :param name: name, defaults to None
@@ -79,7 +79,7 @@ class GetTorrentInfoOkResponseData(BaseModel):
         :type trackers: List[any], optional
         """
         if files is not SENTINEL:
-            self.files = self._define_list(files, DataFiles2)
+            self.files = self._define_list(files, DataFiles3)
         if hash is not SENTINEL:
             self.hash = hash
         if name is not SENTINEL:
@@ -96,11 +96,11 @@ class GetTorrentInfoOkResponseData(BaseModel):
 
 
 @JsonMap({})
-class GetTorrentInfoOkResponse(BaseModel):
-    """GetTorrentInfoOkResponse
+class GetTorrentInfo1OkResponse(BaseModel):
+    """GetTorrentInfo1OkResponse
 
     :param data: data, defaults to None
-    :type data: GetTorrentInfoOkResponseData, optional
+    :type data: GetTorrentInfo1OkResponseData, optional
     :param detail: detail, defaults to None
     :type detail: str, optional
     :param error: error, defaults to None
@@ -111,16 +111,16 @@ class GetTorrentInfoOkResponse(BaseModel):
 
     def __init__(
         self,
-        data: GetTorrentInfoOkResponseData = SENTINEL,
+        data: GetTorrentInfo1OkResponseData = SENTINEL,
         detail: str = SENTINEL,
         error: Union[any, None] = SENTINEL,
         success: bool = SENTINEL,
         **kwargs
     ):
-        """GetTorrentInfoOkResponse
+        """GetTorrentInfo1OkResponse
 
         :param data: data, defaults to None
-        :type data: GetTorrentInfoOkResponseData, optional
+        :type data: GetTorrentInfo1OkResponseData, optional
         :param detail: detail, defaults to None
         :type detail: str, optional
         :param error: error, defaults to None
@@ -129,7 +129,7 @@ class GetTorrentInfoOkResponse(BaseModel):
         :type success: bool, optional
         """
         if data is not SENTINEL:
-            self.data = self._define_object(data, GetTorrentInfoOkResponseData)
+            self.data = self._define_object(data, GetTorrentInfo1OkResponseData)
         if detail is not SENTINEL:
             self.detail = detail
         if error is not SENTINEL:

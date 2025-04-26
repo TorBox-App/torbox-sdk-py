@@ -100,16 +100,15 @@ print(result)
 
 **Parameters**
 
-| Name         | Type | Required | Description                                                                                                                                   |
-| :----------- | :--- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
-| api_version  | str  | ✅       |                                                                                                                                               |
-| token        | str  | ❌       | Your API Key                                                                                                                                  |
-| web_id       | str  | ❌       | The web download's ID that you want to download                                                                                               |
-| file_id      | str  | ❌       | The files's ID that you want to download                                                                                                      |
-| zip_link     | str  | ❌       | If you want a zip link. Required if no file_id. Takes precedence over file_id if both are given.                                              |
-| torrent_file | str  | ❌       | If you want a .torrent file to be downloaded. Does not work with the zip_link option. Optional.                                               |
-| user_ip      | str  | ❌       | The user's IP to determine the closest CDN. Optional.                                                                                         |
-| redirect     | str  | ❌       | If you want to redirect the user to the CDN link. This is useful for creating permalinks so that you can just make this request URL the link. |
+| Name        | Type | Required | Description                                                                                                                                   |
+| :---------- | :--- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| api_version | str  | ✅       |                                                                                                                                               |
+| token       | str  | ❌       | Your API Key                                                                                                                                  |
+| web_id      | str  | ❌       | The web download's ID that you want to download                                                                                               |
+| file_id     | str  | ❌       | The files's ID that you want to download                                                                                                      |
+| zip_link    | str  | ❌       | If you want a zip link. Required if no file_id. Takes precedence over file_id if both are given.                                              |
+| user_ip     | str  | ❌       | The user's IP to determine the closest CDN. Optional.                                                                                         |
+| redirect    | str  | ❌       | If you want to redirect the user to the CDN link. This is useful for creating permalinks so that you can just make this request URL the link. |
 
 **Example Usage Code Snippet**
 
@@ -127,7 +126,6 @@ result = sdk.web_downloads_debrid.request_download_link2(
     web_id="{{webdl_id}}",
     file_id="{{usenet_file_id}}",
     zip_link="boolean",
-    torrent_file="boolean",
     user_ip="string",
     redirect="boolean"
 )

@@ -38,19 +38,11 @@ class WebDownloadsDebridServiceAsync(WebDownloadsDebridService):
         web_id: str = SENTINEL,
         file_id: str = SENTINEL,
         zip_link: str = SENTINEL,
-        torrent_file: str = SENTINEL,
         user_ip: str = SENTINEL,
         redirect: str = SENTINEL,
     ) -> Awaitable[None]:
         return to_async(super().request_download_link2)(
-            api_version,
-            token,
-            web_id,
-            file_id,
-            zip_link,
-            torrent_file,
-            user_ip,
-            redirect,
+            api_version, token, web_id, file_id, zip_link, user_ip, redirect
         )
 
     def get_web_download_list(

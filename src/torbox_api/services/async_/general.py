@@ -1,6 +1,7 @@
 from typing import Awaitable
 from .utils.to_async import to_async
 from ..general import GeneralService
+from ...models.utils.sentinel import SENTINEL
 from ...models import (
     GetUpStatusOkResponse,
     GetStatsOkResponse,
@@ -26,3 +27,8 @@ class GeneralServiceAsync(GeneralService):
         self, api_version: str
     ) -> Awaitable[GetChangelogsJsonOkResponse]:
         return to_async(super().get_changelogs_json)(api_version)
+
+    def get_speedtest_files(
+        self, api_version: str, test_length: str = SENTINEL, region: str = SENTINEL
+    ) -> Awaitable[None]:
+        return to_async(super().get_speedtest_files)(api_version, test_length, region)

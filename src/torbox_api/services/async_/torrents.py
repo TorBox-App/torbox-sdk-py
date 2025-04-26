@@ -11,6 +11,8 @@ from ...models import (
     GetTorrentCachedAvailabilityOkResponse,
     ExportTorrentDataOkResponse,
     GetTorrentInfoOkResponse,
+    GetTorrentInfo1OkResponse,
+    GetTorrentInfo1Request,
 )
 
 
@@ -36,19 +38,11 @@ class TorrentsServiceAsync(TorrentsService):
         torrent_id: str = SENTINEL,
         file_id: str = SENTINEL,
         zip_link: str = SENTINEL,
-        torrent_file: str = SENTINEL,
         user_ip: str = SENTINEL,
         redirect: str = SENTINEL,
     ) -> Awaitable[RequestDownloadLinkOkResponse]:
         return to_async(super().request_download_link)(
-            api_version,
-            token,
-            torrent_id,
-            file_id,
-            zip_link,
-            torrent_file,
-            user_ip,
-            redirect,
+            api_version, token, torrent_id, file_id, zip_link, user_ip, redirect
         )
 
     def get_torrent_list(
@@ -83,3 +77,8 @@ class TorrentsServiceAsync(TorrentsService):
         self, api_version: str, hash: str = SENTINEL, timeout: str = SENTINEL
     ) -> Awaitable[GetTorrentInfoOkResponse]:
         return to_async(super().get_torrent_info)(api_version, hash, timeout)
+
+    def get_torrent_info1(
+        self, api_version: str, request_body: GetTorrentInfo1Request = None
+    ) -> Awaitable[GetTorrentInfo1OkResponse]:
+        return to_async(super().get_torrent_info1)(api_version, request_body)

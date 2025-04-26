@@ -121,7 +121,6 @@ class UsenetService(BaseService):
         usenet_id: str = SENTINEL,
         file_id: str = SENTINEL,
         zip_link: str = SENTINEL,
-        torrent_file: str = SENTINEL,
         user_ip: str = SENTINEL,
         redirect: str = SENTINEL,
     ) -> None:
@@ -147,8 +146,6 @@ class UsenetService(BaseService):
         :type file_id: str, optional
         :param zip_link: If you want a zip link. Required if no file_id. Takes precedence over file_id if both are given., defaults to None
         :type zip_link: str, optional
-        :param torrent_file: If you want a .torrent file to be downloaded. Does not work with the zip_link option. Optional., defaults to None
-        :type torrent_file: str, optional
         :param user_ip: The user's IP to determine the closest CDN. Optional., defaults to None
         :type user_ip: str, optional
         :param redirect: If you want to redirect the user to the CDN link. This is useful for creating permalinks so that you can just make this request URL the link., defaults to None
@@ -163,7 +160,6 @@ class UsenetService(BaseService):
         Validator(str).is_optional().validate(usenet_id)
         Validator(str).is_optional().validate(file_id)
         Validator(str).is_optional().validate(zip_link)
-        Validator(str).is_optional().validate(torrent_file)
         Validator(str).is_optional().validate(user_ip)
         Validator(str).is_optional().validate(redirect)
 
@@ -177,7 +173,6 @@ class UsenetService(BaseService):
             .add_query("usenet_id", usenet_id)
             .add_query("file_id", file_id)
             .add_query("zip_link", zip_link)
-            .add_query("torrent_file", torrent_file)
             .add_query("user_ip", user_ip)
             .add_query("redirect", redirect)
             .serialize()

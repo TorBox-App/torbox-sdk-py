@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 class Environment(Enum):
     """The environments available for the SDK"""
 
-    DEFAULT = "{{api_base}}"
+    DEFAULT = "https://api.torbox.app"
 
     def __new__(cls, url):
         parsed_url = urlparse(url)

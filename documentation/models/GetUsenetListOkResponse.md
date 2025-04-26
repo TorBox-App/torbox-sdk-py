@@ -25,7 +25,7 @@
 | download_state    | str              | ❌       |             |
 | eta               | float            | ❌       |             |
 | expires_at        | str              | ❌       |             |
-| files             | List[DataFiles3] | ❌       |             |
+| files             | List[DataFiles4] | ❌       |             |
 | hash              | str              | ❌       |             |
 | id\_              | float            | ❌       |             |
 | inactive_check    | float            | ❌       |             |
@@ -37,7 +37,7 @@
 | updated_at        | str              | ❌       |             |
 | upload_speed      | float            | ❌       |             |
 
-# DataFiles_3
+# DataFiles_4
 
 **Properties**
 

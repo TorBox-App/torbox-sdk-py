@@ -10,6 +10,8 @@ from ..models import (
     CreateTorrentRequest,
     ExportTorrentDataOkResponse,
     GetTorrentCachedAvailabilityOkResponse,
+    GetTorrentInfo1OkResponse,
+    GetTorrentInfo1Request,
     GetTorrentInfoOkResponse,
     GetTorrentListOkResponse,
     RequestDownloadLinkOkResponse,
@@ -115,7 +117,6 @@ class TorrentsService(BaseService):
         torrent_id: str = SENTINEL,
         file_id: str = SENTINEL,
         zip_link: str = SENTINEL,
-        torrent_file: str = SENTINEL,
         user_ip: str = SENTINEL,
         redirect: str = SENTINEL,
     ) -> RequestDownloadLinkOkResponse:
@@ -141,8 +142,6 @@ class TorrentsService(BaseService):
         :type file_id: str, optional
         :param zip_link: If you want a zip link. Required if no file_id. Takes precedence over file_id if both are given., defaults to None
         :type zip_link: str, optional
-        :param torrent_file: If you want a .torrent file to be downloaded. Does not work with the zip_link option. Optional., defaults to None
-        :type torrent_file: str, optional
         :param user_ip: The user's IP to determine the closest CDN. Optional., defaults to None
         :type user_ip: str, optional
         :param redirect: If you want to redirect the user to the CDN link. This is useful for creating permalinks so that you can just make this request URL the link., defaults to None
@@ -159,7 +158,6 @@ class TorrentsService(BaseService):
         Validator(str).is_optional().validate(torrent_id)
         Validator(str).is_optional().validate(file_id)
         Validator(str).is_optional().validate(zip_link)
-        Validator(str).is_optional().validate(torrent_file)
         Validator(str).is_optional().validate(user_ip)
         Validator(str).is_optional().validate(redirect)
 
@@ -173,7 +171,6 @@ class TorrentsService(BaseService):
             .add_query("torrent_id", torrent_id)
             .add_query("file_id", file_id)
             .add_query("zip_link", zip_link)
-            .add_query("torrent_file", torrent_file)
             .add_query("user_ip", user_ip)
             .add_query("redirect", redirect)
             .serialize()
@@ -406,3 +403,51 @@ class TorrentsService(BaseService):
 
         response, _, _ = self.send_request(serialized_request)
         return GetTorrentInfoOkResponse._unmap(response)
+
+    @cast_models
+    def get_torrent_info1(
+        self, api_version: str, request_body: GetTorrentInfo1Request = None
+    ) -> GetTorrentInfo1OkResponse:
+        """### Overview
+
+        Same as the GET route, but allows posting data such as magnet, and torrent files.
+
+        Hashes will have precedence over magnets, and magnets will have precedence over torrent files.
+
+        Only proper torrent files are accepted.
+
+        At least one of hash, magnet, or torrent file is required.
+
+        A general route that allows you to give a hash, and TorBox will return data about the torrent. This data is retrieved from the Bittorrent network, so expect it to take some time. If the request goes longer than 10 seconds, TorBox will cancel it. You can adjust this if you like, but the default is 10 seconds. This route is cached as well, so subsequent requests will be instant.
+
+        ### Authorization
+
+        None required.
+
+        :param request_body: The request body., defaults to None
+        :type request_body: GetTorrentInfo1Request, optional
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: GetTorrentInfo1OkResponse
+        """
+
+        Validator(GetTorrentInfo1Request).is_optional().validate(request_body)
+        Validator(str).validate(api_version)
+
+        serialized_request = (
+            Serializer(
+                f"{self.base_url or Environment.DEFAULT.url}/{{api_version}}/api/torrents/torrentinfo",
+                [self.get_access_token()],
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("POST")
+            .set_body(request_body, "multipart/form-data")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return GetTorrentInfo1OkResponse._unmap(response)

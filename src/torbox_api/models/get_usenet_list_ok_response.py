@@ -6,8 +6,8 @@ from .utils.sentinel import SENTINEL
 
 
 @JsonMap({"id_": "id"})
-class DataFiles3(BaseModel):
-    """DataFiles3
+class DataFiles4(BaseModel):
+    """DataFiles4
 
     :param id_: id_, defaults to None
     :type id_: float, optional
@@ -36,7 +36,7 @@ class DataFiles3(BaseModel):
         size: float = SENTINEL,
         **kwargs
     ):
-        """DataFiles3
+        """DataFiles4
 
         :param id_: id_, defaults to None
         :type id_: float, optional
@@ -95,7 +95,7 @@ class GetUsenetListOkResponseData(BaseModel):
     :param expires_at: expires_at, defaults to None
     :type expires_at: str, optional
     :param files: files, defaults to None
-    :type files: List[DataFiles3], optional
+    :type files: List[DataFiles4], optional
     :param hash: hash, defaults to None
     :type hash: str, optional
     :param id_: id_, defaults to None
@@ -130,7 +130,7 @@ class GetUsenetListOkResponseData(BaseModel):
         download_state: str = SENTINEL,
         eta: float = SENTINEL,
         expires_at: str = SENTINEL,
-        files: List[DataFiles3] = SENTINEL,
+        files: List[DataFiles4] = SENTINEL,
         hash: str = SENTINEL,
         id_: float = SENTINEL,
         inactive_check: float = SENTINEL,
@@ -166,7 +166,7 @@ class GetUsenetListOkResponseData(BaseModel):
         :param expires_at: expires_at, defaults to None
         :type expires_at: str, optional
         :param files: files, defaults to None
-        :type files: List[DataFiles3], optional
+        :type files: List[DataFiles4], optional
         :param hash: hash, defaults to None
         :type hash: str, optional
         :param id_: id_, defaults to None
@@ -209,7 +209,7 @@ class GetUsenetListOkResponseData(BaseModel):
         if expires_at is not SENTINEL:
             self.expires_at = expires_at
         if files is not SENTINEL:
-            self.files = self._define_list(files, DataFiles3)
+            self.files = self._define_list(files, DataFiles4)
         if hash is not SENTINEL:
             self.hash = hash
         if id_ is not SENTINEL:
