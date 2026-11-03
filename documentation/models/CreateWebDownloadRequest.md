@@ -2,6 +2,10 @@
 
 **Properties**
 
-| Name | Type | Required | Description                                                              |
-| :--- | :--- | :------- | :----------------------------------------------------------------------- |
-| link | str  | ❌       | An accessible link to any file on the internet. Cannot be a redirection. |
+| Name               | Type | Required | Description |
+| :----------------- | :--- | :------- | :---------- |
+| link               | str  | ❌       |             |
+| password           | str  | ❌       |             |
+| name               | str  | ❌       |             |
+| as_queued          | str  | ❌       |             |
+| add_only_if_cached | str  | ❌       |             |

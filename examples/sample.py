@@ -1,7 +1,9 @@
-from torbox_api import TorboxApi
+from main_api_sdk import MainApiSdk, Environment
 
-sdk = TorboxApi(access_token="YOUR_ACCESS_TOKEN", timeout=10000)
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN", base_url=Environment.DEFAULT.value, timeout=10
+)
 
-result = sdk.general.get_up_status()
+result = sdk.main_api_sdk.get_up_status()
 
 print(result)

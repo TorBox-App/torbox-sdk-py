@@ -1,0 +1,407 @@
+{
+  "endpoints": {
+    "/{api_version}/api/torrents/createtorrent": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import CreateTorrentRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = CreateTorrentRequest(\n    file=\"\",\n    magnet=\"string\",\n    seed=\"int\",\n    allow_zip=\"boolean\",\n    name=\"string\",\n    as_queued=\"boolean\",\n    add_only_if_cached=\"boolean\"\n)\n\nresult = sdk.main_api_sdk.create_torrent(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/asynccreatetorrent": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import AsyncCreateTorrentRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = AsyncCreateTorrentRequest(\n    file=\"\",\n    magnet=\"string\",\n    seed=\"int\",\n    allow_zip=\"boolean\",\n    name=\"string\",\n    as_queued=\"boolean\",\n    add_only_if_cached=\"boolean\"\n)\n\nresult = sdk.main_api_sdk.async_create_torrent(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/controltorrent": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.control_torrent(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/requestdl": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.request_download_link(\n    api_version=\"api_version\",\n    token=\"token\",\n    torrent_id=\"torrent_id\",\n    file_id=\"file_id\",\n    zip_link=\"zip_link\",\n    user_ip=\"user_ip\",\n    redirect=\"redirect\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/requestdl/batch": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.request_download_links_get(\n    api_version=\"api_version\",\n    token=\"token\",\n    torrent_id=\"torrent_id\",\n    file_ids=\"file_ids\",\n    user_ip=\"user_ip\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n",
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import MainApiSdkRequestDownloadLinksPostRequest1\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = MainApiSdkRequestDownloadLinksPostRequest1(\n    file_ids=[\n        65\n    ]\n)\n\nresult = sdk.main_api_sdk.request_download_links_post(\n    request_body=request_body,\n    api_version=\"api_version\",\n    token=\"token\",\n    torrent_id=\"torrent_id\",\n    user_ip=\"user_ip\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/mylist": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_torrent_list(\n    api_version=\"api_version\",\n    bypass_cache=\"bypass_cache\",\n    id_=\"id\",\n    offset=\"offset\",\n    limit=\"limit\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/checkcached": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_torrent_cached_availability(\n    api_version=\"api_version\",\n    hash=\"hash\",\n    format=\"object\",\n    list_files=\"list_files\"\n)\n\nprint(result)\n",
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import GetTorrentCachedAvailabilityBatchRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = GetTorrentCachedAvailabilityBatchRequest(\n    hashes=[\n        \"string\"\n    ]\n)\n\nresult = sdk.main_api_sdk.get_torrent_cached_availability_batch(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/exportdata": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.export_torrent_data(\n    api_version=\"api_version\",\n    torrent_id=\"torrent_id\",\n    type_=\"type\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/torrentinfo": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_torrent_info(\n    api_version=\"api_version\",\n    hash=\"hash\",\n    timeout=\"30\",\n    use_cache_lookup=\"false\"\n)\n\nprint(result)\n",
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import GetTorrentInfoRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = GetTorrentInfoRequest(\n    magnet=\"string\",\n    file=\"\",\n    hash=\"string\",\n    timeout=\"integer\",\n    use_cache_lookup=\"bool\",\n    peers_only=\"bool\"\n)\n\nresult = sdk.main_api_sdk.get_torrent_info_1(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/edittorrent": {
+      "put": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import EditTorrentItemRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = EditTorrentItemRequest(\n    torrent_id=98,\n    name=\"string\",\n    tags=[\n        \"string\"\n    ],\n    alternative_hashes=[\n        \"string\"\n    ],\n    airlocked=False\n)\n\nresult = sdk.main_api_sdk.edit_torrent_item(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/torrents/magnettofile": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import MagnetToFileRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = MagnetToFileRequest(\n    magnet=\"string\"\n)\n\nresult = sdk.main_api_sdk.magnet_to_file(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/createusenetdownload": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import CreateUsenetDownloadRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = CreateUsenetDownloadRequest(\n    file=\"\",\n    link=\"string\",\n    name=\"string\",\n    password=\"string\",\n    post_processing=\"integer\",\n    as_queued=\"boolean\",\n    add_only_if_cached=\"boolean\"\n)\n\nresult = sdk.main_api_sdk.create_usenet_download(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/controlusenetdownload": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.control_usenet_download(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/requestdl": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.request_download_link_1(\n    api_version=\"api_version\",\n    token=\"token\",\n    usenet_id=\"usenet_id\",\n    file_id=\"file_id\",\n    zip_link=\"zip_link\",\n    user_ip=\"user_ip\",\n    redirect=\"redirect\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/requestdl/batch": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.request_download_links_get_1(\n    api_version=\"api_version\",\n    token=\"token\",\n    usenet_id=\"usenet_id\",\n    file_ids=\"file_ids\",\n    user_ip=\"user_ip\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n",
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import MainApiSdkRequestDownloadLinksPostRequest2\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = MainApiSdkRequestDownloadLinksPostRequest2(\n    file_ids=[\n        65\n    ]\n)\n\nresult = sdk.main_api_sdk.request_download_links_post_1(\n    request_body=request_body,\n    api_version=\"api_version\",\n    token=\"token\",\n    usenet_id=\"usenet_id\",\n    user_ip=\"user_ip\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/mylist": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_usenet_list(\n    api_version=\"api_version\",\n    bypass_cache=\"bypass_cache\",\n    id_=\"id\",\n    offset=\"offset\",\n    limit=\"limit\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/checkcached": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_usenet_cached_availability(\n    api_version=\"api_version\",\n    hash=\"hash\",\n    format=\"format\",\n    list_files=\"list_files\"\n)\n\nprint(result)\n",
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import GetUsenetCachedAvailabilityBatchRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = GetUsenetCachedAvailabilityBatchRequest(\n    hashes=[\n        \"string\"\n    ]\n)\n\nresult = sdk.main_api_sdk.get_usenet_cached_availability_batch(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/editusenetdownload": {
+      "put": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import EditUsenetItemRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = EditUsenetItemRequest(\n    usenet_download_id=19,\n    name=\"string\",\n    tags=[\n        \"string\"\n    ],\n    alternative_hashes=[\n        \"string\"\n    ],\n    airlocked=False\n)\n\nresult = sdk.main_api_sdk.edit_usenet_item(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/provider/connection": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_news_server_connection_information(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/provider/account": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_news_server_account(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/usenet/provider/account/resetpw": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.reset_news_server_account_password(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/createwebdownload": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import CreateWebDownloadRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = CreateWebDownloadRequest(\n    link=\"string\",\n    password=\"string\",\n    name=\"string\",\n    as_queued=\"boolean\",\n    add_only_if_cached=\"boolean\"\n)\n\nresult = sdk.main_api_sdk.create_web_download(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/controlwebdownload": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.control_web_download(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/requestdl": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.request_download_link_2(\n    api_version=\"api_version\",\n    token=\"token\",\n    web_id=\"web_id\",\n    file_id=\"file_id\",\n    zip_link=\"zip_link\",\n    user_ip=\"user_ip\",\n    redirect=\"redirect\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/requestdl/batch": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.request_download_links_get_2(\n    api_version=\"api_version\",\n    token=\"token\",\n    web_id=\"web_id\",\n    file_ids=\"file_ids\",\n    user_ip=\"user_ip\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n",
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import MainApiSdkRequestDownloadLinksPostRequest3\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = MainApiSdkRequestDownloadLinksPostRequest3(\n    file_ids=[\n        71\n    ]\n)\n\nresult = sdk.main_api_sdk.request_download_links_post_2(\n    request_body=request_body,\n    api_version=\"api_version\",\n    token=\"token\",\n    web_id=\"web_id\",\n    user_ip=\"user_ip\",\n    append_name=\"append_name\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/mylist": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_web_download_list(\n    api_version=\"api_version\",\n    bypass_cache=\"bypass_cache\",\n    id_=\"id\",\n    offset=\"offset\",\n    limit=\"limit\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/checkcached": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_web_download_cached_availability(\n    api_version=\"api_version\",\n    hash=\"hash\",\n    format=\"object\",\n    list_files=\"false\"\n)\n\nprint(result)\n",
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import GetWebDownloadCachedAvailabilityBatchRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = GetWebDownloadCachedAvailabilityBatchRequest(\n    hashes=[\n        \"string\"\n    ]\n)\n\nresult = sdk.main_api_sdk.get_web_download_cached_availability_batch(\n    request_body=request_body,\n    api_version=\"api_version\",\n    format=\"format\",\n    list_files=\"list_files\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/hosters": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_hoster_list(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/webdl/editwebdownload": {
+      "put": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import EditWebDownloadItemRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = EditWebDownloadItemRequest(\n    webdl_id=77,\n    name=\"string\",\n    tags=[\n        \"string\"\n    ],\n    alternative_hashes=[\n        \"string\"\n    ],\n    airlocked=False\n)\n\nresult = sdk.main_api_sdk.edit_web_download_item(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_up_status()\n\nprint(result)\n"
+    },
+    "/{api_version}/api/stats": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_stats(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/changelogs/rss": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_changelogs_rss_feed(\n    api_version=\"api_version\",\n    offset=\"0\",\n    limit=\"10\"\n)\n\nwith open(\"output-file.ext\", \"w\") as f:\n    f.write(result if isinstance(result, str) else result.decode(errors=\"replace\") if isinstance(result, (bytes, bytearray)) else str(result))\n"
+    },
+    "/{api_version}/api/changelogs/json": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_changelogs_json(\n    api_version=\"api_version\",\n    offset=\"0\",\n    limit=\"10\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/speedtest": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_speedtest_files(\n    api_version=\"api_version\",\n    test_length=\"short\",\n    region=\"region\",\n    user_ip=\"user_ip\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/notifications/rss": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_rss_notification_feed(\n    api_version=\"api_version\",\n    token=\"token\"\n)\n\nwith open(\"output-file.ext\", \"w\") as f:\n    f.write(result if isinstance(result, str) else result.decode(errors=\"replace\") if isinstance(result, (bytes, bytearray)) else str(result))\n"
+    },
+    "/{api_version}/api/notifications/mynotifications": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_notification_feed(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/notifications/clear": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.clear_all_notifications(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/notifications/clear/{notification_id}": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.clear_single_notification(\n    api_version=\"api_version\",\n    notification_id=\"notification_id\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/notifications/test": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.send_test_notification(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/refreshtoken": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.refresh_api_token(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/me": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_user_data(\n    api_version=\"api_version\",\n    settings=\"false\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/addreferral": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.add_referral_to_account(\n    api_version=\"api_version\",\n    referral=\"referral\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/getconfirmation": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_confirmation_code(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/auth/device/start": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.start_device_code_authorization_process(\n    api_version=\"api_version\",\n    app=\"Third Party App\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/auth/device/token": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\nfrom main_api_sdk.models import GetTokenFromDeviceCodeProcessRequest\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = GetTokenFromDeviceCodeProcessRequest(\n    device_code=\"XXXXXXXXXXXXXXXXXXXXXXXXX\"\n)\n\nresult = sdk.main_api_sdk.get_token_from_device_code_process(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/referraldata": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_referral_data(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/subscriptions": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_subscriptions(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/transactions": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_transactions(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/transaction/pdf": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_transaction_pdf(\n    api_version=\"api_version\",\n    transaction_id=\"transaction_id\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/settings/editsettings": {
+      "put": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.edit_user_settings(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/user/stats": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_user_stats(\n    api_version=\"api_version\",\n    general=\"true\",\n    bandwidth=\"false\",\n    bandwidth_grouping=\"day\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/rss/addrss": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.add_rss_feed(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/rss/controlrss": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.control_rss_feed(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/rss/modifyrss": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.edit_rss_feed(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/rss/getfeeds": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_user_rss_feeds(\n    api_version=\"api_version\",\n    id_=\"id\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/rss/getfeeditems": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_rss_feed_items(\n    api_version=\"api_version\",\n    rss_feed_id=\"rss_feed_id\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/integration/jobs": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_all_jobs(api_version=\"api_version\")\n\nprint(result)\n"
+    },
+    "/{api_version}/api/integration/job/{job_id}": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_specific_job(\n    api_version=\"api_version\",\n    job_id=\"job_id\"\n)\n\nprint(result)\n",
+      "delete": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.cancel_specific_job(\n    api_version=\"api_version\",\n    job_id=\"job_id\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/integration/jobs/{hash}": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_all_jobs_by_hash(\n    api_version=\"api_version\",\n    hash=\"hash\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/queued/getqueued": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_queued_downloads(\n    api_version=\"api_version\",\n    bypass_cache=\"bypass_cache\",\n    id_=\"id\",\n    offset=\"offset\",\n    limit=\"limit\",\n    type_=\"torrent\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/queued/controlqueued": {
+      "post": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nrequest_body = {}\n\nresult = sdk.main_api_sdk.control_queued_downloads(\n    request_body=request_body,\n    api_version=\"api_version\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/stream/createstream": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.create_stream(\n    api_version=\"api_version\",\n    id_=\"id\",\n    file_id=\"0\",\n    type_=\"torrent\",\n    chosen_subtitle_index=\"chosen_subtitle_index\",\n    chosen_audio_index=\"0\",\n    chosen_resolution_index=\"chosen_resolution_index\"\n)\n\nprint(result)\n"
+    },
+    "/{api_version}/api/stream/getstreamdata": {
+      "get": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_stream_data(\n    api_version=\"api_version\",\n    presigned_token=\"presigned_token\",\n    token=\"token\",\n    chosen_subtitle_index=\"chosen_subtitle_index\",\n    chosen_audio_index=\"chosen_audio_index\",\n    chosen_resolution_index=\"chosen_resolution_index\"\n)\n\nprint(result)\n"
+    }
+  },
+  "methodResponses": {
+    "/{api_version}/api/torrents/createtorrent": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/torrents/asynccreatetorrent": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/torrents/controltorrent": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/torrents/requestdl": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/torrents/requestdl/batch": {
+      "get": "print(result)",
+      "post": "print(result)"
+    },
+    "/{api_version}/api/torrents/mylist": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/torrents/checkcached": {
+      "get": "print(result)",
+      "post": "print(result)"
+    },
+    "/{api_version}/api/torrents/exportdata": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/torrents/torrentinfo": {
+      "get": "print(result)",
+      "post": "print(result)"
+    },
+    "/{api_version}/api/torrents/edittorrent": {
+      "put": "print(result)"
+    },
+    "/{api_version}/api/torrents/magnettofile": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/usenet/createusenetdownload": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/usenet/controlusenetdownload": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/usenet/requestdl": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/usenet/requestdl/batch": {
+      "get": "print(result)",
+      "post": "print(result)"
+    },
+    "/{api_version}/api/usenet/mylist": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/usenet/checkcached": {
+      "get": "print(result)",
+      "post": "print(result)"
+    },
+    "/{api_version}/api/usenet/editusenetdownload": {
+      "put": "print(result)"
+    },
+    "/{api_version}/api/usenet/provider/connection": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/usenet/provider/account": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/usenet/provider/account/resetpw": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/webdl/createwebdownload": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/webdl/controlwebdownload": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/webdl/requestdl": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/webdl/requestdl/batch": {
+      "get": "print(result)",
+      "post": "print(result)"
+    },
+    "/{api_version}/api/webdl/mylist": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/webdl/checkcached": {
+      "get": "print(result)",
+      "post": "print(result)"
+    },
+    "/{api_version}/api/webdl/hosters": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/webdl/editwebdownload": {
+      "put": "print(result)"
+    },
+    "/": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/stats": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/changelogs/rss": {
+      "get": "with open(\"output-file.ext\", \"w\") as f:\n    f.write(result if isinstance(result, str) else result.decode(errors=\"replace\") if isinstance(result, (bytes, bytearray)) else str(result))"
+    },
+    "/{api_version}/api/changelogs/json": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/speedtest": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/notifications/rss": {
+      "get": "with open(\"output-file.ext\", \"w\") as f:\n    f.write(result if isinstance(result, str) else result.decode(errors=\"replace\") if isinstance(result, (bytes, bytearray)) else str(result))"
+    },
+    "/{api_version}/api/notifications/mynotifications": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/notifications/clear": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/notifications/clear/{notification_id}": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/notifications/test": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/user/refreshtoken": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/user/me": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/user/addreferral": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/user/getconfirmation": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/user/auth/device/start": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/user/auth/device/token": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/user/referraldata": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/user/subscriptions": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/user/transactions": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/user/transaction/pdf": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/user/settings/editsettings": {
+      "put": "print(result)"
+    },
+    "/{api_version}/api/user/stats": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/rss/addrss": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/rss/controlrss": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/rss/modifyrss": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/rss/getfeeds": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/rss/getfeeditems": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/integration/jobs": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/integration/job/{job_id}": {
+      "get": "print(result)",
+      "delete": "print(result)"
+    },
+    "/{api_version}/api/integration/jobs/{hash}": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/queued/getqueued": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/queued/controlqueued": {
+      "post": "print(result)"
+    },
+    "/{api_version}/api/stream/createstream": {
+      "get": "print(result)"
+    },
+    "/{api_version}/api/stream/getstreamdata": {
+      "get": "print(result)"
+    }
+  },
+  "example": "from main_api_sdk import MainApiSdk, Environment\n\nsdk = MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    base_url=Environment.DEFAULT.value,\n    timeout=10\n)\n\nresult = sdk.main_api_sdk.get_up_status()\n\nprint(result)\n",
+  "authentication": {
+    "bearer": {
+      "constructor": "MainApiSdk(\n    access_token=\"YOUR_ACCESS_TOKEN\",\n    timeout=10\n)",
+      "setter": "sdk.set_access_token(\"YOUR_ACCESS_TOKEN\")"
+    }
+  }
+}
