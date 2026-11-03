@@ -1,0 +1,50 @@
+name: ci
+
+on: [push]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: python -m pip install -e .
+
+      - name: Compile
+        run: python -m compileall src/main_api_sdk
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: python -m pip install -e .
+
+      - name: Test
+        run: |
+          python -m pip install pytest
+          if [ -d tests ]; then
+            python -m pytest -rP tests
+          else
+            echo "No tests directory found; skipping pytest."
+          fi
