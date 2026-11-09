@@ -341,7 +341,7 @@ sdk = MainApiSdk(
 
 request_body = MainApiSdkRequestDownloadLinksPostRequest1(
     file_ids=[
-        65
+        12
     ]
 )
 
@@ -373,6 +373,8 @@ print(result)
 | id\_         | str  | ❌       | Determines the torrent requested, will return an object rather than list. Optional.                                                                                                           |
 | offset       | str  | ❌       | Determines the offset of items to get from the database. Default is 0. Optional.                                                                                                              |
 | limit        | str  | ❌       | Determines the number of items to recieve per request. Default is 1000. Optional.                                                                                                             |
+| active       | str  | ❌       | Shows only active downloads. Optional                                                                                                                                                         |
+| files        | str  | ❌       | Exclude files from response. Optional                                                                                                                                                         |
 
 **Return Type**
 
@@ -394,7 +396,9 @@ result = sdk.main_api_sdk.get_torrent_list(
     bypass_cache="bypass_cache",
     id_="id",
     offset="offset",
-    limit="limit"
+    limit="limit",
+    active="active",
+    files="files"
 )
 
 print(result)
@@ -643,7 +647,7 @@ sdk = MainApiSdk(
 )
 
 request_body = EditTorrentItemRequest(
-    torrent_id=98,
+    torrent_id=76,
     name="string",
     tags=[
         "string"
@@ -921,7 +925,7 @@ sdk = MainApiSdk(
 
 request_body = MainApiSdkRequestDownloadLinksPostRequest2(
     file_ids=[
-        65
+        49
     ]
 )
 
@@ -953,6 +957,8 @@ print(result)
 | id\_         | str  | ❌       | Determines the usenet download requested, will return an object rather than list. Optional.                                                                                                   |
 | offset       | str  | ❌       | Determines the offset of items to get from the database. Default is 0. Optional.                                                                                                              |
 | limit        | str  | ❌       | Determines the number of items to recieve per request. Default is 1000. Optional.                                                                                                             |
+| active       | str  | ❌       | Shows only active downloads. Optional                                                                                                                                                         |
+| files        | str  | ❌       | Exclude files from response. Optional                                                                                                                                                         |
 
 **Return Type**
 
@@ -974,7 +980,9 @@ result = sdk.main_api_sdk.get_usenet_list(
     bypass_cache="bypass_cache",
     id_="id",
     offset="offset",
-    limit="limit"
+    limit="limit",
+    active="active",
+    files="files"
 )
 
 print(result)
@@ -1096,7 +1104,7 @@ sdk = MainApiSdk(
 )
 
 request_body = EditUsenetItemRequest(
-    usenet_download_id=19,
+    usenet_download_id=83,
     name="string",
     tags=[
         "string"
@@ -1429,7 +1437,7 @@ sdk = MainApiSdk(
 
 request_body = MainApiSdkRequestDownloadLinksPostRequest3(
     file_ids=[
-        71
+        68
     ]
 )
 
@@ -1461,6 +1469,8 @@ print(result)
 | id\_         | str  | ❌       | Determines the torrent requested, will return an object rather than list. Optional.                                                                                                           |
 | offset       | str  | ❌       | Determines the offset of items to get from the database. Default is 0. Optional.                                                                                                              |
 | limit        | str  | ❌       | Determines the number of items to recieve per request. Default is 1000. Optional.                                                                                                             |
+| active       | str  | ❌       | Shows only active downloads. Optional                                                                                                                                                         |
+| files        | str  | ❌       | Exclude files from response. Optional                                                                                                                                                         |
 
 **Return Type**
 
@@ -1482,7 +1492,9 @@ result = sdk.main_api_sdk.get_web_download_list(
     bypass_cache="bypass_cache",
     id_="id",
     offset="offset",
-    limit="limit"
+    limit="limit",
+    active="active",
+    files="files"
 )
 
 print(result)
@@ -1641,7 +1653,7 @@ sdk = MainApiSdk(
 )
 
 request_body = EditWebDownloadItemRequest(
-    webdl_id=77,
+    webdl_id=66,
     name="string",
     tags=[
         "string"

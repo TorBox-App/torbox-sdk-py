@@ -46,7 +46,7 @@ class Serializer:
         self.config: Optional["SdkConfig"] = config
 
         self.headers["User-Agent"] = (
-            "postman-codegen/3.17.0 main_api_sdk/1.0.0 (python)"
+            "postman-codegen/3.20.0 main_api_sdk/1.0.1 (python)"
         )
 
         # Apply default headers, FIRST contributor of a header name winning (FSDK-1671).

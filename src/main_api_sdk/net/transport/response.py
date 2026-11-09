@@ -1,6 +1,6 @@
 import json
 from typing import Generator, Optional, Union
-from requests import Response
+from requests import Response as RequestsResponse
 from urllib.parse import parse_qs
 
 
@@ -17,7 +17,7 @@ class Response:
 
     def __init__(
         self,
-        response: Response,
+        response: RequestsResponse,
         chunk: Optional[str] = None,
         raw_chunk: Optional[bytes] = None,
     ) -> None:
@@ -38,16 +38,22 @@ class Response:
         # A streamed chunk is identified by `raw_chunk`, not by a truthy `chunk`: a BINARY chunk has
         # no text form at all (see `_chunk_text`), and falling back to `response.text` for it would
         # re-read a body whose stream has already been consumed.
-        is_chunk = raw_chunk is not None
+        if raw_chunk is not None:
+            response_body = chunk or ""
+            response_raw_body = raw_chunk
+        else:
+            response_body = response.text
+            response_raw_body = response.content
+
         self.body = self._parse_response_body(
             content_type=self.media_type,
-            body=(chunk or "") if is_chunk else response.text,
-            raw_body=raw_chunk if is_chunk else response.content,
+            body=response_body,
+            raw_body=response_raw_body,
         )
 
     @staticmethod
     def from_chunk(
-        response: Response, raw_chunk: bytes
+        response: RequestsResponse, raw_chunk: bytes
     ) -> Generator["Response", None, None]:
         """
         Create a Response object from a chunk of data.
@@ -114,7 +120,7 @@ class Response:
         )
 
     @property
-    def raw(self) -> Response:
+    def raw(self) -> RequestsResponse:
         """
         Get the underlying requests.Response object.
 

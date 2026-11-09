@@ -1,4 +1,4 @@
-from typing import Generator, Optional
+from typing import cast, Generator, Optional
 from .handlers.base_handler import BaseHandler
 from ..transport.request import Request
 from ..transport.response import Response
@@ -32,7 +32,7 @@ class RequestChain:
             self._head = handler
             self._tail = handler
         else:
-            self._tail.set_next(handler)
+            cast(BaseHandler, self._tail).set_next(handler)
             self._tail = handler
 
         return self
@@ -52,7 +52,7 @@ class RequestChain:
             if error is not None:
                 raise error
 
-            return response
+            return cast(Response, response)
         else:
             raise RuntimeError("RequestChain is empty")
 
@@ -71,6 +71,6 @@ class RequestChain:
                 if error is not None:
                     raise error
 
-                yield response
+                yield cast(Response, response)
         else:
             raise RuntimeError("RequestChain is empty")

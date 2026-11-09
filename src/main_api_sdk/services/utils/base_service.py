@@ -1,6 +1,16 @@
 import logging
 import requests
-from typing import Any, Dict, Optional, Tuple, Generator, Union, TYPE_CHECKING
+from typing import (
+    Any,
+    Dict,
+    Mapping,
+    Optional,
+    Tuple,
+    Generator,
+    Union,
+    TYPE_CHECKING,
+    cast,
+)
 from enum import Enum
 
 from .default_headers import DefaultHeaders, DefaultHeadersKeys
@@ -29,7 +39,7 @@ class BaseService:
 
     def __init__(
         self,
-        base_url: str,
+        base_url: Optional[str],
         http_client: Optional[requests.Session] = None,
         follow_redirects: bool = True,
         logger: Optional[logging.Logger] = None,
@@ -41,7 +51,7 @@ class BaseService:
         """
         self.base_url = self._normalize_base_url(base_url)
         self._default_headers = DefaultHeaders()
-        self._timeout = 60
+        self._timeout: float = 60.0
         self._http_client = http_client
         self._follow_redirects = follow_redirects
         self._logger = logger
@@ -200,11 +210,16 @@ class BaseService:
         :return: The service instance for method chaining.
         """
         return self.set_config(
-            self._deep_merge(self._service_config or {}, {"retry": retry})
+            cast(
+                "SdkConfig",
+                self._deep_merge(self._service_config or {}, {"retry": retry}),
+            )
         )
 
     @staticmethod
-    def _deep_merge(base: dict, override: dict) -> dict:
+    def _deep_merge(
+        base: Mapping[str, Any], override: Mapping[str, Any]
+    ) -> Dict[str, Any]:
         """
         Recursively merges two dictionaries. Nested dicts are merged key-by-key so
         that a partial override (e.g. ``{"retry": {"attempts": 5}}``) only overwrites
@@ -232,7 +247,9 @@ class BaseService:
         return merged
 
     def _get_resolved_config(
-        self, method_config: "SdkConfig" = None, request_config: "SdkConfig" = None
+        self,
+        method_config: Optional["SdkConfig"] = None,
+        request_config: Optional["SdkConfig"] = None,
     ) -> "SdkConfig":
         """
         Resolves configuration overrides from the hierarchy: request_config > method_config > service_config.
@@ -249,19 +266,25 @@ class BaseService:
 
         # Apply service config
         if self._service_config:
-            resolved = BaseService._deep_merge(resolved, self._service_config)
+            resolved = cast(
+                "SdkConfig", BaseService._deep_merge(resolved, self._service_config)
+            )
 
         # Apply method config
         if method_config:
-            resolved = BaseService._deep_merge(resolved, method_config)
+            resolved = cast(
+                "SdkConfig", BaseService._deep_merge(resolved, method_config)
+            )
 
         # Apply request config
         if request_config:
-            resolved = BaseService._deep_merge(resolved, request_config)
+            resolved = cast(
+                "SdkConfig", BaseService._deep_merge(resolved, request_config)
+            )
 
         return resolved
 
-    def send_request(self, request: Request) -> Tuple[Dict, int, str]:
+    def send_request(self, request: Request) -> Tuple[Any, int, str]:
         """
         Sends the given request.
 
@@ -280,7 +303,9 @@ class BaseService:
             response.media_type,
         )
 
-    def stream_request(self, request: Request) -> Generator[Dict, None, None]:
+    def stream_request(
+        self, request: Request
+    ) -> Generator[Tuple[Any, int, str], None, None]:
         """
         Streams the given request.
 

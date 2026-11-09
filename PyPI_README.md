@@ -1,10 +1,10 @@
-# MainApiSdk Python SDK 1.0.0<a id="mainapisdk-python-sdk-100"></a>
+# MainApiSdk Python SDK 1.0.1<a id="mainapisdk-python-sdk-101"></a>
 
 Welcome to the MainApiSdk SDK documentation. This guide will help you get started with integrating and using the MainApiSdk SDK in your project.
 
 ## Versions<a id="versions"></a>
 
-- SDK version: `1.0.0`
+- SDK version: `1.0.1`
 
 ## About the API<a id="about-the-api"></a>
 

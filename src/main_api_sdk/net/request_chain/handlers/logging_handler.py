@@ -108,7 +108,10 @@ class LoggingHandler(BaseHandler):
 
     def _log_request(self, request: Request) -> None:
         """Log an outgoing request line, with credential-bearing headers/URL redacted."""
-        self._logger.info(
+        logger = self._logger
+        if logger is None:
+            return
+        logger.info(
             "--> %s %s headers=%s",
             request.method,
             self._redact_url(request.url),
@@ -123,8 +126,11 @@ class LoggingHandler(BaseHandler):
         elapsed_seconds: float,
     ) -> None:
         """Log the response (or error) for a previously logged request."""
+        logger = self._logger
+        if logger is None:
+            return
         if error is not None:
-            self._logger.info(
+            logger.info(
                 "<-- %s %s failed after %.3fs: %s",
                 request.method,
                 self._redact_url(request.url),
@@ -133,7 +139,7 @@ class LoggingHandler(BaseHandler):
             )
             return
 
-        self._logger.info(
+        logger.info(
             "<-- %s %s %s in %.3fs headers=%s",
             request.method,
             self._redact_url(request.url),

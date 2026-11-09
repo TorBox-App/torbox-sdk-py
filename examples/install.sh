@@ -13,4 +13,4 @@ $PYTHON_CMD -m venv .venv
 . .venv/bin/activate
 $PYTHON_CMD -m pip install build
 $PYTHON_CMD -m build --outdir dist ../
-$PYTHON_CMD -m pip install dist/main_api_sdk-1.0.0-py3-none-any.whl --force-reinstall
+$PYTHON_CMD -m pip install dist/main_api_sdk-1.0.1-py3-none-any.whl --force-reinstall

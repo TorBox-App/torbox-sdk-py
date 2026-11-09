@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type
+from typing import Any, Dict, Optional, Type, Union
 from pydantic import BaseModel as PydanticBaseModel, ValidationError
 
 
@@ -14,7 +14,7 @@ class BaseError(Exception):
     """
 
     # Pydantic model class for validation (overridden by subclasses)
-    _model_class: Type[PydanticBaseModel] = None
+    _model_class: Optional[Type[PydanticBaseModel]] = None
 
     def __init__(self, **data: Any):
         """
@@ -22,6 +22,8 @@ class BaseError(Exception):
 
         :param data: Error data to validate
         """
+        self._data: Union[PydanticBaseModel, Dict[str, Any]]
+
         # If _model_class is set, use it for validation
         if self._model_class is not None:
             try:

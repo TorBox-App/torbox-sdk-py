@@ -30,28 +30,28 @@ class Validator:
     :ivar Validator _item_validator: A validator applied to every item of an array value.
     """
 
-    def __init__(self, _type: Type[Any] = None):
+    def __init__(self, _type: Optional[Type[Any]] = None):
         """
         Initializes a Validator instance.
 
-        :param Type[Any] _type: The expected type for the value. Defaults to None.
+        :param Optional[Type[Any]] _type: The expected type for the value. Defaults to None.
         """
-        self._type: Type[Any] = _type
+        self._type: Optional[Type[Any]] = _type
         self._is_optional: bool = False
         self._is_nullable: bool = False
         self._is_array: bool = False
-        self._pattern: Pattern[str] = None
-        self._min_length: int = None
-        self._max_length: int = None
-        self._min: int = None
+        self._pattern: Optional[Pattern[str]] = None
+        self._min_length: Optional[int] = None
+        self._max_length: Optional[int] = None
+        self._min: Optional[int] = None
         self._min_exclusive: bool = False
-        self._max: int = None
+        self._max: Optional[int] = None
         self._max_exclusive: bool = False
-        self._multiple_of: float = None
-        self._min_items: int = None
-        self._max_items: int = None
+        self._multiple_of: Optional[float] = None
+        self._min_items: Optional[int] = None
+        self._max_items: Optional[int] = None
         self._unique_items: bool = False
-        self._item_validator: "Validator" = None
+        self._item_validator: Optional["Validator"] = None
 
     def is_array(self) -> "Validator":
         """
@@ -304,6 +304,8 @@ class Validator:
         check_type = get_origin(self._type) or self._type
         if check_type is Any:
             return True
+        if check_type is None:
+            return False
         # A subscripted Union (e.g. a list of `Union[str, int]`) reaches here as
         # `typing.Union`, which also can't be passed to isinstance(). Match the
         # value against any of the union's member types instead.

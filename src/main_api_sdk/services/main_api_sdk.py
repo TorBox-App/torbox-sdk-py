@@ -1262,6 +1262,8 @@ class MainApiSdkService(BaseService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
     ) -> Any:
@@ -1277,6 +1279,10 @@ class MainApiSdkService(BaseService):
         :type offset: str, optional
         :param limit: Determines the number of items to recieve per request. Default is 1000. Optional., defaults to None
         :type limit: str, optional
+        :param active: Shows only active downloads. Optional, defaults to None
+        :type active: str, optional
+        :param files: Exclude files from response. Optional, defaults to None
+        :type files: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -1291,6 +1297,8 @@ class MainApiSdkService(BaseService):
         Validator(str).is_optional().is_nullable().validate(id_, "id_")
         Validator(str).is_optional().is_nullable().validate(offset, "offset")
         Validator(str).is_optional().is_nullable().validate(limit, "limit")
+        Validator(str).is_optional().is_nullable().validate(active, "active")
+        Validator(str).is_optional().is_nullable().validate(files, "files")
 
         resolved_config = self._get_resolved_config(
             self._get_torrent_list_config, request_config
@@ -1307,6 +1315,8 @@ class MainApiSdkService(BaseService):
             .add_query("id", id_, nullable=True)
             .add_query("offset", offset, nullable=True)
             .add_query("limit", limit, nullable=True)
+            .add_query("active", active, nullable=True)
+            .add_query("files", files, nullable=True)
             .serialize()
             .set_method("GET")
         )
@@ -1947,6 +1957,8 @@ class MainApiSdkService(BaseService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
     ) -> Any:
@@ -1962,6 +1974,10 @@ class MainApiSdkService(BaseService):
         :type offset: str, optional
         :param limit: Determines the number of items to recieve per request. Default is 1000. Optional., defaults to None
         :type limit: str, optional
+        :param active: Shows only active downloads. Optional, defaults to None
+        :type active: str, optional
+        :param files: Exclude files from response. Optional, defaults to None
+        :type files: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -1976,6 +1992,8 @@ class MainApiSdkService(BaseService):
         Validator(str).is_optional().is_nullable().validate(id_, "id_")
         Validator(str).is_optional().is_nullable().validate(offset, "offset")
         Validator(str).is_optional().is_nullable().validate(limit, "limit")
+        Validator(str).is_optional().is_nullable().validate(active, "active")
+        Validator(str).is_optional().is_nullable().validate(files, "files")
 
         resolved_config = self._get_resolved_config(
             self._get_usenet_list_config, request_config
@@ -1992,6 +2010,8 @@ class MainApiSdkService(BaseService):
             .add_query("id", id_, nullable=True)
             .add_query("offset", offset, nullable=True)
             .add_query("limit", limit, nullable=True)
+            .add_query("active", active, nullable=True)
+            .add_query("files", files, nullable=True)
             .serialize()
             .set_method("GET")
         )
@@ -2544,6 +2564,8 @@ class MainApiSdkService(BaseService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
     ) -> Any:
@@ -2559,6 +2581,10 @@ class MainApiSdkService(BaseService):
         :type offset: str, optional
         :param limit: Determines the number of items to recieve per request. Default is 1000. Optional., defaults to None
         :type limit: str, optional
+        :param active: Shows only active downloads. Optional, defaults to None
+        :type active: str, optional
+        :param files: Exclude files from response. Optional, defaults to None
+        :type files: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -2573,6 +2599,8 @@ class MainApiSdkService(BaseService):
         Validator(str).is_optional().is_nullable().validate(id_, "id_")
         Validator(str).is_optional().is_nullable().validate(offset, "offset")
         Validator(str).is_optional().is_nullable().validate(limit, "limit")
+        Validator(str).is_optional().is_nullable().validate(active, "active")
+        Validator(str).is_optional().is_nullable().validate(files, "files")
 
         resolved_config = self._get_resolved_config(
             self._get_web_download_list_config, request_config
@@ -2589,6 +2617,8 @@ class MainApiSdkService(BaseService):
             .add_query("id", id_, nullable=True)
             .add_query("offset", offset, nullable=True)
             .add_query("limit", limit, nullable=True)
+            .add_query("active", active, nullable=True)
+            .add_query("files", files, nullable=True)
             .serialize()
             .set_method("GET")
         )
