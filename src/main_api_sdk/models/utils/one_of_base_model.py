@@ -12,7 +12,7 @@ class OneOfBaseModel:
     :ivar dict class_list: A dictionary mapping class names to their constructors.
     """
 
-    class_list = {}
+    class_list: Dict[str, Any] = {}
 
     @classmethod
     def return_one_of(cls, input_data: Optional[Any]) -> Optional[Any]:
@@ -46,6 +46,7 @@ class OneOfBaseModel:
             return max(success_list, key=cls._count_non_none_attributes)
 
         cls._raise_one_of_error(exception_list)
+        return None
 
     @classmethod
     def _count_non_none_attributes(cls, instance):

@@ -4,7 +4,7 @@ Defines the SENTINEL object to be used to represent a nullable value.
 
 from typing import Any
 
-SENTINEL = object()
+SENTINEL: Any = object()
 
 
 def was_value_set(value: Any) -> bool:

@@ -34,7 +34,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().create_torrent)(
             request_body, api_version, request_config=request_config
         )
@@ -45,7 +45,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().async_create_torrent)(
             request_body, api_version, request_config=request_config
         )
@@ -56,7 +56,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().control_torrent)(
             request_body, api_version, request_config=request_config
         )
@@ -73,22 +73,24 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_link)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "torrent_id": torrent_id,
-                    "file_id": file_id,
-                    "zip_link": zip_link,
-                    "user_ip": user_ip,
-                    "redirect": redirect,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "torrent_id": torrent_id,
+                        "file_id": file_id,
+                        "zip_link": zip_link,
+                        "user_ip": user_ip,
+                        "redirect": redirect,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -102,20 +104,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_links_get)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "torrent_id": torrent_id,
-                    "file_ids": file_ids,
-                    "user_ip": user_ip,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "torrent_id": torrent_id,
+                        "file_ids": file_ids,
+                        "user_ip": user_ip,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -129,20 +133,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_links_post)(
             request_body,
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "torrent_id": torrent_id,
-                    "user_ip": user_ip,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "torrent_id": torrent_id,
+                        "user_ip": user_ip,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -153,21 +159,27 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_torrent_list)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "bypass_cache": bypass_cache,
-                    "id_": id_,
-                    "offset": offset,
-                    "limit": limit,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "bypass_cache": bypass_cache,
+                        "id_": id_,
+                        "offset": offset,
+                        "limit": limit,
+                        "active": active,
+                        "files": files,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -179,18 +191,20 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         list_files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_torrent_cached_availability)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "hash": hash,
-                    "format": format,
-                    "list_files": list_files,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "hash": hash,
+                        "format": format,
+                        "list_files": list_files,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -200,7 +214,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_torrent_cached_availability_batch)(
             request_body, api_version, request_config=request_config
         )
@@ -212,14 +226,16 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         type_: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().export_torrent_data)(
             api_version,
-            **{
-                k: v
-                for k, v in {"torrent_id": torrent_id, "type_": type_}.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {"torrent_id": torrent_id, "type_": type_}.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -231,18 +247,20 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         use_cache_lookup: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_torrent_info)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "hash": hash,
-                    "timeout": timeout,
-                    "use_cache_lookup": use_cache_lookup,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "hash": hash,
+                        "timeout": timeout,
+                        "use_cache_lookup": use_cache_lookup,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -252,7 +270,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_torrent_info_1)(
             request_body, api_version, request_config=request_config
         )
@@ -263,7 +281,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().edit_torrent_item)(
             request_body, api_version, request_config=request_config
         )
@@ -274,7 +292,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().magnet_to_file)(
             request_body, api_version, request_config=request_config
         )
@@ -285,7 +303,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().create_usenet_download)(
             request_body, api_version, request_config=request_config
         )
@@ -296,7 +314,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().control_usenet_download)(
             request_body, api_version, request_config=request_config
         )
@@ -313,22 +331,24 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_link_1)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "usenet_id": usenet_id,
-                    "file_id": file_id,
-                    "zip_link": zip_link,
-                    "user_ip": user_ip,
-                    "redirect": redirect,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "usenet_id": usenet_id,
+                        "file_id": file_id,
+                        "zip_link": zip_link,
+                        "user_ip": user_ip,
+                        "redirect": redirect,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -342,20 +362,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_links_get_1)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "usenet_id": usenet_id,
-                    "file_ids": file_ids,
-                    "user_ip": user_ip,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "usenet_id": usenet_id,
+                        "file_ids": file_ids,
+                        "user_ip": user_ip,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -369,20 +391,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_links_post_1)(
             request_body,
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "usenet_id": usenet_id,
-                    "user_ip": user_ip,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "usenet_id": usenet_id,
+                        "user_ip": user_ip,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -393,21 +417,27 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_usenet_list)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "bypass_cache": bypass_cache,
-                    "id_": id_,
-                    "offset": offset,
-                    "limit": limit,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "bypass_cache": bypass_cache,
+                        "id_": id_,
+                        "offset": offset,
+                        "limit": limit,
+                        "active": active,
+                        "files": files,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -419,18 +449,20 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         list_files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_usenet_cached_availability)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "hash": hash,
-                    "format": format,
-                    "list_files": list_files,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "hash": hash,
+                        "format": format,
+                        "list_files": list_files,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -440,7 +472,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_usenet_cached_availability_batch)(
             request_body, api_version, request_config=request_config
         )
@@ -451,28 +483,28 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().edit_usenet_item)(
             request_body, api_version, request_config=request_config
         )
 
     def get_news_server_connection_information(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_news_server_connection_information)(
             api_version, request_config=request_config
         )
 
     def get_news_server_account(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_news_server_account)(
             api_version, request_config=request_config
         )
 
     def reset_news_server_account_password(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().reset_news_server_account_password)(
             api_version, request_config=request_config
         )
@@ -483,7 +515,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().create_web_download)(
             request_body, api_version, request_config=request_config
         )
@@ -494,7 +526,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().control_web_download)(
             request_body, api_version, request_config=request_config
         )
@@ -511,22 +543,24 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_link_2)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "web_id": web_id,
-                    "file_id": file_id,
-                    "zip_link": zip_link,
-                    "user_ip": user_ip,
-                    "redirect": redirect,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "web_id": web_id,
+                        "file_id": file_id,
+                        "zip_link": zip_link,
+                        "user_ip": user_ip,
+                        "redirect": redirect,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -540,20 +574,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_links_get_2)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "web_id": web_id,
-                    "file_ids": file_ids,
-                    "user_ip": user_ip,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "web_id": web_id,
+                        "file_ids": file_ids,
+                        "user_ip": user_ip,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -567,20 +603,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         append_name: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().request_download_links_post_2)(
             request_body,
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "token": token,
-                    "web_id": web_id,
-                    "user_ip": user_ip,
-                    "append_name": append_name,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "token": token,
+                        "web_id": web_id,
+                        "user_ip": user_ip,
+                        "append_name": append_name,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -591,21 +629,27 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_web_download_list)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "bypass_cache": bypass_cache,
-                    "id_": id_,
-                    "offset": offset,
-                    "limit": limit,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "bypass_cache": bypass_cache,
+                        "id_": id_,
+                        "offset": offset,
+                        "limit": limit,
+                        "active": active,
+                        "files": files,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -617,18 +661,20 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         list_files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_web_download_cached_availability)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "hash": hash,
-                    "format": format,
-                    "list_files": list_files,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "hash": hash,
+                        "format": format,
+                        "list_files": list_files,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -640,21 +686,23 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         list_files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_web_download_cached_availability_batch)(
             request_body,
             api_version,
-            **{
-                k: v
-                for k, v in {"format": format, "list_files": list_files}.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {"format": format, "list_files": list_files}.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
     def get_hoster_list(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_hoster_list)(
             api_version, request_config=request_config
         )
@@ -665,19 +713,19 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().edit_web_download_item)(
             request_body, api_version, request_config=request_config
         )
 
     def get_up_status(
         self, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_up_status)(request_config=request_config)
 
     def get_stats(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_stats)(api_version, request_config=request_config)
 
     def get_changelogs_rss_feed(
@@ -687,14 +735,16 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         limit: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[str]:
+    ) -> Awaitable[str]:  # type: ignore[override]
         return to_async(super().get_changelogs_rss_feed)(
             api_version,
-            **{
-                k: v
-                for k, v in {"offset": offset, "limit": limit}.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {"offset": offset, "limit": limit}.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -705,14 +755,16 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         limit: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_changelogs_json)(
             api_version,
-            **{
-                k: v
-                for k, v in {"offset": offset, "limit": limit}.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {"offset": offset, "limit": limit}.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -724,18 +776,20 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         user_ip: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_speedtest_files)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "test_length": test_length,
-                    "region": region,
-                    "user_ip": user_ip,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "test_length": test_length,
+                        "region": region,
+                        "user_ip": user_ip,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -745,23 +799,25 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         token: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[str]:
+    ) -> Awaitable[str]:  # type: ignore[override]
         return to_async(super().get_rss_notification_feed)(
             api_version,
-            **{k: v for k, v in {"token": token}.items() if v is not SENTINEL},
+            **dict[str, Any](
+                {k: v for k, v in {"token": token}.items() if v is not SENTINEL}
+            ),
             request_config=request_config,
         )
 
     def get_notification_feed(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_notification_feed)(
             api_version, request_config=request_config
         )
 
     def clear_all_notifications(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().clear_all_notifications)(
             api_version, request_config=request_config
         )
@@ -772,14 +828,14 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         notification_id: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().clear_single_notification)(
             api_version, notification_id, request_config=request_config
         )
 
     def send_test_notification(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().send_test_notification)(
             api_version, request_config=request_config
         )
@@ -790,7 +846,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().refresh_api_token)(
             request_body, api_version, request_config=request_config
         )
@@ -801,10 +857,12 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         settings: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_user_data)(
             api_version,
-            **{k: v for k, v in {"settings": settings}.items() if v is not SENTINEL},
+            **dict[str, Any](
+                {k: v for k, v in {"settings": settings}.items() if v is not SENTINEL}
+            ),
             request_config=request_config,
         )
 
@@ -814,16 +872,18 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         referral: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().add_referral_to_account)(
             api_version,
-            **{k: v for k, v in {"referral": referral}.items() if v is not SENTINEL},
+            **dict[str, Any](
+                {k: v for k, v in {"referral": referral}.items() if v is not SENTINEL}
+            ),
             request_config=request_config,
         )
 
     def get_confirmation_code(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_confirmation_code)(
             api_version, request_config=request_config
         )
@@ -834,10 +894,12 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         app: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().start_device_code_authorization_process)(
             api_version,
-            **{k: v for k, v in {"app": app}.items() if v is not SENTINEL},
+            **dict[str, Any](
+                {k: v for k, v in {"app": app}.items() if v is not SENTINEL}
+            ),
             request_config=request_config,
         )
 
@@ -847,28 +909,28 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_token_from_device_code_process)(
             request_body, api_version, request_config=request_config
         )
 
     def get_referral_data(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_referral_data)(
             api_version, request_config=request_config
         )
 
     def get_subscriptions(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_subscriptions)(
             api_version, request_config=request_config
         )
 
     def get_transactions(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_transactions)(
             api_version, request_config=request_config
         )
@@ -879,14 +941,16 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         transaction_id: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_transaction_pdf)(
             api_version,
-            **{
-                k: v
-                for k, v in {"transaction_id": transaction_id}.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {"transaction_id": transaction_id}.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -896,7 +960,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().edit_user_settings)(
             request_body, api_version, request_config=request_config
         )
@@ -909,18 +973,20 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         bandwidth_grouping: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_user_stats)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "general": general,
-                    "bandwidth": bandwidth,
-                    "bandwidth_grouping": bandwidth_grouping,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "general": general,
+                        "bandwidth": bandwidth,
+                        "bandwidth_grouping": bandwidth_grouping,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -930,7 +996,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().add_rss_feed)(
             request_body, api_version, request_config=request_config
         )
@@ -941,7 +1007,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().control_rss_feed)(
             request_body, api_version, request_config=request_config
         )
@@ -952,7 +1018,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().edit_rss_feed)(
             request_body, api_version, request_config=request_config
         )
@@ -963,10 +1029,12 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         id_: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_user_rss_feeds)(
             api_version,
-            **{k: v for k, v in {"id_": id_}.items() if v is not SENTINEL},
+            **dict[str, Any](
+                {k: v for k, v in {"id_": id_}.items() if v is not SENTINEL}
+            ),
             request_config=request_config,
         )
 
@@ -976,20 +1044,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         rss_feed_id: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_rss_feed_items)(
             api_version,
-            **{
-                k: v
-                for k, v in {"rss_feed_id": rss_feed_id}.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {"rss_feed_id": rss_feed_id}.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
     def get_all_jobs(
         self, api_version: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_all_jobs)(
             api_version, request_config=request_config
         )
@@ -1000,14 +1070,14 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         job_id: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_specific_job)(
             api_version, job_id, request_config=request_config
         )
 
     def get_all_jobs_by_hash(
         self, api_version: str, hash: str, *, request_config: Optional[SdkConfig] = None
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_all_jobs_by_hash)(
             api_version, hash, request_config=request_config
         )
@@ -1018,7 +1088,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         job_id: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().cancel_specific_job)(
             api_version, job_id, request_config=request_config
         )
@@ -1033,20 +1103,22 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         type_: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_queued_downloads)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "bypass_cache": bypass_cache,
-                    "id_": id_,
-                    "offset": offset,
-                    "limit": limit,
-                    "type_": type_,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "bypass_cache": bypass_cache,
+                        "id_": id_,
+                        "offset": offset,
+                        "limit": limit,
+                        "type_": type_,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -1056,7 +1128,7 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         api_version: str,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().control_queued_downloads)(
             request_body, api_version, request_config=request_config
         )
@@ -1072,21 +1144,23 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         chosen_resolution_index: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().create_stream)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "id_": id_,
-                    "file_id": file_id,
-                    "type_": type_,
-                    "chosen_subtitle_index": chosen_subtitle_index,
-                    "chosen_audio_index": chosen_audio_index,
-                    "chosen_resolution_index": chosen_resolution_index,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "id_": id_,
+                        "file_id": file_id,
+                        "type_": type_,
+                        "chosen_subtitle_index": chosen_subtitle_index,
+                        "chosen_audio_index": chosen_audio_index,
+                        "chosen_resolution_index": chosen_resolution_index,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )
 
@@ -1100,19 +1174,21 @@ class MainApiSdkServiceAsync(MainApiSdkService):
         chosen_resolution_index: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
-    ) -> Awaitable[Any]:
+    ) -> Awaitable[Any]:  # type: ignore[override]
         return to_async(super().get_stream_data)(
             api_version,
-            **{
-                k: v
-                for k, v in {
-                    "presigned_token": presigned_token,
-                    "token": token,
-                    "chosen_subtitle_index": chosen_subtitle_index,
-                    "chosen_audio_index": chosen_audio_index,
-                    "chosen_resolution_index": chosen_resolution_index,
-                }.items()
-                if v is not SENTINEL
-            },
+            **dict[str, Any](
+                {
+                    k: v
+                    for k, v in {
+                        "presigned_token": presigned_token,
+                        "token": token,
+                        "chosen_subtitle_index": chosen_subtitle_index,
+                        "chosen_audio_index": chosen_audio_index,
+                        "chosen_resolution_index": chosen_resolution_index,
+                    }.items()
+                    if v is not SENTINEL
+                }
+            ),
             request_config=request_config,
         )

@@ -1,10 +1,10 @@
-# MainApiSdk Python SDK 1.0.0
+# MainApiSdk Python SDK 1.0.1
 
 Welcome to the MainApiSdk SDK documentation. This guide will help you get started with integrating and using the MainApiSdk SDK in your project.
 
 ## Versions
 
-- SDK version: `1.0.0`
+- SDK version: `1.0.1`
 
 ## About the API
 
