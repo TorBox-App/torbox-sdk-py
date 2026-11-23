@@ -14,14 +14,14 @@ class MainApiSdkAsync(MainApiSdk):
     def __init__(
         self,
         *,
-        access_token: str = None,
+        access_token: Optional[str] = None,
         base_url: Union[Environment, str, None] = None,
-        timeout: float = None,
-        timeout_ms: int = None,
+        timeout: Optional[float] = None,
+        timeout_ms: Optional[int] = None,
         http_client: Optional[requests.Session] = None,
         follow_redirects: bool = True,
         logger: Optional[logging.Logger] = None,
-        retry: "RetryConfig" = None,
+        retry: Optional["RetryConfig"] = None,
     ):
         super().__init__(
             access_token=access_token,

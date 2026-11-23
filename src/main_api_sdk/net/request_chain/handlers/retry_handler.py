@@ -271,6 +271,9 @@ class RetryHandler(BaseHandler):
         if isinstance(error, ApiConnectionError):
             return False
 
+        if error.status is None:
+            return False
+
         # Check if status code is retryable
         request_status_codes = retry_config.get("status_codes_to_retry")
         if request_status_codes is not None:

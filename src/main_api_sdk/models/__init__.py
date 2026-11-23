@@ -6,6 +6,7 @@ on SDKs with thousands of generated models.
 """
 
 import importlib
+import threading
 import typing
 
 import pydantic
@@ -49,6 +50,9 @@ _MODEL_TO_MODULE = {
     "GetWebDownloadCachedAvailabilityBatchRequest": "get_web_download_cached_availability_batch_request",
     "EditWebDownloadItemRequest": "edit_web_download_item_request",
     "GetTokenFromDeviceCodeProcessRequest": "get_token_from_device_code_process_request",
+    "EditTagRequest": "edit_tag_request",
+    "ControlTagRequest": "control_tag_request",
+    "ChatWithAssistantRequest": "chat_with_assistant_request",
 }
 
 _REBUILD_NAMES = frozenset(
@@ -69,12 +73,25 @@ _REBUILD_NAMES = frozenset(
         "GetWebDownloadCachedAvailabilityBatchRequest",
         "EditWebDownloadItemRequest",
         "GetTokenFromDeviceCodeProcessRequest",
+        "EditTagRequest",
+        "ControlTagRequest",
+        "ChatWithAssistantRequest",
     }
 )
 
 __all__ = list(_MODEL_TO_MODULE.keys())
 
 _rebuilt = False
+
+
+class _CompletionState(threading.local):
+    def __init__(self):
+        self.pending = []
+        self.running = False
+
+
+_completion = _CompletionState()
+_unsettled = []
 
 
 def _load(name):
@@ -154,6 +171,50 @@ def _ensure_rebuilt():
         if cls is None:
             continue
         _rebuild(cls, ns)
+
+
+def _complete_models(*classes):
+    """Finish the models of an import cycle, called from the bottom of each model's own file.
+
+    A model in a cycle defers its partners to ``TYPE_CHECKING``, so imported by its own submodule
+    path it is left half-built and the first ``model_validate`` raises "not fully defined". This
+    loads the partners its references name, through ``_rebuild``, and rebuilds every class the
+    files it pulled in handed over, so one cycle completes without loading the rest of the package.
+    A file imported while a completion is running on the same thread only queues its classes; the
+    outermost call settles them all. Each thread completes what it imported itself, so no thread
+    waits on another while holding a module's import lock. A class that could not finish yet,
+    because a union alias it names was still mid-import, is kept and retried by the next outermost
+    call.
+    """
+    pending = _completion.pending
+    pending.extend(classes)
+    if _completion.running:
+        return
+    _completion.running = True
+    try:
+        ns = dict(_BUILTIN_NAMESPACE)
+        ns.update(globals())
+        while _unsettled:
+            try:
+                pending.append(_unsettled.pop())
+            except IndexError:
+                break
+        while pending:
+            settled = []
+            while pending:
+                cls = pending.pop()
+                if not (isinstance(cls, type) and issubclass(cls, pydantic.BaseModel)):
+                    continue
+                ns.setdefault(cls.__name__, cls)
+                settled.append(cls)
+                _rebuild(cls, ns)
+            for cls in settled:
+                if not cls.__pydantic_complete__:
+                    _rebuild(cls, ns)
+                if not cls.__pydantic_complete__:
+                    _unsettled.append(cls)
+    finally:
+        _completion.running = False
 
 
 def __getattr__(name):

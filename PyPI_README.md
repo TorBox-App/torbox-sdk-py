@@ -1,10 +1,10 @@
-# MainApiSdk Python SDK 1.0.0<a id="mainapisdk-python-sdk-100"></a>
+# MainApiSdk Python SDK 2.0.0<a id="mainapisdk-python-sdk-200"></a>
 
 Welcome to the MainApiSdk SDK documentation. This guide will help you get started with integrating and using the MainApiSdk SDK in your project.
 
 ## Versions<a id="versions"></a>
 
-- SDK version: `1.0.0`
+- SDK version: `2.0.0`
 
 ## About the API<a id="about-the-api"></a>
 
@@ -30,6 +30,14 @@ You can find more API docs here: [http://api.torbox.app/docs](http://api.torbox.
 - `POST` /usenet/createusenetdownload is rate limited to **60/hour** per API token.
 - `POST` /webdl/createwebdownload is rate limited to **60/hour** per API token.
 - We no longer accept IP whitelisting requests due to rate limiting being API token based, rather than IP based.
+
+### AI Usage<a id="ai-usage"></a>
+
+TorBox has an MCP that you can plug into using your AI chat or agents. This allows your AI to use the TorBox API through a chat interface. To add the TorBox MCP simply configure your AI to use this url: [https://api.torbox.app/mcp](https://api.torbox.app/mcp) and follow the instructions for signing in.
+
+TorBox also has a skills repository that you can insert into your AI to make it use the API and MCP optimally, making sure it knows exactly how to do what you want. You can find these skills here: [https://github.com/TorBox-App/ai-skills](https://github.com/TorBox-App/ai-skills).
+
+Both tools can also help with integrating TorBox into your app. You can find a guide on how to set this up here: [https://support.torbox.app/en/articles/18453973-how-to-connect-your-ai-to-torbox](https://support.torbox.app/en/articles/18453973-how-to-connect-your-ai-to-torbox)
 
 ### Standard Response<a id="standard-response"></a>
 
@@ -302,5 +310,8 @@ The SDK includes several models that represent the data structures used in API r
 | GetWebDownloadCachedAvailabilityBatchRequest |             |
 | EditWebDownloadItemRequest                   |             |
 | GetTokenFromDeviceCodeProcessRequest         |             |
+| EditTagRequest                               |             |
+| ControlTagRequest                            |             |
+| ChatWithAssistantRequest                     |             |
 
 </details>

@@ -75,6 +75,15 @@ A list of all methods in the `MainApiSdkService` service. Click on the method na
 | [control_queued_downloads](#control_queued_downloads)                                     | ### Overview Controls a queued torrent. By sending the queued torrent's ID and the type of operation you want to perform, it will perform that action on the queued torrent. Operations are either: - **Delete** `deletes the queued download from your account` - **Start** `starts a queued download, cannot be used with the "all" parameter` ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | [create_stream](#create_stream)                                                           | ### Overview Creates a new stream based off of the data provided. #### Selecting Subtitles and Audios We use indexes to determine which audio and subtitle you would like to select. To view all available indexes, you must request this endpoint intially with "null" or 0, for the chosen indexes. This will return a metadata dictionary in the response, which will contain the list of audios and subtitles available for this stream. When choosing a subtitle or audio stream, use the **relative index**, starting from 0, rather than the "index" value. This is important for selecting the correct index. Once your user gets a selection of audios and subtitles available, you can submit this to the endpoint again to get the chosen stream. - **null** - Selecting no subtitle. Not available for audio as one must always be selected. - **0** - Selecting first subtitle or audio #### Selecting Resolution Similar to the subtitles and audios, we use indexes to determine the resolution chosen. Unlike the above, these are predetermined. We do not upscale video, so if for example, you pass a 1080p video, and request it with resolution, 7, it will stay at 1080p. Please see the below for options. - **null** - Original video resolution. No downscaling will take place. - **0** - 144p - **1** - 240p - **2** - 360p - **3** - 480p - **4** - 720p - **5** - 1080p - **6** - 1440p - **7** - 2160p #### Types This endpoint allows you to handle torrents, usenet and web downloads all in one. This is why the "type" parameter is available. It defaults to "torrent". - **torrent** - Torrents - **usenet** - Usenet downloads - **webdownload** - Web Downloads #### Important Notes - Only text based subtitles are supported. If a non-text based subtitle is selected, it will be ignored. - If a subtitle or audio index does not exist on the stream, it will be ignored. - There are a lot of edge-case videos, if something doesn't work, don't hesitate to report the download hash and file_id of the failing video file. - This is a **Pro** only feature. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                       |
 | [get_stream_data](#get_stream_data)                                                       | ### Overview Gets stream data from an already created stream. Requires the presigned token and user API token from the original request. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| [get_user_tags](#get_user_tags)                                                           | ### Overview Gets the tags attached to a user account, with the downloads using each tag, their count and total size. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| [edit_tag](#edit_tag)                                                                     | ### Overview Renames a tag. This new name is case sensitive. The ID is the tag's ID from the `/mytags`. Fails with `DUPLICATE_ITEM` when another of the user's tags already has the same name, in any casing. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| [control_tag](#control_tag)                                                               | ### Overview Controls a tag. Currently, the only operation is "delete", which deletes the tag and removes it from every download using it; the downloads stay in your account and are otherwise unmodified. The ID is the tag's ID from `/mytags` endpoint. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| [chat_with_assistant](#chat_with_assistant)                                               | ### Overview Send a message to the AI Assistant. Optionally include a `session_id` to resume a previous conversation. If no `session_id` is given, the AI will have no previous context and will create a new conversation. Also included is a way to upload `files` in base64 allowing you to attach a file that the AI Assistant can use. We also allow you to send `blocks` which is a list of strings that state what additional features your chat interface includes. If no `blocks` are sent, responses are sent in plain text and markdown (for things like tables or bolding text). ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| [get_assistant_usage](#get_assistant_usage)                                               | ### Overview Gets the current user's AI assistant usage. Users are limited to a certain number of tokens daily, and this endpoint tells you exactly how much is left as a percentage. This makes it easy for developers so they don't have to spend time counting tokens, which is usually inaccurate. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| [get_assistant_conversations](#get_assistant_conversations)                               | ### Overview Gets the user's open conversations. Conversations are sorted newest first. Each conversation is kept for 30 days after its last message. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| [get_assistant_conversation](#get_assistant_conversation)                                 | ### Overview Get a specific user conversation with the AI assistant. You can pass the `since` parameter with a Unix timestamp, and will show any revisions since that time, this way, you don't waste bandwidth retrieving and updating the entire conversation. If no update has been made since, the data return will be null. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| [delete_assistant_conversation](#delete_assistant_conversation)                           | ### Overview Deletes a specific conversation with the AI assistant. Usage persists from the conversation. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| [delete_all_assistant_conversations](#delete_all_assistant_conversations)                 | ### Overview Deletes all conversations for a user's account. Usage persists from the conversations. ### Authorization Requires an API key using the Authorization Bearer Header.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 
 ## create_torrent
 
@@ -341,7 +350,7 @@ sdk = MainApiSdk(
 
 request_body = MainApiSdkRequestDownloadLinksPostRequest1(
     file_ids=[
-        65
+        8
     ]
 )
 
@@ -373,6 +382,8 @@ print(result)
 | id\_         | str  | ❌       | Determines the torrent requested, will return an object rather than list. Optional.                                                                                                           |
 | offset       | str  | ❌       | Determines the offset of items to get from the database. Default is 0. Optional.                                                                                                              |
 | limit        | str  | ❌       | Determines the number of items to recieve per request. Default is 1000. Optional.                                                                                                             |
+| active       | str  | ❌       | Shows only active downloads. Optional                                                                                                                                                         |
+| files        | str  | ❌       | Exclude files from response. Optional                                                                                                                                                         |
 
 **Return Type**
 
@@ -394,7 +405,9 @@ result = sdk.main_api_sdk.get_torrent_list(
     bypass_cache="bypass_cache",
     id_="id",
     offset="offset",
-    limit="limit"
+    limit="limit",
+    active="active",
+    files="files"
 )
 
 print(result)
@@ -643,7 +656,7 @@ sdk = MainApiSdk(
 )
 
 request_body = EditTorrentItemRequest(
-    torrent_id=98,
+    torrent_id=56,
     name="string",
     tags=[
         "string"
@@ -921,7 +934,7 @@ sdk = MainApiSdk(
 
 request_body = MainApiSdkRequestDownloadLinksPostRequest2(
     file_ids=[
-        65
+        4
     ]
 )
 
@@ -953,6 +966,8 @@ print(result)
 | id\_         | str  | ❌       | Determines the usenet download requested, will return an object rather than list. Optional.                                                                                                   |
 | offset       | str  | ❌       | Determines the offset of items to get from the database. Default is 0. Optional.                                                                                                              |
 | limit        | str  | ❌       | Determines the number of items to recieve per request. Default is 1000. Optional.                                                                                                             |
+| active       | str  | ❌       | Shows only active downloads. Optional                                                                                                                                                         |
+| files        | str  | ❌       | Exclude files from response. Optional                                                                                                                                                         |
 
 **Return Type**
 
@@ -974,7 +989,9 @@ result = sdk.main_api_sdk.get_usenet_list(
     bypass_cache="bypass_cache",
     id_="id",
     offset="offset",
-    limit="limit"
+    limit="limit",
+    active="active",
+    files="files"
 )
 
 print(result)
@@ -1096,7 +1113,7 @@ sdk = MainApiSdk(
 )
 
 request_body = EditUsenetItemRequest(
-    usenet_download_id=19,
+    usenet_download_id=12,
     name="string",
     tags=[
         "string"
@@ -1429,7 +1446,7 @@ sdk = MainApiSdk(
 
 request_body = MainApiSdkRequestDownloadLinksPostRequest3(
     file_ids=[
-        71
+        77
     ]
 )
 
@@ -1461,6 +1478,8 @@ print(result)
 | id\_         | str  | ❌       | Determines the torrent requested, will return an object rather than list. Optional.                                                                                                           |
 | offset       | str  | ❌       | Determines the offset of items to get from the database. Default is 0. Optional.                                                                                                              |
 | limit        | str  | ❌       | Determines the number of items to recieve per request. Default is 1000. Optional.                                                                                                             |
+| active       | str  | ❌       | Shows only active downloads. Optional                                                                                                                                                         |
+| files        | str  | ❌       | Exclude files from response. Optional                                                                                                                                                         |
 
 **Return Type**
 
@@ -1482,7 +1501,9 @@ result = sdk.main_api_sdk.get_web_download_list(
     bypass_cache="bypass_cache",
     id_="id",
     offset="offset",
-    limit="limit"
+    limit="limit",
+    active="active",
+    files="files"
 )
 
 print(result)
@@ -1641,7 +1662,7 @@ sdk = MainApiSdk(
 )
 
 request_body = EditWebDownloadItemRequest(
-    webdl_id=77,
+    webdl_id=78,
     name="string",
     tags=[
         "string"
@@ -2962,6 +2983,349 @@ result = sdk.main_api_sdk.get_stream_data(
     chosen_audio_index="chosen_audio_index",
     chosen_resolution_index="chosen_resolution_index"
 )
+
+print(result)
+```
+
+## get_user_tags
+
+### Overview Gets the tags attached to a user account, with the downloads using each tag, their count and total size. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `GET`
+- Endpoint: `/{api_version}/api/tags/mytags`
+
+**Parameters**
+
+| Name        | Type | Required | Description |
+| :---------- | :--- | :------- | :---------- |
+| api_version | str  | ✅       |             |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+result = sdk.main_api_sdk.get_user_tags(api_version="api_version")
+
+print(result)
+```
+
+## edit_tag
+
+### Overview Renames a tag. This new name is case sensitive. The ID is the tag's ID from the `/mytags`. Fails with `DUPLICATE_ITEM` when another of the user's tags already has the same name, in any casing. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `PUT`
+- Endpoint: `/{api_version}/api/tags/edittag`
+
+**Parameters**
+
+| Name         | Type                                          | Required | Description       |
+| :----------- | :-------------------------------------------- | :------- | :---------------- |
+| request_body | [EditTagRequest](../models/EditTagRequest.md) | ✅       | The request body. |
+| api_version  | str                                           | ✅       |                   |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+from main_api_sdk.models import EditTagRequest
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+request_body = EditTagRequest(
+    id_=65,
+    new_name="string"
+)
+
+result = sdk.main_api_sdk.edit_tag(
+    request_body=request_body,
+    api_version="api_version"
+)
+
+print(result)
+```
+
+## control_tag
+
+### Overview Controls a tag. Currently, the only operation is "delete", which deletes the tag and removes it from every download using it; the downloads stay in your account and are otherwise unmodified. The ID is the tag's ID from `/mytags` endpoint. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `POST`
+- Endpoint: `/{api_version}/api/tags/controltag`
+
+**Parameters**
+
+| Name         | Type                                                | Required | Description       |
+| :----------- | :-------------------------------------------------- | :------- | :---------------- |
+| request_body | [ControlTagRequest](../models/ControlTagRequest.md) | ✅       | The request body. |
+| api_version  | str                                                 | ✅       |                   |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+from main_api_sdk.models import ControlTagRequest
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+request_body = ControlTagRequest(
+    id_=71,
+    operation="delete"
+)
+
+result = sdk.main_api_sdk.control_tag(
+    request_body=request_body,
+    api_version="api_version"
+)
+
+print(result)
+```
+
+## chat_with_assistant
+
+### Overview Send a message to the AI Assistant. Optionally include a `session_id` to resume a previous conversation. If no `session_id` is given, the AI will have no previous context and will create a new conversation. Also included is a way to upload `files` in base64 allowing you to attach a file that the AI Assistant can use. We also allow you to send `blocks` which is a list of strings that state what additional features your chat interface includes. If no `blocks` are sent, responses are sent in plain text and markdown (for things like tables or bolding text). ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `POST`
+- Endpoint: `/{api_version}/api/assistant/chat`
+
+**Parameters**
+
+| Name         | Type                                                              | Required | Description       |
+| :----------- | :---------------------------------------------------------------- | :------- | :---------------- |
+| request_body | [ChatWithAssistantRequest](../models/ChatWithAssistantRequest.md) | ✅       | The request body. |
+| api_version  | str                                                               | ✅       |                   |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+from main_api_sdk.models import ChatWithAssistantRequest
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+request_body = ChatWithAssistantRequest(
+    message="string",
+    session_id="string",
+    files=[
+        "string"
+    ],
+    blocks=[
+        "string"
+    ]
+)
+
+result = sdk.main_api_sdk.chat_with_assistant(
+    request_body=request_body,
+    api_version="api_version"
+)
+
+print(result)
+```
+
+## get_assistant_usage
+
+### Overview Gets the current user's AI assistant usage. Users are limited to a certain number of tokens daily, and this endpoint tells you exactly how much is left as a percentage. This makes it easy for developers so they don't have to spend time counting tokens, which is usually inaccurate. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `GET`
+- Endpoint: `/{api_version}/api/assistant/usage`
+
+**Parameters**
+
+| Name        | Type | Required | Description |
+| :---------- | :--- | :------- | :---------- |
+| api_version | str  | ✅       |             |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+result = sdk.main_api_sdk.get_assistant_usage(api_version="api_version")
+
+print(result)
+```
+
+## get_assistant_conversations
+
+### Overview Gets the user's open conversations. Conversations are sorted newest first. Each conversation is kept for 30 days after its last message. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `GET`
+- Endpoint: `/{api_version}/api/assistant/conversations`
+
+**Parameters**
+
+| Name        | Type | Required | Description |
+| :---------- | :--- | :------- | :---------- |
+| api_version | str  | ✅       |             |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+result = sdk.main_api_sdk.get_assistant_conversations(api_version="api_version")
+
+print(result)
+```
+
+## get_assistant_conversation
+
+### Overview Get a specific user conversation with the AI assistant. You can pass the `since` parameter with a Unix timestamp, and will show any revisions since that time, this way, you don't waste bandwidth retrieving and updating the entire conversation. If no update has been made since, the data return will be null. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `GET`
+- Endpoint: `/{api_version}/api/assistant/conversations/{session_id}`
+
+**Parameters**
+
+| Name        | Type | Required | Description                                                         |
+| :---------- | :--- | :------- | :------------------------------------------------------------------ |
+| api_version | str  | ✅       |                                                                     |
+| session_id  | str  | ✅       |                                                                     |
+| since       | str  | ❌       | Unix timestamp of the conversation you want to get since this time. |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+result = sdk.main_api_sdk.get_assistant_conversation(
+    api_version="api_version",
+    session_id="session_id",
+    since="since"
+)
+
+print(result)
+```
+
+## delete_assistant_conversation
+
+### Overview Deletes a specific conversation with the AI assistant. Usage persists from the conversation. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `DELETE`
+- Endpoint: `/{api_version}/api/assistant/conversations/{session_id}`
+
+**Parameters**
+
+| Name        | Type | Required | Description |
+| :---------- | :--- | :------- | :---------- |
+| api_version | str  | ✅       |             |
+| session_id  | str  | ✅       |             |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+result = sdk.main_api_sdk.delete_assistant_conversation(
+    api_version="api_version",
+    session_id="session_id"
+)
+
+print(result)
+```
+
+## delete_all_assistant_conversations
+
+### Overview Deletes all conversations for a user's account. Usage persists from the conversations. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+- HTTP Method: `DELETE`
+- Endpoint: `/{api_version}/api/assistant/conversations`
+
+**Parameters**
+
+| Name        | Type | Required | Description |
+| :---------- | :--- | :------- | :---------- |
+| api_version | str  | ✅       |             |
+
+**Return Type**
+
+`Any`
+
+**Example Usage Code Snippet**
+
+```python
+from main_api_sdk import MainApiSdk, Environment
+
+sdk = MainApiSdk(
+    access_token="YOUR_ACCESS_TOKEN",
+    base_url=Environment.DEFAULT.value,
+    timeout=10
+)
+
+result = sdk.main_api_sdk.delete_all_assistant_conversations(api_version="api_version")
 
 print(result)
 ```

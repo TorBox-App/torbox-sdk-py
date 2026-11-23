@@ -23,7 +23,8 @@ class BaseHeader:
         """
         return None
 
-    def get_headers(self) -> Dict[str, str]:
+    # Preserve the legacy implicit-None behavior; concrete auth headers override this method.
+    def get_headers(self) -> Dict[str, str]:  # type: ignore[empty-body]
         """
         Get the HTTP headers containing authentication information.
         Subclasses should override this method to return appropriate authentication headers.

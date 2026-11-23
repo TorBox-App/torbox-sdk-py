@@ -1,6 +1,6 @@
 import functools
 from enum import Enum
-from typing import Any, Callable, TypeVar, cast, get_args, Union
+from typing import Any, Callable, TypeVar, cast, get_args, get_origin, Union
 from inspect import isclass
 from .one_of_base_model import OneOfBaseModel
 from .sentinel import was_value_set
@@ -107,7 +107,11 @@ def cast_models(func: F) -> F:
             return input_type(data)
 
         # Instanciate object models
-        elif isinstance(data, dict) and input_type is not str:
+        elif (
+            isinstance(data, dict)
+            and input_type is not str
+            and get_origin(input_type) is not dict
+        ):
             # Pydantic models: use model_validate() for better validation
             if hasattr(input_type, "model_validate"):
                 try:
@@ -129,6 +133,12 @@ def cast_models(func: F) -> F:
             # `TypeError: Cannot instantiate typing.Any`.
             if element_type is Any:
                 return data
+            # A union has no constructor and no `model_validate`; each item resolves to its own
+            # member exactly as a lone value of that union does.
+            if _is_one_of_model(element_type) or get_origin(element_type) is dict:
+                return [
+                    _get_instanced_type(item, element_type, param_name) for item in data
+                ]
             # Pydantic models: use model_validate() for each item. Validated one at a time so the
             # failing element's index reaches the error message.
             if hasattr(element_type, "model_validate"):
@@ -145,6 +155,18 @@ def cast_models(func: F) -> F:
             # Legacy models or direct instantiation
             else:
                 return [element_type(**item) for item in data]
+
+        # Instanciate a list that nests more lists or dictionaries than the branch above accepts
+        elif (
+            isinstance(data, list)
+            and get_origin(input_type) is list
+            and get_args(input_type)
+            and any(isinstance(i, (dict, list)) for i in data)
+        ):
+            return [
+                _get_instanced_type(item, get_args(input_type)[0], param_name)
+                for item in data
+            ]
 
         # Instanciate bytes if input is str
         elif input_type is bytes and isinstance(data, str):

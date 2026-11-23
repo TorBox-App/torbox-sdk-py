@@ -1,4 +1,4 @@
-from typing import Any, Set, TYPE_CHECKING
+from typing import Any, Optional, Set, TYPE_CHECKING
 from .utils import extract_original_data
 
 if TYPE_CHECKING:
@@ -42,7 +42,7 @@ class Request:
         self.scopes = None
         self.bearer_wins_over_oauth = False
         self.errors = None
-        self.config: "SdkConfig" = None
+        self.config: Optional["SdkConfig"] = None
 
     def set_url(self, url: str) -> "Request":
         """
@@ -123,7 +123,7 @@ class Request:
         self.errors = errors
         return self
 
-    def set_config(self, config: "SdkConfig") -> "Request":
+    def set_config(self, config: Optional["SdkConfig"]) -> "Request":
         """
         Set the configuration for the request.
 

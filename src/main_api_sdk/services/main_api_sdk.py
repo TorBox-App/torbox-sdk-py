@@ -8,9 +8,12 @@ from ..models.utils.sentinel import SENTINEL
 from ..models.utils.cast_models import cast_models
 from ..models import (
     AsyncCreateTorrentRequest,
+    ChatWithAssistantRequest,
+    ControlTagRequest,
     CreateTorrentRequest,
     CreateUsenetDownloadRequest,
     CreateWebDownloadRequest,
+    EditTagRequest,
     EditTorrentItemRequest,
     EditUsenetItemRequest,
     EditWebDownloadItemRequest,
@@ -209,6 +212,27 @@ class MainApiSdkService(BaseService):
         }
         self._create_stream_config: SdkConfig = {"environment": Environment.API_BASE}
         self._get_stream_data_config: SdkConfig = {"environment": Environment.API_BASE}
+        self._get_user_tags_config: SdkConfig = {"environment": Environment.API_BASE}
+        self._edit_tag_config: SdkConfig = {"environment": Environment.API_BASE}
+        self._control_tag_config: SdkConfig = {"environment": Environment.API_BASE}
+        self._chat_with_assistant_config: SdkConfig = {
+            "environment": Environment.API_BASE
+        }
+        self._get_assistant_usage_config: SdkConfig = {
+            "environment": Environment.API_BASE
+        }
+        self._get_assistant_conversations_config: SdkConfig = {
+            "environment": Environment.API_BASE
+        }
+        self._get_assistant_conversation_config: SdkConfig = {
+            "environment": Environment.API_BASE
+        }
+        self._delete_assistant_conversation_config: SdkConfig = {
+            "environment": Environment.API_BASE
+        }
+        self._delete_all_assistant_conversations_config: SdkConfig = {
+            "environment": Environment.API_BASE
+        }
 
     def set_create_torrent_config(self, config: SdkConfig):
         """
@@ -920,6 +944,96 @@ class MainApiSdkService(BaseService):
         self._get_stream_data_config = config
         return self
 
+    def set_get_user_tags_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for get_user_tags.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._get_user_tags_config = config
+        return self
+
+    def set_edit_tag_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for edit_tag.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._edit_tag_config = config
+        return self
+
+    def set_control_tag_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for control_tag.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._control_tag_config = config
+        return self
+
+    def set_chat_with_assistant_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for chat_with_assistant.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._chat_with_assistant_config = config
+        return self
+
+    def set_get_assistant_usage_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for get_assistant_usage.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._get_assistant_usage_config = config
+        return self
+
+    def set_get_assistant_conversations_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for get_assistant_conversations.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._get_assistant_conversations_config = config
+        return self
+
+    def set_get_assistant_conversation_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for get_assistant_conversation.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._get_assistant_conversation_config = config
+        return self
+
+    def set_delete_assistant_conversation_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for delete_assistant_conversation.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._delete_assistant_conversation_config = config
+        return self
+
+    def set_delete_all_assistant_conversations_config(self, config: SdkConfig):
+        """
+        Sets method-level configuration for delete_all_assistant_conversations.
+
+        :param SdkConfig config: Configuration dictionary to override service-level defaults.
+        :return: The service instance for method chaining.
+        """
+        self._delete_all_assistant_conversations_config = config
+        return self
+
     @cast_models
     def create_torrent(
         self,
@@ -1262,6 +1376,8 @@ class MainApiSdkService(BaseService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
     ) -> Any:
@@ -1277,6 +1393,10 @@ class MainApiSdkService(BaseService):
         :type offset: str, optional
         :param limit: Determines the number of items to recieve per request. Default is 1000. Optional., defaults to None
         :type limit: str, optional
+        :param active: Shows only active downloads. Optional, defaults to None
+        :type active: str, optional
+        :param files: Exclude files from response. Optional, defaults to None
+        :type files: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -1291,6 +1411,8 @@ class MainApiSdkService(BaseService):
         Validator(str).is_optional().is_nullable().validate(id_, "id_")
         Validator(str).is_optional().is_nullable().validate(offset, "offset")
         Validator(str).is_optional().is_nullable().validate(limit, "limit")
+        Validator(str).is_optional().is_nullable().validate(active, "active")
+        Validator(str).is_optional().is_nullable().validate(files, "files")
 
         resolved_config = self._get_resolved_config(
             self._get_torrent_list_config, request_config
@@ -1307,6 +1429,8 @@ class MainApiSdkService(BaseService):
             .add_query("id", id_, nullable=True)
             .add_query("offset", offset, nullable=True)
             .add_query("limit", limit, nullable=True)
+            .add_query("active", active, nullable=True)
+            .add_query("files", files, nullable=True)
             .serialize()
             .set_method("GET")
         )
@@ -1947,6 +2071,8 @@ class MainApiSdkService(BaseService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
     ) -> Any:
@@ -1962,6 +2088,10 @@ class MainApiSdkService(BaseService):
         :type offset: str, optional
         :param limit: Determines the number of items to recieve per request. Default is 1000. Optional., defaults to None
         :type limit: str, optional
+        :param active: Shows only active downloads. Optional, defaults to None
+        :type active: str, optional
+        :param files: Exclude files from response. Optional, defaults to None
+        :type files: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -1976,6 +2106,8 @@ class MainApiSdkService(BaseService):
         Validator(str).is_optional().is_nullable().validate(id_, "id_")
         Validator(str).is_optional().is_nullable().validate(offset, "offset")
         Validator(str).is_optional().is_nullable().validate(limit, "limit")
+        Validator(str).is_optional().is_nullable().validate(active, "active")
+        Validator(str).is_optional().is_nullable().validate(files, "files")
 
         resolved_config = self._get_resolved_config(
             self._get_usenet_list_config, request_config
@@ -1992,6 +2124,8 @@ class MainApiSdkService(BaseService):
             .add_query("id", id_, nullable=True)
             .add_query("offset", offset, nullable=True)
             .add_query("limit", limit, nullable=True)
+            .add_query("active", active, nullable=True)
+            .add_query("files", files, nullable=True)
             .serialize()
             .set_method("GET")
         )
@@ -2544,6 +2678,8 @@ class MainApiSdkService(BaseService):
         id_: Union[str, None] = SENTINEL,
         offset: Union[str, None] = SENTINEL,
         limit: Union[str, None] = SENTINEL,
+        active: Union[str, None] = SENTINEL,
+        files: Union[str, None] = SENTINEL,
         *,
         request_config: Optional[SdkConfig] = None,
     ) -> Any:
@@ -2559,6 +2695,10 @@ class MainApiSdkService(BaseService):
         :type offset: str, optional
         :param limit: Determines the number of items to recieve per request. Default is 1000. Optional., defaults to None
         :type limit: str, optional
+        :param active: Shows only active downloads. Optional, defaults to None
+        :type active: str, optional
+        :param files: Exclude files from response. Optional, defaults to None
+        :type files: str, optional
         ...
         :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
         ...
@@ -2573,6 +2713,8 @@ class MainApiSdkService(BaseService):
         Validator(str).is_optional().is_nullable().validate(id_, "id_")
         Validator(str).is_optional().is_nullable().validate(offset, "offset")
         Validator(str).is_optional().is_nullable().validate(limit, "limit")
+        Validator(str).is_optional().is_nullable().validate(active, "active")
+        Validator(str).is_optional().is_nullable().validate(files, "files")
 
         resolved_config = self._get_resolved_config(
             self._get_web_download_list_config, request_config
@@ -2589,6 +2731,8 @@ class MainApiSdkService(BaseService):
             .add_query("id", id_, nullable=True)
             .add_query("offset", offset, nullable=True)
             .add_query("limit", limit, nullable=True)
+            .add_query("active", active, nullable=True)
+            .add_query("files", files, nullable=True)
             .serialize()
             .set_method("GET")
         )
@@ -4314,6 +4458,370 @@ class MainApiSdkService(BaseService):
             )
             .serialize()
             .set_method("GET")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def get_user_tags(
+        self, api_version: str, *, request_config: Optional[SdkConfig] = None
+    ) -> Any:
+        """### Overview Gets the tags attached to a user account, with the downloads using each tag, their count and total size. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(str).validate(api_version, "api_version")
+
+        resolved_config = self._get_resolved_config(
+            self._get_user_tags_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/tags/mytags",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("GET")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def edit_tag(
+        self,
+        request_body: EditTagRequest,
+        api_version: str,
+        *,
+        request_config: Optional[SdkConfig] = None,
+    ) -> Any:
+        """### Overview Renames a tag. This new name is case sensitive. The ID is the tag's ID from the `/mytags`. Fails with `DUPLICATE_ITEM` when another of the user's tags already has the same name, in any casing. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param request_body: The request body.
+        :type request_body: EditTagRequest
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(EditTagRequest).is_nullable().validate(request_body, "request_body")
+        Validator(str).validate(api_version, "api_version")
+
+        resolved_config = self._get_resolved_config(
+            self._edit_tag_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/tags/edittag",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("PUT")
+            .set_body(request_body)
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def control_tag(
+        self,
+        request_body: ControlTagRequest,
+        api_version: str,
+        *,
+        request_config: Optional[SdkConfig] = None,
+    ) -> Any:
+        """### Overview Controls a tag. Currently, the only operation is "delete", which deletes the tag and removes it from every download using it; the downloads stay in your account and are otherwise unmodified. The ID is the tag's ID from `/mytags` endpoint. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param request_body: The request body.
+        :type request_body: ControlTagRequest
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(ControlTagRequest).is_nullable().validate(
+            request_body, "request_body"
+        )
+        Validator(str).validate(api_version, "api_version")
+
+        resolved_config = self._get_resolved_config(
+            self._control_tag_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/tags/controltag",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("POST")
+            .set_body(request_body)
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def chat_with_assistant(
+        self,
+        request_body: ChatWithAssistantRequest,
+        api_version: str,
+        *,
+        request_config: Optional[SdkConfig] = None,
+    ) -> Any:
+        """### Overview Send a message to the AI Assistant. Optionally include a `session_id` to resume a previous conversation. If no `session_id` is given, the AI will have no previous context and will create a new conversation. Also included is a way to upload `files` in base64 allowing you to attach a file that the AI Assistant can use. We also allow you to send `blocks` which is a list of strings that state what additional features your chat interface includes. If no `blocks` are sent, responses are sent in plain text and markdown (for things like tables or bolding text). ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param request_body: The request body.
+        :type request_body: ChatWithAssistantRequest
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(ChatWithAssistantRequest).is_nullable().validate(
+            request_body, "request_body"
+        )
+        Validator(str).validate(api_version, "api_version")
+
+        resolved_config = self._get_resolved_config(
+            self._chat_with_assistant_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/assistant/chat",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("POST")
+            .set_body(request_body)
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def get_assistant_usage(
+        self, api_version: str, *, request_config: Optional[SdkConfig] = None
+    ) -> Any:
+        """### Overview Gets the current user's AI assistant usage. Users are limited to a certain number of tokens daily, and this endpoint tells you exactly how much is left as a percentage. This makes it easy for developers so they don't have to spend time counting tokens, which is usually inaccurate. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(str).validate(api_version, "api_version")
+
+        resolved_config = self._get_resolved_config(
+            self._get_assistant_usage_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/assistant/usage",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("GET")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def get_assistant_conversations(
+        self, api_version: str, *, request_config: Optional[SdkConfig] = None
+    ) -> Any:
+        """### Overview Gets the user's open conversations. Conversations are sorted newest first. Each conversation is kept for 30 days after its last message. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(str).validate(api_version, "api_version")
+
+        resolved_config = self._get_resolved_config(
+            self._get_assistant_conversations_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/assistant/conversations",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("GET")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def get_assistant_conversation(
+        self,
+        api_version: str,
+        session_id: str,
+        since: Union[str, None] = SENTINEL,
+        *,
+        request_config: Optional[SdkConfig] = None,
+    ) -> Any:
+        """### Overview Get a specific user conversation with the AI assistant. You can pass the `since` parameter with a Unix timestamp, and will show any revisions since that time, this way, you don't waste bandwidth retrieving and updating the entire conversation. If no update has been made since, the data return will be null. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        :param session_id: session_id
+        :type session_id: str
+        :param since: Unix timestamp of the conversation you want to get since this time., defaults to None
+        :type since: str, optional
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(str).validate(api_version, "api_version")
+        Validator(str).validate(session_id, "session_id")
+        Validator(str).is_optional().is_nullable().validate(since, "since")
+
+        resolved_config = self._get_resolved_config(
+            self._get_assistant_conversation_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/assistant/conversations/{{session_id}}",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .add_path("session_id", session_id)
+            .add_query("since", since, nullable=True)
+            .serialize()
+            .set_method("GET")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def delete_assistant_conversation(
+        self,
+        api_version: str,
+        session_id: str,
+        *,
+        request_config: Optional[SdkConfig] = None,
+    ) -> Any:
+        """### Overview Deletes a specific conversation with the AI assistant. Usage persists from the conversation. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        :param session_id: session_id
+        :type session_id: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(str).validate(api_version, "api_version")
+        Validator(str).validate(session_id, "session_id")
+
+        resolved_config = self._get_resolved_config(
+            self._delete_assistant_conversation_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/assistant/conversations/{{session_id}}",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .add_path("session_id", session_id)
+            .serialize()
+            .set_method("DELETE")
+        )
+
+        response, _, _ = self.send_request(serialized_request)
+        return response
+
+    @cast_models
+    def delete_all_assistant_conversations(
+        self, api_version: str, *, request_config: Optional[SdkConfig] = None
+    ) -> Any:
+        """### Overview Deletes all conversations for a user's account. Usage persists from the conversations. ### Authorization Requires an API key using the Authorization Bearer Header.
+
+        :param api_version: api_version
+        :type api_version: str
+        ...
+        :raises RequestError: Raised when a request fails, with optional HTTP status code and details.
+        ...
+        :return: The parsed response data.
+        :rtype: Any
+        """
+
+        Validator(str).validate(api_version, "api_version")
+
+        resolved_config = self._get_resolved_config(
+            self._delete_all_assistant_conversations_config, request_config
+        )
+
+        serialized_request = (
+            Serializer(
+                f"{self._resolve_base_url(resolved_config) or Environment.API_BASE.url or Environment.DEFAULT.url}/{{api_version}}/api/assistant/conversations",
+                [self.get_access_token(resolved_config)],
+                resolved_config,
+            )
+            .add_path("api_version", api_version)
+            .serialize()
+            .set_method("DELETE")
         )
 
         response, _, _ = self.send_request(serialized_request)
