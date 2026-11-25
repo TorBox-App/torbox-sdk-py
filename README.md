@@ -5,7 +5,7 @@ Python client for the [TorBox API](https://api-docs.torbox.app). Generated from 
 [OpenAPI spec](https://api.torbox.app/openapi.json) and published automatically when the API changes.
 
 ```bash
-pip install torbox-sdk==9.3.1.20261125.4
+pip install torbox-sdk==9.3.2026112508
 ```
 
 Python 3.9+. The import name is `torbox`.

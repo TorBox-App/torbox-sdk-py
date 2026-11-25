@@ -133,7 +133,7 @@ class TorBox:
             raise_on_status=False,
         )
         self.api_client = ApiClient(config)
-        self.api_client.user_agent = "torbox-python/9.3.1.20261125.4"
+        self.api_client.user_agent = "torbox-python/9.3.2026112508"
         self.torrents = _Group(TorrentsApi(self.api_client), self)
         self.usenet = _Group(UsenetApi(self.api_client), self)
         self.web_downloads = _Group(WebDownloadsApi(self.api_client), self)
